@@ -1,0 +1,101 @@
+/*
+    Copyright (C) 2020 George Cave - gcave@stablecoder.ca
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+
+#include <catch.hpp>
+#include <vk_enum_converter_v132.hpp>
+#include <vulkan/vulkan.h>
+
+using namespace vkEnum;
+
+TEST_CASE("De-stringify: Failure Cases") {
+    SECTION("Garbage type returns nothing") {
+        REQUIRE(0 == parseEnum("VkGarbagio", "2D"));
+        REQUIRE(0 == parseBitmask("VkGarbagio", "2D"));
+    }
+    SECTION("Garbage values return nothing") {
+        REQUIRE(0 == parseEnum("VkImageType", "6D"));
+        REQUIRE(0 == parseBitmask("VkToolPurposeFlagBitsEXT", "NOT_EXIST"));
+    }
+    SECTION("Attempting to do a bitmask for an enum returns nothing") {
+        REQUIRE(0 == parseEnum("VkImageType", "2D | 3D"));
+    }
+}
+
+TEST_CASE(
+    "De-stringify: Checking enum conversions from strings to the values from the  actual header") {
+    SECTION("With original shortened strings") {
+        REQUIRE(VK_IMAGE_LAYOUT_UNDEFINED == parseEnum("VkImageLayout", "UNDEFINED"));
+        REQUIRE(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL ==
+                parseEnum("VkImageLayout", "TRANSFER_DST_OPTIMAL"));
+
+        REQUIRE(VK_IMAGE_TYPE_2D == parseEnum("VkImageType", "2D"));
+    }
+    SECTION("With extra spaces around the type") {
+        REQUIRE(VK_IMAGE_LAYOUT_UNDEFINED ==
+                parseEnum("VkImageLayout", "    VK_IMAGE_LAYOUT_UNDEFINED    "));
+    }
+    SECTION("With mixed capitalization and mixture of underscores/spaces") {
+        REQUIRE(VK_IMAGE_LAYOUT_UNDEFINED ==
+                parseEnum("VkImageLayout", "    vK IMgeE_LAyOUt UNDEFIned    "));
+    }
+    SECTION("With full strings") {
+        REQUIRE(VK_IMAGE_LAYOUT_UNDEFINED ==
+                parseEnum("VkImageLayout", "VK_IMAGE_LAYOUT_UNDEFINED"));
+        REQUIRE(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL ==
+                parseEnum("VkImageLayout", "VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL"));
+
+        REQUIRE(VK_IMAGE_TYPE_2D == parseEnum("VkImageType", "VK_IMAGE_TYPE_2D"));
+    }
+}
+
+TEST_CASE("De-stringify: Checking bitmask conversions from string to bitmask values") {
+    SECTION("With original shortened strings") {
+        REQUIRE(VK_TOOL_PURPOSE_VALIDATION_BIT_EXT ==
+                parseBitmask("VkToolPurposeFlagBitsEXT", "VALIDATION_BIT_EXT"));
+        REQUIRE(VK_TOOL_PURPOSE_ADDITIONAL_FEATURES_BIT_EXT ==
+                parseBitmask("VkToolPurposeFlagBitsEXT", "ADDITIONAL_FEATURES_BIT_EXT"));
+        REQUIRE(VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT ==
+                parseBitmask("VkToolPurposeFlagBitsEXT", "MODIFYING_FEATURES_BIT_EXT"));
+
+        REQUIRE((VK_TOOL_PURPOSE_ADDITIONAL_FEATURES_BIT_EXT |
+                 VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT) ==
+                parseBitmask("VkToolPurposeFlagBitsEXT",
+                             "ADDITIONAL_FEATURES_BIT_EXT | MODIFYING_FEATURES_BIT_EXT"));
+    }
+    SECTION("With full strings") {
+        REQUIRE(VK_TOOL_PURPOSE_VALIDATION_BIT_EXT ==
+                parseBitmask("VkToolPurposeFlagBitsEXT", "VK_TOOL_PURPOSE_VALIDATION_BIT_EXT"));
+        REQUIRE(VK_TOOL_PURPOSE_ADDITIONAL_FEATURES_BIT_EXT ==
+                parseBitmask("VkToolPurposeFlagBitsEXT",
+                             "VK_TOOL_PURPOSE_ADDITIONAL_FEATURES_BIT_EXT"));
+        REQUIRE(
+            VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT ==
+            parseBitmask("VkToolPurposeFlagBitsEXT", "VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT"));
+
+        REQUIRE((VK_TOOL_PURPOSE_ADDITIONAL_FEATURES_BIT_EXT |
+                 VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT) ==
+                parseBitmask("VkToolPurposeFlagBitsEXT",
+                             "VK_TOOL_PURPOSE_ADDITIONAL_FEATURES_BIT_EXT | "
+                             "VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT"));
+    }
+    SECTION("With mixed short/full strings") {
+        REQUIRE((VK_TOOL_PURPOSE_ADDITIONAL_FEATURES_BIT_EXT |
+                 VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT) ==
+                parseBitmask("VkToolPurposeFlagBitsEXT",
+                             "ADDITIONAL_FEATURES_BIT_EXT | "
+                             "VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT"));
+    }
+}

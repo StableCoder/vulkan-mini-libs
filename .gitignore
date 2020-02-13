@@ -1,0 +1,5 @@
+.clangd/
+.vscode/
+build/
+compile_commands.json
+vk.xml
