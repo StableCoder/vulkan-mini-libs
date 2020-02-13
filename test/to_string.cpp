@@ -15,7 +15,7 @@
 */
 
 #include <catch.hpp>
-#include <vk_enum_converter_v132.hpp>
+#include <vk_enum_stringifier_v132.hpp>
 #include <vulkan/vulkan.h>
 #include <vulkan/vulkan_core.h>
 
