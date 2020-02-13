@@ -301,6 +301,34 @@ std::string stringifyBitmask(std::string_view enumType, uint32_t enumValue) {
 }
 )COMMON";
 
+const char *helpStr = R"HELP(
+This program builds a source/header file for use in C++20 or newer. It lists
+contains all Vulkan enum types/flags/values of the indicated Vulkan header spec
+version, and can convert to/from strings representing those values. 
+
+Supports both plain enums and the bitmasks.
+
+When converting values to strings, where possible a shorter version of the
+enum string is used, where the verbose type prefix is removed:
+    VK_IMAGE_LAYOUT_GENERAL => GENERAL
+    VK_CULL_MODE_FRONT_BIT | VK_CULL_MODE_BACK_BIT => FRONT | BACK
+
+When converting from strings into values, either the short OR full string can
+be used where strings are case insensitive, and underscores can be replaced
+with spaces, and addition whitespace can be added to either side of the first/
+last alphanumeric character, as these are trimmed off.
+
+For example, all of the following conver to VK_IMAGE_LAYOUT_GENERAL:
+`vk imAGE_LayOut GenerAL`, `VK_IMAGE_LAYOUT_GENERAL`,`GENERAL`, `   General `
+
+Program Arguments:
+    -h, --help  : Help Blurb
+    -i, --input : Input vk.xml file to parse
+    -d, --dir   : Output directory
+    -o, --out   : Output file name, note that there will be both a .cpp and
+                    .hpp variant generated. (Default: `vk_enum_converter`)
+)HELP";
+
 /**
  * @brief Converts a Vulakn Flag typename into the prefix that is used for it's enums
  * @param typeName Name of the type to generate the Vk enum prefix for
@@ -344,15 +372,18 @@ int main(int argc, char **argv) {
     std::string outputFile = "vk_enum_converter";
 
     for (int i = 0; i < argc; ++i) {
-        if (strcmp(argv[i], "-f") == 0) {
+        if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
+            std::cout << helpStr << std::endl;
+            return 0;
+        } else if (strcmp(argv[i], "-i") == 0 || strcmp(argv[i], "--input") == 0) {
             if (i + 1 <= argc) {
                 inputFile = argv[i + 1];
             }
-        } else if (strcmp(argv[i], "-d") == 0) {
+        } else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--dir") == 0) {
             if (i + 1 <= argc) {
                 outputDir = argv[i + 1];
             }
-        } else if (strcmp(argv[i], "-o") == 0) {
+        } else if (strcmp(argv[i], "-o") == 0 || strcmp(argv[i], "--out") == 0) {
             if (i + 1 <= argc) {
                 outputFile = argv[i + 1];
             }
