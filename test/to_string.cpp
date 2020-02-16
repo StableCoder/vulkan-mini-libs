@@ -39,10 +39,11 @@ TEST_CASE("Stringify: Bitmask") {
         REQUIRE(stringifyBitmask("VkGarbagio", VK_CULL_MODE_BACK_BIT).empty());
     }
     SECTION("Regular success cases") {
-        REQUIRE(stringifyBitmask("VkResolveModeFlagBits", VK_RESOLVE_MODE_MIN_BIT) == "MIN_BIT");
-        REQUIRE(stringifyBitmask("VkResolveModeFlagBits",
-                                 VK_RESOLVE_MODE_MAX_BIT | VK_RESOLVE_MODE_MIN_BIT) ==
-                "MAX_BIT | MIN_BIT");
+        REQUIRE(stringifyBitmask("VkDebugReportFlagBitsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
+                "ERROR_BIT");
+        REQUIRE(stringifyBitmask("VkDebugReportFlagBitsEXT",
+                                 VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
+                "DEBUG_BIT | ERROR_BIT");
     }
     SECTION("Combined bitmask will use larger items first") {
         REQUIRE(stringifyBitmask("VkCullModeFlagBits",

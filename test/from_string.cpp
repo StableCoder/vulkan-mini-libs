@@ -27,7 +27,7 @@ TEST_CASE("De-stringify: Failure Cases") {
     }
     SECTION("Garbage values return nothing") {
         REQUIRE(0 == parseEnum("VkImageType", "6D"));
-        REQUIRE(0 == parseBitmask("VkResolveModeFlagBits", "NOT_EXIST"));
+        REQUIRE(0 == parseBitmask("VkDebugReportFlagBitsEXT", "NOT_EXIST"));
     }
     SECTION("Attempting to do a bitmask for an enum returns nothing") {
         REQUIRE(0 == parseEnum("VkImageType", "2D | 3D"));
@@ -73,34 +73,37 @@ TEST_CASE(
 
 TEST_CASE("De-stringify: Checking bitmask conversions from string to bitmask values") {
     SECTION("With original shortened strings") {
-        REQUIRE(VK_RESOLVE_MODE_SAMPLE_ZERO_BIT ==
-                parseBitmask("VkResolveModeFlagBits", "SAMPLE_ZERO_BIT"));
-        REQUIRE(VK_RESOLVE_MODE_MAX_BIT == parseBitmask("VkResolveModeFlagBits", "MAX_BIT"));
-        REQUIRE(VK_RESOLVE_MODE_MIN_BIT == parseBitmask("VkResolveModeFlagBits", "MIN_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "PERFORMANCE_WARNING_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "ERROR_BIT"));
 
-        REQUIRE((VK_RESOLVE_MODE_MAX_BIT | VK_RESOLVE_MODE_MIN_BIT) ==
-                parseBitmask("VkResolveModeFlagBits", "MAX_BIT | MIN_BIT"));
+        REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG_BIT | ERROR_BIT"));
     }
     SECTION("With full strings") {
-        REQUIRE(VK_RESOLVE_MODE_SAMPLE_ZERO_BIT ==
-                parseBitmask("VkResolveModeFlagBits", "VK_RESOLVE_MODE_SAMPLE_ZERO_BIT"));
-        REQUIRE(VK_RESOLVE_MODE_MAX_BIT ==
-                parseBitmask("VkResolveModeFlagBits", "VK_RESOLVE_MODE_MAX_BIT"));
-        REQUIRE(VK_RESOLVE_MODE_MIN_BIT ==
-                parseBitmask("VkResolveModeFlagBits", "VK_RESOLVE_MODE_MIN_BIT"));
+        REQUIRE(
+            VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
+            parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_DEBUG_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR_BIT"));
 
-        REQUIRE((VK_RESOLVE_MODE_MAX_BIT | VK_RESOLVE_MODE_MIN_BIT) ==
-                parseBitmask("VkResolveModeFlagBits",
-                             "VK_RESOLVE_MODE_MAX_BIT | VK_RESOLVE_MODE_MIN_BIT"));
-        REQUIRE((VK_RESOLVE_MODE_MAX_BIT | VK_RESOLVE_MODE_MIN_BIT) ==
-                parseBitmask("VkResolveModeFlagBits",
-                             "VK_RESOLVE_MODE_MIN_BIT | VK_RESOLVE_MODE_MAX_BIT"));
+        REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
+                parseBitmask("VkDebugReportFlagBitsEXT",
+                             "VK_DEBUG_REPORT_DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT"));
+        REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
+                parseBitmask("VkDebugReportFlagBitsEXT",
+                             "VK_DEBUG_REPORT_ERROR_BIT | VK_DEBUG_REPORT_DEBUG_BIT"));
     }
     SECTION("With mixed short/full strings") {
-        REQUIRE((VK_RESOLVE_MODE_MAX_BIT | VK_RESOLVE_MODE_MIN_BIT) ==
-                parseBitmask("VkResolveModeFlagBits", "MAX_BIT | "
-                                                      "VK_RESOLVE_MODE_MIN_BIT"));
-        REQUIRE((VK_RESOLVE_MODE_MAX_BIT | VK_RESOLVE_MODE_MIN_BIT) ==
-                parseBitmask("VkResolveModeFlagBits", "VK_RESOLVE_MODE_MIN_BIT | MAX_BIT"));
+        REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG_BIT | "
+                                                         "VK_DEBUG_REPORT_ERROR_BIT"));
+        REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR_BIT | DEBUG_BIT"));
     }
 }
