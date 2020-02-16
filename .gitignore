@@ -3,3 +3,5 @@
 build/
 compile_commands.json
 vk.xml
+vk_enum_stringifier.hpp
+vk_enum_stringifier.cpp
