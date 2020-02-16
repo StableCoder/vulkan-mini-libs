@@ -2,6 +2,7 @@
 
 stages:
   - Platform Tests
+  - Analysis
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -102,3 +103,22 @@ macOS/Clang:
     CC: clang
     CXX: clang++
   <<: *platform_macos_template
+
+# Analysis
+Code Coverage:
+  stage: Analysis
+  image: stabletec/build-foe:fedora-clang
+  tags:
+    - docker-linux
+  dependencies: []
+  script:
+    - mkdir build && cd build
+    - cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DCODE_COVERAGE=ON -DBUILD_TESTS=ON
+    - ninja
+    - ninja ccov-VkEnumStringifierTests
+    - ninja ccov-report-VkEnumStringifierTests
+  artifacts:
+    name: CodeCoverage
+    paths: 
+      - build/ccov
+    expire_in: 1 day
