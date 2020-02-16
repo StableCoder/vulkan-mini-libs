@@ -1574,6 +1574,23 @@ std::string formatString(std::string str) {
 }
 
 /**
+ * @brief Removes a vendor tag from the end of the given string view
+ * @param view String view to remove the vendor tag from
+ * @return A string_view without the vendor tag, if it was suffixed
+ */
+std::string_view removeVendorTag(std::string_view view) {
+    for (std::size_t i = 0; i < vendorTagCount; ++i) {
+        std::size_t vendorSize = strlen(vendorTags[i]);
+        if (strncmp(view.data() + view.size() - vendorSize, vendorTags[i], vendorSize) == 0) {
+            view = view.substr(0, view.size() - strlen(vendorTags[i]));
+            break;
+        }
+    }
+
+    return view;
+}
+
+/**
  * @brief Converts a Vulakn Flag typename into the prefix that is used for it's enums
  * @param typeName Name of the type to generate the Vk enum prefix for
  * @return Generated prefix string
@@ -1582,22 +1599,14 @@ std::string formatString(std::string str) {
  * is added to the end, and all characters are converted to upper case.
  */
 std::string processEnumPrefix(std::string_view typeName) {
-    std::string retStr;
-
-    for (std::size_t i = 0; i < vendorTagCount; ++i) {
-        std::size_t vendorSize = strlen(vendorTags[i]);
-        if (strncmp(typeName.data() + typeName.size() - vendorSize, vendorTags[i], vendorSize) ==
-            0) {
-            typeName = typeName.substr(0, typeName.size() - strlen(vendorTags[i]));
-            break;
+    std::size_t size = strlen("FlagBits");
+    if (typeName.size() > size) {
+        if (strncmp(typeName.data() + typeName.size() - size, "FlagBits", size) == 0) {
+            typeName = typeName.substr(0, typeName.size() - strlen("FlagBits"));
         }
     }
 
-    std::size_t size = strlen("FlagBits");
-    if (strncmp(typeName.data() + typeName.size() - size, "FlagBits", size) == 0) {
-        typeName = typeName.substr(0, typeName.size() - strlen("FlagBits"));
-    }
-
+    std::string retStr;
     for (auto it = typeName.begin(); it != typeName.end(); ++it) {
         if (it == typeName.begin()) {
             retStr += ::toupper(*it);
@@ -1649,14 +1658,14 @@ uint32_t findValue(std::string_view enumType,
 namespace vkEnum {
 
 uint32_t parseEnum(std::string_view enumType, std::string value) {
-    auto prefix = processEnumPrefix(enumType);
+    auto prefix = processEnumPrefix(removeVendorTag(enumType));
     value = formatString(value);
 
     return findValue(enumType, prefix, value);
 }
 
 uint32_t parseBitmask(std::string_view enumType, std::string value) {
-    auto prefix = processEnumPrefix(enumType);
+    auto prefix = processEnumPrefix(removeVendorTag(enumType));
     uint32_t retVal = 0;
 
     auto startCh = value.begin();
