@@ -12,8 +12,8 @@ Supports both plain enums and the bitmasks.
 
 When converting values to strings, where possible a shorter version of the
 enum string is used, where the verbose type prefix is removed:
-    VK_IMAGE_LAYOUT_GENERAL => GENERAL
-    VK_CULL_MODE_FRONT_BIT | VK_CULL_MODE_BACK_BIT => FRONT | BACK
+- VK_IMAGE_LAYOUT_GENERAL => GENERAL
+- VK_CULL_MODE_FRONT_BIT | VK_CULL_MODE_BACK_BIT => FRONT | BACK
 
 When converting from strings into values, either the short OR full string can
 be used where strings are case insensitive, and underscores can be replaced
