@@ -16,10 +16,13 @@ be used where strings are case insensitive, and underscores can be replaced
 with spaces, and addition whitespace can be added to either side of the first/
 last alphanumeric character, as these are trimmed off.
 
-For example, all of the following conver to VK_IMAGE_LAYOUT_GENERAL:
+For example, all of the following convert to VK_IMAGE_LAYOUT_GENERAL:
 `vk imAGE_LayOut GenerAL`, `VK_IMAGE_LAYOUT_GENERAL`,`GENERAL`, `   General `
 
-Also, to assist with forward and backwards compatability, all the vendor tags are stripped from the typenames and values, since they can be removed in later versions leading to incompatability issues.
+Also, to assist with forward and backwards compatability, all the vendor tags are stripped from the typenames and values, since they can be removed in later versions leading to incompatability issues. For example, the flag
+for VkToolPurposeFlagBitsEXT, `VK_TOOL_PURPOSE_VALIDATION_BIT_EXT`, can will
+be output as `VALIDATION_BIT`, and can be read similarly, with the above
+rules applicable for de-stringifying.
 
 ## Program Arguments
 ### -h, --help
