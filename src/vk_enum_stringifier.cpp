@@ -576,8 +576,6 @@ constexpr const EnumValueSet *valueSets[] = {
         auto nonVendorName = removeVendorTag(vendorTagList, nameAttr->value());
         std::string prefix = processEnumPrefix(vendorTagList, nonVendorName);
 
-        valueSets << "constexpr const EnumValueSet " << nameAttr->value() << "Sets[] = {\n";
-
         std::size_t enumCount = 0;
         if (enumsNode->first_node() != nullptr) {
             // Process each 'enum' within
@@ -590,6 +588,11 @@ constexpr const EnumValueSet *valueSets[] = {
                     continue;
 
                 ++enumCount;
+
+                if (enumCount == 1) {
+                    valueSets << "constexpr const EnumValueSet " << nameAttr->value()
+                              << "Sets[] = {\n";
+                }
 
                 std::string_view name = enumNode->first_attribute("name")->value();
                 name = removeVendorTag(vendorTagList, name);
@@ -645,8 +648,12 @@ constexpr const EnumValueSet *valueSets[] = {
 
         // Finish up the end of the enum for the streams
         enumDecl << "    {\"" << nameAttr->value() << "\", " << enumCount << "},\n";
-        valueSets << "};\n";
-        valueSetArr << "    " << nameAttr->value() << "Sets,\n";
+        if (enumCount != 0) {
+            valueSets << "};\n";
+            valueSetArr << "    " << nameAttr->value() << "Sets,\n";
+        } else {
+            valueSetArr << "    nullptr,\n";
+        }
 
         if (enumsNode == endEnumsNode)
             break;

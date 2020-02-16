@@ -691,8 +691,6 @@ constexpr const EnumValueSet VkQueueFlagBitsSets[] = {
     {"TRANSFER_BIT", 0x00000004},
     {"SPARSE_BINDING_BIT", 0x00000008},
 };
-constexpr const EnumValueSet VkRenderPassCreateFlagBitsSets[] = {};
-constexpr const EnumValueSet VkDeviceQueueCreateFlagBitsSets[] = {};
 constexpr const EnumValueSet VkMemoryPropertyFlagBitsSets[] = {
     {"DEVICE_LOCAL_BIT", 0x00000001},     {"HOST_VISIBLE_BIT", 0x00000002},
     {"HOST_COHERENT_BIT", 0x00000004},    {"HOST_CACHED_BIT", 0x00000008},
@@ -757,14 +755,11 @@ constexpr const EnumValueSet VkImageCreateFlagBitsSets[] = {
     {"SPARSE_ALIASED_BIT", 0x00000004},  {"MUTABLE_FORMAT_BIT", 0x00000008},
     {"CUBE_COMPATIBLE_BIT", 0x00000010},
 };
-constexpr const EnumValueSet VkImageViewCreateFlagBitsSets[] = {};
-constexpr const EnumValueSet VkSamplerCreateFlagBitsSets[] = {};
 constexpr const EnumValueSet VkPipelineCreateFlagBitsSets[] = {
     {"DISABLE_OPTIMIZATION_BIT", 0x00000001},
     {"ALLOW_DERIVATIVES_BIT", 0x00000002},
     {"DERIVATIVE_BIT", 0x00000004},
 };
-constexpr const EnumValueSet VkPipelineShaderStageCreateFlagBitsSets[] = {};
 constexpr const EnumValueSet VkColorComponentFlagBitsSets[] = {
     {"R_BIT", 0x00000001},
     {"G_BIT", 0x00000002},
@@ -774,7 +769,6 @@ constexpr const EnumValueSet VkColorComponentFlagBitsSets[] = {
 constexpr const EnumValueSet VkFenceCreateFlagBitsSets[] = {
     {"SIGNALED_BIT", 0x00000001},
 };
-constexpr const EnumValueSet VkSemaphoreCreateFlagBitsSets[] = {};
 constexpr const EnumValueSet VkFormatFeatureFlagBitsSets[] = {
     {"SAMPLED_IMAGE_BIT", 0x00000001},
     {"STORAGE_IMAGE_BIT", 0x00000002},
@@ -1030,7 +1024,6 @@ constexpr const EnumValueSet VkObjectEntryTypeNVXSets[] = {
     {"DESCRIPTOR_SET", 0}, {"PIPELINE", 1},      {"INDEX_BUFFER", 2},
     {"VERTEX_BUFFER", 3},  {"PUSH_CONSTANT", 4},
 };
-constexpr const EnumValueSet VkDescriptorSetLayoutCreateFlagBitsSets[] = {};
 constexpr const EnumValueSet VkExternalMemoryHandleTypeFlagBitsSets[] = {
     {"OPAQUE_FD_BIT", 0x00000001},         {"OPAQUE_WIN32_BIT", 0x00000002},
     {"OPAQUE_WIN32_KMT_BIT", 0x00000004},  {"D3D11_TEXTURE_BIT", 0x00000008},
@@ -1096,7 +1089,6 @@ constexpr const EnumValueSet VkDeviceGroupPresentModeFlagBitsKHRSets[] = {
     {"SUM_BIT", 0x00000004},
     {"LOCAL_MULTI_DEVICE_BIT", 0x00000008},
 };
-constexpr const EnumValueSet VkSwapchainCreateFlagBitsKHRSets[] = {};
 constexpr const EnumValueSet VkViewportCoordinateSwizzleNVSets[] = {
     {"POSITIVE_X", 0}, {"NEGATIVE_X", 1}, {"POSITIVE_Y", 2}, {"NEGATIVE_Y", 3},
     {"POSITIVE_Z", 4}, {"NEGATIVE_Z", 5}, {"POSITIVE_W", 6}, {"NEGATIVE_W", 7},
@@ -1105,7 +1097,6 @@ constexpr const EnumValueSet VkDiscardRectangleModeEXTSets[] = {
     {"INCLUSIVE", 0},
     {"EXCLUSIVE", 1},
 };
-constexpr const EnumValueSet VkSubpassDescriptionFlagBitsSets[] = {};
 constexpr const EnumValueSet VkPointClippingBehaviorSets[] = {
     {"ALL_CLIP_PLANES", 0},
     {"USER_CLIP_PLANES_ONLY", 1},
@@ -1266,7 +1257,6 @@ constexpr const EnumValueSet VkMemoryOverallocationBehaviorAMDSets[] = {
     {"ALLOWED", 1},
     {"DISALLOWED", 2},
 };
-constexpr const EnumValueSet VkFramebufferCreateFlagBitsSets[] = {};
 constexpr const EnumValueSet VkScopeNVSets[] = {
     {"DEVICE", 1},
     {"WORKGROUP", 2},
@@ -1308,8 +1298,6 @@ constexpr const EnumValueSet VkPerformanceCounterDescriptionFlagBitsKHRSets[] = 
     {"PERFORMANCE_IMPACTING", 0x00000001},
     {"CONCURRENTLY_IMPACTED", 0x00000002},
 };
-constexpr const EnumValueSet VkAcquireProfilingLockFlagBitsKHRSets[] = {};
-constexpr const EnumValueSet VkShaderCorePropertiesFlagBitsAMDSets[] = {};
 constexpr const EnumValueSet VkPerformanceConfigurationTypeINTELSets[] = {
     {"COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED", 0},
 };
@@ -1344,8 +1332,6 @@ constexpr const EnumValueSet VkLineRasterizationModeEXTSets[] = {
     {"BRESENHAM", 2},
     {"RECTANGULAR_SMOOTH", 3},
 };
-constexpr const EnumValueSet VkShaderModuleCreateFlagBitsSets[] = {};
-constexpr const EnumValueSet VkPipelineCompilerControlFlagBitsAMDSets[] = {};
 constexpr const EnumValueSet VkToolPurposeFlagBitsEXTSets[] = {
     {"VALIDATION_BIT", 0x00000001},
     {"PROFILING_BIT", 0x00000002},
@@ -1393,8 +1379,8 @@ constexpr const EnumValueSet *valueSets[] = {
     VkDescriptorUpdateTemplateTypeSets,
     VkObjectTypeSets,
     VkQueueFlagBitsSets,
-    VkRenderPassCreateFlagBitsSets,
-    VkDeviceQueueCreateFlagBitsSets,
+    nullptr,
+    nullptr,
     VkMemoryPropertyFlagBitsSets,
     VkMemoryHeapFlagBitsSets,
     VkAccessFlagBitsSets,
@@ -1403,13 +1389,13 @@ constexpr const EnumValueSet *valueSets[] = {
     VkShaderStageFlagBitsSets,
     VkImageUsageFlagBitsSets,
     VkImageCreateFlagBitsSets,
-    VkImageViewCreateFlagBitsSets,
-    VkSamplerCreateFlagBitsSets,
+    nullptr,
+    nullptr,
     VkPipelineCreateFlagBitsSets,
-    VkPipelineShaderStageCreateFlagBitsSets,
+    nullptr,
     VkColorComponentFlagBitsSets,
     VkFenceCreateFlagBitsSets,
-    VkSemaphoreCreateFlagBitsSets,
+    nullptr,
     VkFormatFeatureFlagBitsSets,
     VkQueryControlFlagBitsSets,
     VkQueryResultFlagBitsSets,
@@ -1449,7 +1435,7 @@ constexpr const EnumValueSet *valueSets[] = {
     VkObjectEntryUsageFlagBitsNVXSets,
     VkIndirectCommandsTokenTypeNVXSets,
     VkObjectEntryTypeNVXSets,
-    VkDescriptorSetLayoutCreateFlagBitsSets,
+    nullptr,
     VkExternalMemoryHandleTypeFlagBitsSets,
     VkExternalMemoryFeatureFlagBitsSets,
     VkExternalSemaphoreHandleTypeFlagBitsSets,
@@ -1465,10 +1451,10 @@ constexpr const EnumValueSet *valueSets[] = {
     VkPeerMemoryFeatureFlagBitsSets,
     VkMemoryAllocateFlagBitsSets,
     VkDeviceGroupPresentModeFlagBitsKHRSets,
-    VkSwapchainCreateFlagBitsKHRSets,
+    nullptr,
     VkViewportCoordinateSwizzleNVSets,
     VkDiscardRectangleModeEXTSets,
-    VkSubpassDescriptionFlagBitsSets,
+    nullptr,
     VkPointClippingBehaviorSets,
     VkSamplerReductionModeSets,
     VkTessellationDomainOriginSets,
@@ -1500,7 +1486,7 @@ constexpr const EnumValueSet *valueSets[] = {
     VkAccelerationStructureMemoryRequirementsTypeNVSets,
     VkRayTracingShaderGroupTypeNVSets,
     VkMemoryOverallocationBehaviorAMDSets,
-    VkFramebufferCreateFlagBitsSets,
+    nullptr,
     VkScopeNVSets,
     VkComponentTypeNVSets,
     VkPipelineCreationFeedbackFlagBitsEXTSets,
@@ -1509,8 +1495,8 @@ constexpr const EnumValueSet *valueSets[] = {
     VkPerformanceCounterUnitKHRSets,
     VkPerformanceCounterStorageKHRSets,
     VkPerformanceCounterDescriptionFlagBitsKHRSets,
-    VkAcquireProfilingLockFlagBitsKHRSets,
-    VkShaderCorePropertiesFlagBitsAMDSets,
+    nullptr,
+    nullptr,
     VkPerformanceConfigurationTypeINTELSets,
     VkQueryPoolSamplingModeINTELSets,
     VkPerformanceOverrideTypeINTELSets,
@@ -1519,8 +1505,8 @@ constexpr const EnumValueSet *valueSets[] = {
     VkShaderFloatControlsIndependenceSets,
     VkPipelineExecutableStatisticFormatKHRSets,
     VkLineRasterizationModeEXTSets,
-    VkShaderModuleCreateFlagBitsSets,
-    VkPipelineCompilerControlFlagBitsAMDSets,
+    nullptr,
+    nullptr,
     VkToolPurposeFlagBitsEXTSets,
 };
 
