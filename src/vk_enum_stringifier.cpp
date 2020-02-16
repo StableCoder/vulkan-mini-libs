@@ -372,6 +372,15 @@ std::string processEnumPrefix(const std::vector<std::string> &vendorTags, std::s
     return retStr;
 }
 
+void removeVendorTag(const std::vector<std::string> &vendorTags, std::string_view &name) {
+    for (auto &it : vendorTags) {
+        if (strncmp(name.data() + name.size() - it.size(), it.data(), it.size()) == 0) {
+            name = name.substr(0, name.size() - it.size() - 1);
+            break;
+        }
+    }
+}
+
 int main(int argc, char **argv) {
     std::string inputFile;
     std::string outputDir;
@@ -535,6 +544,7 @@ constexpr const EnumValueSet *valueSets[] = {
                 ++enumCount;
 
                 std::string_view name = enumNode->first_attribute("name")->value();
+                removeVendorTag(vendorTagList, name);
 
                 if (const auto *value = enumNode->first_attribute("value"); value != nullptr) {
                     // Plain value
@@ -551,7 +561,10 @@ constexpr const EnumValueSet *valueSets[] = {
                     // Alias
                     bool found = false;
                     for (auto &it : enums) {
-                        if (strcmp(std::get<0>(it).data(), alias->value()) == 0) {
+                        std::string_view aliasView = alias->value();
+                        removeVendorTag(vendorTagList, aliasView);
+                        if (strncmp(std::get<0>(it).data(), aliasView.data(), aliasView.size()) ==
+                            0) {
                             enums.emplace_back(name, std::get<1>(it));
                             found = true;
                             break;
