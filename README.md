@@ -19,6 +19,8 @@ last alphanumeric character, as these are trimmed off.
 For example, all of the following conver to VK_IMAGE_LAYOUT_GENERAL:
 `vk imAGE_LayOut GenerAL`, `VK_IMAGE_LAYOUT_GENERAL`,`GENERAL`, `   General `
 
+Also, to assist with forward and backwards compatability, all the vendor tags are stripped from the typenames and values, since they can be removed in later versions leading to incompatability issues.
+
 ## Program Arguments
 ### -h, --help
 Help blurb
