@@ -531,7 +531,7 @@ int main(int argc, char **argv) {
         }
 
         vendorTags << "};\n";
-        vendorTags << "constexpr const std::size_t vendorTagCount = " << tagCount << ";\n";
+        vendorTags << "constexpr std::size_t vendorTagCount = " << tagCount << ";\n";
     }
 
     std::stringstream enumDecl;
@@ -590,8 +590,7 @@ constexpr const EnumValueSet *valueSets[] = {
                 ++enumCount;
 
                 if (enumCount == 1) {
-                    valueSets << "constexpr const EnumValueSet " << nameAttr->value()
-                              << "Sets[] = {\n";
+                    valueSets << "constexpr EnumValueSet " << nameAttr->value() << "Sets[] = {\n";
                 }
 
                 std::string_view name = enumNode->first_attribute("name")->value();
@@ -661,7 +660,7 @@ constexpr const EnumValueSet *valueSets[] = {
 
     valueSetArr << "};\n";
     enumDecl << "};\n";
-    enumDecl << "constexpr const std::size_t enumTypesCount = " << enumsCount << ";\n";
+    enumDecl << "constexpr std::size_t enumTypesCount = " << enumsCount << ";\n";
 
     { // Header File
         std::ofstream outFile(outputDir + outputFile + ".hpp");
