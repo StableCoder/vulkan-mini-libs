@@ -59,6 +59,16 @@ TEST_CASE(
 
         REQUIRE(VK_IMAGE_TYPE_2D == parseEnum("VkImageType", "VK_IMAGE_TYPE_2D"));
     }
+
+    SECTION("With Vendor Tags") {
+        REQUIRE(VK_PRESENT_MODE_IMMEDIATE_KHR ==
+                parseEnum("VkPresentModeKHR", "VK_PRESENT_MODE_IMMEDIATE_KHR"));
+        REQUIRE(VK_PRESENT_MODE_IMMEDIATE_KHR == parseEnum("VkPresentModeKHR", "IMMEDIATE_KHR"));
+
+        REQUIRE(VK_PRESENT_MODE_IMMEDIATE_KHR ==
+                parseEnum("VkPresentModeKHR", "VK_PRESENT_MODE_IMMEDIATE"));
+        REQUIRE(VK_PRESENT_MODE_IMMEDIATE_KHR == parseEnum("VkPresentModeKHR", "IMMEDIATE"));
+    }
 }
 
 TEST_CASE("De-stringify: Checking bitmask conversions from string to bitmask values") {

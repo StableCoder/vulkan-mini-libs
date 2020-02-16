@@ -17,7 +17,6 @@
 #include <catch.hpp>
 #include <vk_enum_stringifier_v132.hpp>
 #include <vulkan/vulkan.h>
-#include <vulkan/vulkan_core.h>
 
 using namespace vkEnum;
 
@@ -28,6 +27,10 @@ TEST_CASE("Stringify: Enum") {
     SECTION("Success cases") {
         REQUIRE(stringifyEnum("VkImageType", VK_IMAGE_TYPE_3D) == "3D");
         REQUIRE(stringifyEnum("VkImageType", VK_IMAGE_TYPE_2D) == "2D");
+    }
+
+    SECTION("Vendor Tag Success") {
+        REQUIRE(stringifyEnum("VkPresentModeKHR", VK_PRESENT_MODE_IMMEDIATE_KHR) == "IMMEDIATE");
     }
 }
 
