@@ -50,56 +50,46 @@ variables:
     - ctest
 
 Fedora/GCC:
-  image: stabletec/build-core:fedora-gcc
+  image: stabletec/build-foe:fedora-gcc
   <<: *platform_unix_template
 
 Fedora/Clang:
-  image: stabletec/build-core:fedora-clang
+  image: stabletec/build-foe:fedora-clang
   <<: *platform_unix_template
 
 Debian/GCC:
-  image: stabletec/build-core:debian-gcc
+  image: stabletec/build-foe:debian-gcc
   <<: *platform_unix_template
 
 Debian/Clang:
-  image: stabletec/build-core:debian-clang
+  image: stabletec/build-foe:debian-clang
   <<: *platform_unix_template
 
 Ubuntu/GCC:
-  image: stabletec/build-core:ubuntu-gcc
+  image: stabletec/build-foe:ubuntu-gcc
   <<: *platform_unix_template
 
 Ubuntu/Clang:
-  image: stabletec/build-core:ubuntu-clang
+  image: stabletec/build-foe:ubuntu-clang
   <<: *platform_unix_template
 
 openSUSE/GCC:
-  image: stabletec/build-core:opensuse-gcc
+  image: stabletec/build-foe:opensuse-gcc
   <<: *platform_unix_template
 
 openSUSE/Clang:
-  image: stabletec/build-core:opensuse-clang
+  image: stabletec/build-foe:opensuse-clang
   <<: *platform_unix_template
 
 Windows/MSVC:
   variables:
-    IMAGE: stabletec/build-core:windows-msvc
+    IMAGE: stabletec/build-foe:windows-msvc
   <<: *platform_windows_template
 
 Windows/Clang-cl:
   variables:
-    IMAGE: stabletec/build-core:windows-clang-cl
+    IMAGE: stabletec/build-foe:windows-clang-cl
   <<: *platform_windows_template
-
-MacOS/Clang:
-  stage: Platform Tests
-  tags:
-    - macos
-  script:
-    - mkdir build && cd build
-    - cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release
-    - ninja
-    - ctest
 
 macOS/GCC:
   variables:
