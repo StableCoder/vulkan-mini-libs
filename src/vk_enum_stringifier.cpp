@@ -168,13 +168,16 @@ std::string processEnumPrefix(std::string_view typeName) {
     std::string retStr;
 
     for (std::size_t i = 0; i < vendorTagCount; ++i) {
-        if (typeName.ends_with(vendorTags[i])) {
+        std::size_t vendorSize = strlen(vendorTags[i]);
+        if (strncmp(typeName.data() + typeName.size() - vendorSize, vendorTags[i], vendorSize) ==
+            0) {
             typeName = typeName.substr(0, typeName.size() - strlen(vendorTags[i]));
             break;
         }
     }
 
-    if (typeName.ends_with("FlagBits")) {
+    std::size_t size = strlen("FlagBits");
+    if (strncmp(typeName.data() + typeName.size() - size, "FlagBits", size) == 0) {
         typeName = typeName.substr(0, typeName.size() - strlen("FlagBits"));
     }
 
@@ -343,13 +346,14 @@ std::string processEnumPrefix(const std::vector<std::string> &vendorTags, std::s
     std::string retStr;
 
     for (auto &it : vendorTags) {
-        if (typeName.ends_with(it)) {
+        if (strncmp(typeName.data() + typeName.size() - it.size(), it.data(), it.size()) == 0) {
             typeName = typeName.substr(0, typeName.size() - it.size());
             break;
         }
     }
 
-    if (typeName.ends_with("FlagBits")) {
+    std::size_t size = strlen("FlagBits");
+    if (strncmp(typeName.data() + typeName.size() - size, "FlagBits", size) == 0) {
         typeName = typeName.substr(0, typeName.size() - strlen("FlagBits"));
     }
 
@@ -567,7 +571,7 @@ constexpr const EnumValueSet *valueSets[] = {
             }
 
             for (auto &it : enums) {
-                if (std::get<0>(it).starts_with(prefix)) {
+                if (strncmp(std::get<0>(it).data(), prefix.data(), prefix.size()) == 0) {
                     valueSets << "    {\"" << std::get<0>(it).substr(prefixSize) << "\", ";
                 } else {
                     valueSets << "    {\"" << std::get<0>(it) << "\", ";

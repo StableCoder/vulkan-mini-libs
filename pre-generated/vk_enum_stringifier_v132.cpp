@@ -1597,13 +1597,16 @@ std::string processEnumPrefix(std::string_view typeName) {
     std::string retStr;
 
     for (std::size_t i = 0; i < vendorTagCount; ++i) {
-        if (typeName.ends_with(vendorTags[i])) {
+        std::size_t vendorSize = strlen(vendorTags[i]);
+        if (strncmp(typeName.data() + typeName.size() - vendorSize, vendorTags[i], vendorSize) ==
+            0) {
             typeName = typeName.substr(0, typeName.size() - strlen(vendorTags[i]));
             break;
         }
     }
 
-    if (typeName.ends_with("FlagBits")) {
+    std::size_t size = strlen("FlagBits");
+    if (strncmp(typeName.data() + typeName.size() - size, "FlagBits", size) == 0) {
         typeName = typeName.substr(0, typeName.size() - strlen("FlagBits"));
     }
 
