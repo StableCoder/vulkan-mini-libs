@@ -314,7 +314,7 @@ std::string stringifyBitmask(std::string_view enumType, uint32_t enumValue) {
 )COMMON";
 
 const char *helpStr = R"HELP(
-This program builds a source/header file for use in C++20 or newer. It lists
+This program builds a source/header file for use in C++17 or newer. It lists
 contains all Vulkan enum types/flags/values of the indicated Vulkan header spec
 version, and can convert to/from strings representing those values. 
 
