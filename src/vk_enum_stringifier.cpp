@@ -15,7 +15,6 @@
 */
 
 #include <rapidxml-1.13/rapidxml.hpp>
-#include <vulkan/vulkan.h>
 
 #include <algorithm>
 #include <cstring>
