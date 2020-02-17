@@ -34,12 +34,13 @@ TEST_CASE("Stringify: Enum") {
         REQUIRE_FALSE(stringifyEnum("VkImageType", -1U).has_value());
     }
     SECTION("Success cases") {
-        REQUIRE(stringifyEnum("VkImageType", VK_IMAGE_TYPE_3D) == "3D");
-        REQUIRE(stringifyEnum("VkImageType", VK_IMAGE_TYPE_2D) == "2D");
+        REQUIRE(stringifyEnum("VkImageType", VK_IMAGE_TYPE_3D).value() == "3D");
+        REQUIRE(stringifyEnum("VkImageType", VK_IMAGE_TYPE_2D).value() == "2D");
     }
 
     SECTION("Vendor Tag Success") {
-        REQUIRE(stringifyEnum("VkPresentModeKHR", VK_PRESENT_MODE_IMMEDIATE_KHR) == "IMMEDIATE");
+        REQUIRE(stringifyEnum("VkPresentModeKHR", VK_PRESENT_MODE_IMMEDIATE_KHR).value() ==
+                "IMMEDIATE");
     }
 }
 
@@ -48,15 +49,16 @@ TEST_CASE("Stringify: Bitmask") {
         REQUIRE_FALSE(stringifyBitmask("VkGarbagio", VK_CULL_MODE_BACK_BIT).has_value());
     }
     SECTION("Regular success cases") {
-        REQUIRE(stringifyBitmask("VkDebugReportFlagBitsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                "ERROR_BIT");
+        REQUIRE(
+            stringifyBitmask("VkDebugReportFlagBitsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT).value() ==
+            "ERROR");
         REQUIRE(stringifyBitmask("VkDebugReportFlagBitsEXT",
-                                 VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                "DEBUG_BIT | ERROR_BIT");
+                                 VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT)
+                    .value() == "DEBUG | ERROR");
     }
     SECTION("Combined bitmask will use larger items first") {
-        REQUIRE(stringifyBitmask("VkCullModeFlagBits",
-                                 VK_CULL_MODE_BACK_BIT | VK_CULL_MODE_FRONT_BIT) ==
-                "FRONT_AND_BACK");
+        REQUIRE(
+            stringifyBitmask("VkCullModeFlagBits", VK_CULL_MODE_BACK_BIT | VK_CULL_MODE_FRONT_BIT)
+                .value() == "FRONT_AND_BACK");
     }
 }

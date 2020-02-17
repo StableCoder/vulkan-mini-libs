@@ -67,6 +67,19 @@ std::string_view removeVendorTag(std::string_view view) {
 }
 
 /**
+ * @brief Strips '_BIT' from the end of a string, if there
+ */
+std::string_view stripBit(std::string_view view) {
+    if (view.size() > strlen("_BIT")) {
+        if (view.substr(view.size() - strlen("_BIT")) == "_BIT") {
+            return view.substr(0, view.size() - strlen("_BIT"));
+        }
+    }
+
+    return view;
+}
+
+/**
  * @brief Returns the start->end pointer range for valid value sets for the given typename
  * @param enumType Vulkan enum typename
  * @return Pointer range, or nullopt if type not found
@@ -179,6 +192,9 @@ std::optional<uint32_t> findValue(std::string_view enumType,
     enumName = removeVendorTag(enumName);
     if (enumName[enumName.size() - 1] == '_')
         enumName = enumName.substr(0, enumName.size() - 1);
+
+    // Remove the '_BIT' if its there
+    enumName = stripBit(enumName);
 
     // With the given sets/count, iterate until we find the value
     while (start != end) {
@@ -419,6 +435,19 @@ std::string_view trimNonAlNum(std::string_view view) {
     return view;
 }
 
+/**
+ * @brief Strips '_BIT' from the end of a string, if there
+ */
+std::string_view stripBit(std::string_view view) {
+    if (view.size() > strlen("_BIT")) {
+        if (view.substr(view.size() - strlen("_BIT")) == "_BIT") {
+            return view.substr(0, view.size() - strlen("_BIT"));
+        }
+    }
+
+    return view;
+}
+
 int main(int argc, char **argv) {
     std::string inputFile;
     std::string outputDir;
@@ -586,6 +615,7 @@ constexpr const EnumValueSet *valueSets[] = {
                 std::string_view name = enumNode->first_attribute("name")->value();
                 name = removeVendorTag(vendorTagList, name);
                 name = trimNonAlNum(name);
+                name = stripBit(name);
 
                 if (const auto *value = enumNode->first_attribute("value"); value != nullptr) {
                     // Plain value
@@ -652,7 +682,8 @@ constexpr const EnumValueSet *valueSets[] = {
     enumDecl << "constexpr std::size_t enumTypesCount = " << enumsCount << ";\n";
 
     { // Source File
-        if (outputDir[outputDir.size() - 1] != '/' && outputDir[outputDir.size() - 1] != '\\') {
+        if (!outputDir.empty() && outputDir[outputDir.size() - 1] != '/' &&
+            outputDir[outputDir.size() - 1] != '\\') {
             outputDir += '/';
         }
 

@@ -321,8 +321,8 @@ constexpr EnumValueSet VkPolygonModeSets[] = {
 };
 constexpr EnumValueSet VkCullModeFlagBitsSets[] = {
     {"NONE", 0},
-    {"FRONT_BIT", 0x00000001},
-    {"BACK_BIT", 0x00000002},
+    {"FRONT", 0x00000001},
+    {"BACK", 0x00000002},
     {"FRONT_AND_BACK", 0x00000003},
 };
 constexpr EnumValueSet VkFrontFaceSets[] = {
@@ -679,199 +679,198 @@ constexpr EnumValueSet VkObjectTypeSets[] = {
     {"COMMAND_POOL", 25},
 };
 constexpr EnumValueSet VkQueueFlagBitsSets[] = {
-    {"GRAPHICS_BIT", 0x00000001},
-    {"COMPUTE_BIT", 0x00000002},
-    {"TRANSFER_BIT", 0x00000004},
-    {"SPARSE_BINDING_BIT", 0x00000008},
+    {"GRAPHICS", 0x00000001},
+    {"COMPUTE", 0x00000002},
+    {"TRANSFER", 0x00000004},
+    {"SPARSE_BINDING", 0x00000008},
 };
 constexpr EnumValueSet VkMemoryPropertyFlagBitsSets[] = {
-    {"DEVICE_LOCAL_BIT", 0x00000001},     {"HOST_VISIBLE_BIT", 0x00000002},
-    {"HOST_COHERENT_BIT", 0x00000004},    {"HOST_CACHED_BIT", 0x00000008},
-    {"LAZILY_ALLOCATED_BIT", 0x00000010},
+    {"DEVICE_LOCAL", 0x00000001}, {"HOST_VISIBLE", 0x00000002},     {"HOST_COHERENT", 0x00000004},
+    {"HOST_CACHED", 0x00000008},  {"LAZILY_ALLOCATED", 0x00000010},
 };
 constexpr EnumValueSet VkMemoryHeapFlagBitsSets[] = {
-    {"DEVICE_LOCAL_BIT", 0x00000001},
+    {"DEVICE_LOCAL", 0x00000001},
 };
 constexpr EnumValueSet VkAccessFlagBitsSets[] = {
-    {"INDIRECT_COMMAND_READ_BIT", 0x00000001},
-    {"INDEX_READ_BIT", 0x00000002},
-    {"VERTEX_ATTRIBUTE_READ_BIT", 0x00000004},
-    {"UNIFORM_READ_BIT", 0x00000008},
-    {"INPUT_ATTACHMENT_READ_BIT", 0x00000010},
-    {"SHADER_READ_BIT", 0x00000020},
-    {"SHADER_WRITE_BIT", 0x00000040},
-    {"COLOR_ATTACHMENT_READ_BIT", 0x00000080},
-    {"COLOR_ATTACHMENT_WRITE_BIT", 0x00000100},
-    {"DEPTH_STENCIL_ATTACHMENT_READ_BIT", 0x00000200},
-    {"DEPTH_STENCIL_ATTACHMENT_WRITE_BIT", 0x00000400},
-    {"TRANSFER_READ_BIT", 0x00000800},
-    {"TRANSFER_WRITE_BIT", 0x00001000},
-    {"HOST_READ_BIT", 0x00002000},
-    {"HOST_WRITE_BIT", 0x00004000},
-    {"MEMORY_READ_BIT", 0x00008000},
-    {"MEMORY_WRITE_BIT", 0x00010000},
+    {"INDIRECT_COMMAND_READ", 0x00000001},
+    {"INDEX_READ", 0x00000002},
+    {"VERTEX_ATTRIBUTE_READ", 0x00000004},
+    {"UNIFORM_READ", 0x00000008},
+    {"INPUT_ATTACHMENT_READ", 0x00000010},
+    {"SHADER_READ", 0x00000020},
+    {"SHADER_WRITE", 0x00000040},
+    {"COLOR_ATTACHMENT_READ", 0x00000080},
+    {"COLOR_ATTACHMENT_WRITE", 0x00000100},
+    {"DEPTH_STENCIL_ATTACHMENT_READ", 0x00000200},
+    {"DEPTH_STENCIL_ATTACHMENT_WRITE", 0x00000400},
+    {"TRANSFER_READ", 0x00000800},
+    {"TRANSFER_WRITE", 0x00001000},
+    {"HOST_READ", 0x00002000},
+    {"HOST_WRITE", 0x00004000},
+    {"MEMORY_READ", 0x00008000},
+    {"MEMORY_WRITE", 0x00010000},
 };
 constexpr EnumValueSet VkBufferUsageFlagBitsSets[] = {
-    {"TRANSFER_SRC_BIT", 0x00000001},         {"TRANSFER_DST_BIT", 0x00000002},
-    {"UNIFORM_TEXEL_BUFFER_BIT", 0x00000004}, {"STORAGE_TEXEL_BUFFER_BIT", 0x00000008},
-    {"UNIFORM_BUFFER_BIT", 0x00000010},       {"STORAGE_BUFFER_BIT", 0x00000020},
-    {"INDEX_BUFFER_BIT", 0x00000040},         {"VERTEX_BUFFER_BIT", 0x00000080},
-    {"INDIRECT_BUFFER_BIT", 0x00000100},
+    {"TRANSFER_SRC", 0x00000001},         {"TRANSFER_DST", 0x00000002},
+    {"UNIFORM_TEXEL_BUFFER", 0x00000004}, {"STORAGE_TEXEL_BUFFER", 0x00000008},
+    {"UNIFORM_BUFFER", 0x00000010},       {"STORAGE_BUFFER", 0x00000020},
+    {"INDEX_BUFFER", 0x00000040},         {"VERTEX_BUFFER", 0x00000080},
+    {"INDIRECT_BUFFER", 0x00000100},
 };
 constexpr EnumValueSet VkBufferCreateFlagBitsSets[] = {
-    {"SPARSE_BINDING_BIT", 0x00000001},
-    {"SPARSE_RESIDENCY_BIT", 0x00000002},
-    {"SPARSE_ALIASED_BIT", 0x00000004},
+    {"SPARSE_BINDING", 0x00000001},
+    {"SPARSE_RESIDENCY", 0x00000002},
+    {"SPARSE_ALIASED", 0x00000004},
 };
 constexpr EnumValueSet VkShaderStageFlagBitsSets[] = {
-    {"VERTEX_BIT", 0x00000001},
-    {"TESSELLATION_CONTROL_BIT", 0x00000002},
-    {"TESSELLATION_EVALUATION_BIT", 0x00000004},
-    {"GEOMETRY_BIT", 0x00000008},
-    {"FRAGMENT_BIT", 0x00000010},
-    {"COMPUTE_BIT", 0x00000020},
+    {"VERTEX", 0x00000001},
+    {"TESSELLATION_CONTROL", 0x00000002},
+    {"TESSELLATION_EVALUATION", 0x00000004},
+    {"GEOMETRY", 0x00000008},
+    {"FRAGMENT", 0x00000010},
+    {"COMPUTE", 0x00000020},
     {"ALL_GRAPHICS", 0x0000001F},
     {"ALL", 0x7FFFFFFF},
 };
 constexpr EnumValueSet VkImageUsageFlagBitsSets[] = {
-    {"TRANSFER_SRC_BIT", 0x00000001},
-    {"TRANSFER_DST_BIT", 0x00000002},
-    {"SAMPLED_BIT", 0x00000004},
-    {"STORAGE_BIT", 0x00000008},
-    {"COLOR_ATTACHMENT_BIT", 0x00000010},
-    {"DEPTH_STENCIL_ATTACHMENT_BIT", 0x00000020},
-    {"TRANSIENT_ATTACHMENT_BIT", 0x00000040},
-    {"INPUT_ATTACHMENT_BIT", 0x00000080},
+    {"TRANSFER_SRC", 0x00000001},
+    {"TRANSFER_DST", 0x00000002},
+    {"SAMPLED", 0x00000004},
+    {"STORAGE", 0x00000008},
+    {"COLOR_ATTACHMENT", 0x00000010},
+    {"DEPTH_STENCIL_ATTACHMENT", 0x00000020},
+    {"TRANSIENT_ATTACHMENT", 0x00000040},
+    {"INPUT_ATTACHMENT", 0x00000080},
 };
 constexpr EnumValueSet VkImageCreateFlagBitsSets[] = {
-    {"SPARSE_BINDING_BIT", 0x00000001},  {"SPARSE_RESIDENCY_BIT", 0x00000002},
-    {"SPARSE_ALIASED_BIT", 0x00000004},  {"MUTABLE_FORMAT_BIT", 0x00000008},
-    {"CUBE_COMPATIBLE_BIT", 0x00000010},
+    {"SPARSE_BINDING", 0x00000001},  {"SPARSE_RESIDENCY", 0x00000002},
+    {"SPARSE_ALIASED", 0x00000004},  {"MUTABLE_FORMAT", 0x00000008},
+    {"CUBE_COMPATIBLE", 0x00000010},
 };
 constexpr EnumValueSet VkPipelineCreateFlagBitsSets[] = {
-    {"DISABLE_OPTIMIZATION_BIT", 0x00000001},
-    {"ALLOW_DERIVATIVES_BIT", 0x00000002},
-    {"DERIVATIVE_BIT", 0x00000004},
+    {"DISABLE_OPTIMIZATION", 0x00000001},
+    {"ALLOW_DERIVATIVES", 0x00000002},
+    {"DERIVATIVE", 0x00000004},
 };
 constexpr EnumValueSet VkColorComponentFlagBitsSets[] = {
-    {"R_BIT", 0x00000001},
-    {"G_BIT", 0x00000002},
-    {"B_BIT", 0x00000004},
-    {"A_BIT", 0x00000008},
+    {"R", 0x00000001},
+    {"G", 0x00000002},
+    {"B", 0x00000004},
+    {"A", 0x00000008},
 };
 constexpr EnumValueSet VkFenceCreateFlagBitsSets[] = {
-    {"SIGNALED_BIT", 0x00000001},
+    {"SIGNALED", 0x00000001},
 };
 constexpr EnumValueSet VkFormatFeatureFlagBitsSets[] = {
-    {"SAMPLED_IMAGE_BIT", 0x00000001},
-    {"STORAGE_IMAGE_BIT", 0x00000002},
-    {"STORAGE_IMAGE_ATOMIC_BIT", 0x00000004},
-    {"UNIFORM_TEXEL_BUFFER_BIT", 0x00000008},
-    {"STORAGE_TEXEL_BUFFER_BIT", 0x00000010},
-    {"STORAGE_TEXEL_BUFFER_ATOMIC_BIT", 0x00000020},
-    {"VERTEX_BUFFER_BIT", 0x00000040},
-    {"COLOR_ATTACHMENT_BIT", 0x00000080},
-    {"COLOR_ATTACHMENT_BLEND_BIT", 0x00000100},
-    {"DEPTH_STENCIL_ATTACHMENT_BIT", 0x00000200},
-    {"BLIT_SRC_BIT", 0x00000400},
-    {"BLIT_DST_BIT", 0x00000800},
-    {"SAMPLED_IMAGE_FILTER_LINEAR_BIT", 0x00001000},
+    {"SAMPLED_IMAGE", 0x00000001},
+    {"STORAGE_IMAGE", 0x00000002},
+    {"STORAGE_IMAGE_ATOMIC", 0x00000004},
+    {"UNIFORM_TEXEL_BUFFER", 0x00000008},
+    {"STORAGE_TEXEL_BUFFER", 0x00000010},
+    {"STORAGE_TEXEL_BUFFER_ATOMIC", 0x00000020},
+    {"VERTEX_BUFFER", 0x00000040},
+    {"COLOR_ATTACHMENT", 0x00000080},
+    {"COLOR_ATTACHMENT_BLEND", 0x00000100},
+    {"DEPTH_STENCIL_ATTACHMENT", 0x00000200},
+    {"BLIT_SRC", 0x00000400},
+    {"BLIT_DST", 0x00000800},
+    {"SAMPLED_IMAGE_FILTER_LINEAR", 0x00001000},
 };
 constexpr EnumValueSet VkQueryControlFlagBitsSets[] = {
-    {"PRECISE_BIT", 0x00000001},
+    {"PRECISE", 0x00000001},
 };
 constexpr EnumValueSet VkQueryResultFlagBitsSets[] = {
-    {"64_BIT", 0x00000001},
-    {"WAIT_BIT", 0x00000002},
-    {"WITH_AVAILABILITY_BIT", 0x00000004},
-    {"PARTIAL_BIT", 0x00000008},
+    {"64", 0x00000001},
+    {"WAIT", 0x00000002},
+    {"WITH_AVAILABILITY", 0x00000004},
+    {"PARTIAL", 0x00000008},
 };
 constexpr EnumValueSet VkCommandBufferUsageFlagBitsSets[] = {
-    {"ONE_TIME_SUBMIT_BIT", 0x00000001},
-    {"RENDER_PASS_CONTINUE_BIT", 0x00000002},
-    {"SIMULTANEOUS_USE_BIT", 0x00000004},
+    {"ONE_TIME_SUBMIT", 0x00000001},
+    {"RENDER_PASS_CONTINUE", 0x00000002},
+    {"SIMULTANEOUS_USE", 0x00000004},
 };
 constexpr EnumValueSet VkQueryPipelineStatisticFlagBitsSets[] = {
-    {"INPUT_ASSEMBLY_VERTICES_BIT", 0x00000001},
-    {"INPUT_ASSEMBLY_PRIMITIVES_BIT", 0x00000002},
-    {"VERTEX_SHADER_INVOCATIONS_BIT", 0x00000004},
-    {"GEOMETRY_SHADER_INVOCATIONS_BIT", 0x00000008},
-    {"GEOMETRY_SHADER_PRIMITIVES_BIT", 0x00000010},
-    {"CLIPPING_INVOCATIONS_BIT", 0x00000020},
-    {"CLIPPING_PRIMITIVES_BIT", 0x00000040},
-    {"FRAGMENT_SHADER_INVOCATIONS_BIT", 0x00000080},
-    {"TESSELLATION_CONTROL_SHADER_PATCHES_BIT", 0x00000100},
-    {"TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT", 0x00000200},
-    {"COMPUTE_SHADER_INVOCATIONS_BIT", 0x00000400},
+    {"INPUT_ASSEMBLY_VERTICES", 0x00000001},
+    {"INPUT_ASSEMBLY_PRIMITIVES", 0x00000002},
+    {"VERTEX_SHADER_INVOCATIONS", 0x00000004},
+    {"GEOMETRY_SHADER_INVOCATIONS", 0x00000008},
+    {"GEOMETRY_SHADER_PRIMITIVES", 0x00000010},
+    {"CLIPPING_INVOCATIONS", 0x00000020},
+    {"CLIPPING_PRIMITIVES", 0x00000040},
+    {"FRAGMENT_SHADER_INVOCATIONS", 0x00000080},
+    {"TESSELLATION_CONTROL_SHADER_PATCHES", 0x00000100},
+    {"TESSELLATION_EVALUATION_SHADER_INVOCATIONS", 0x00000200},
+    {"COMPUTE_SHADER_INVOCATIONS", 0x00000400},
 };
 constexpr EnumValueSet VkImageAspectFlagBitsSets[] = {
-    {"COLOR_BIT", 0x00000001},
-    {"DEPTH_BIT", 0x00000002},
-    {"STENCIL_BIT", 0x00000004},
-    {"METADATA_BIT", 0x00000008},
+    {"COLOR", 0x00000001},
+    {"DEPTH", 0x00000002},
+    {"STENCIL", 0x00000004},
+    {"METADATA", 0x00000008},
 };
 constexpr EnumValueSet VkSparseImageFormatFlagBitsSets[] = {
-    {"SINGLE_MIPTAIL_BIT", 0x00000001},
-    {"ALIGNED_MIP_SIZE_BIT", 0x00000002},
-    {"NONSTANDARD_BLOCK_SIZE_BIT", 0x00000004},
+    {"SINGLE_MIPTAIL", 0x00000001},
+    {"ALIGNED_MIP_SIZE", 0x00000002},
+    {"NONSTANDARD_BLOCK_SIZE", 0x00000004},
 };
 constexpr EnumValueSet VkSparseMemoryBindFlagBitsSets[] = {
-    {"METADATA_BIT", 0x00000001},
+    {"METADATA", 0x00000001},
 };
 constexpr EnumValueSet VkPipelineStageFlagBitsSets[] = {
-    {"TOP_OF_PIPE_BIT", 0x00000001},
-    {"DRAW_INDIRECT_BIT", 0x00000002},
-    {"VERTEX_INPUT_BIT", 0x00000004},
-    {"VERTEX_SHADER_BIT", 0x00000008},
-    {"TESSELLATION_CONTROL_SHADER_BIT", 0x00000010},
-    {"TESSELLATION_EVALUATION_SHADER_BIT", 0x00000020},
-    {"GEOMETRY_SHADER_BIT", 0x00000040},
-    {"FRAGMENT_SHADER_BIT", 0x00000080},
-    {"EARLY_FRAGMENT_TESTS_BIT", 0x00000100},
-    {"LATE_FRAGMENT_TESTS_BIT", 0x00000200},
-    {"COLOR_ATTACHMENT_OUTPUT_BIT", 0x00000400},
-    {"COMPUTE_SHADER_BIT", 0x00000800},
-    {"TRANSFER_BIT", 0x00001000},
-    {"BOTTOM_OF_PIPE_BIT", 0x00002000},
-    {"HOST_BIT", 0x00004000},
-    {"ALL_GRAPHICS_BIT", 0x00008000},
-    {"ALL_COMMANDS_BIT", 0x00010000},
+    {"TOP_OF_PIPE", 0x00000001},
+    {"DRAW_INDIRECT", 0x00000002},
+    {"VERTEX_INPUT", 0x00000004},
+    {"VERTEX_SHADER", 0x00000008},
+    {"TESSELLATION_CONTROL_SHADER", 0x00000010},
+    {"TESSELLATION_EVALUATION_SHADER", 0x00000020},
+    {"GEOMETRY_SHADER", 0x00000040},
+    {"FRAGMENT_SHADER", 0x00000080},
+    {"EARLY_FRAGMENT_TESTS", 0x00000100},
+    {"LATE_FRAGMENT_TESTS", 0x00000200},
+    {"COLOR_ATTACHMENT_OUTPUT", 0x00000400},
+    {"COMPUTE_SHADER", 0x00000800},
+    {"TRANSFER", 0x00001000},
+    {"BOTTOM_OF_PIPE", 0x00002000},
+    {"HOST", 0x00004000},
+    {"ALL_GRAPHICS", 0x00008000},
+    {"ALL_COMMANDS", 0x00010000},
 };
 constexpr EnumValueSet VkCommandPoolCreateFlagBitsSets[] = {
-    {"TRANSIENT_BIT", 0x00000001},
-    {"RESET_COMMAND_BUFFER_BIT", 0x00000002},
+    {"TRANSIENT", 0x00000001},
+    {"RESET_COMMAND_BUFFER", 0x00000002},
 };
 constexpr EnumValueSet VkCommandPoolResetFlagBitsSets[] = {
-    {"RELEASE_RESOURCES_BIT", 0x00000001},
+    {"RELEASE_RESOURCES", 0x00000001},
 };
 constexpr EnumValueSet VkCommandBufferResetFlagBitsSets[] = {
-    {"RELEASE_RESOURCES_BIT", 0x00000001},
+    {"RELEASE_RESOURCES", 0x00000001},
 };
 constexpr EnumValueSet VkSampleCountFlagBitsSets[] = {
-    {"1_BIT", 0x00000001},  {"2_BIT", 0x00000002},  {"4_BIT", 0x00000004},  {"8_BIT", 0x00000008},
-    {"16_BIT", 0x00000010}, {"32_BIT", 0x00000020}, {"64_BIT", 0x00000040},
+    {"1", 0x00000001},  {"2", 0x00000002},  {"4", 0x00000004},  {"8", 0x00000008},
+    {"16", 0x00000010}, {"32", 0x00000020}, {"64", 0x00000040},
 };
 constexpr EnumValueSet VkAttachmentDescriptionFlagBitsSets[] = {
-    {"MAY_ALIAS_BIT", 0x00000001},
+    {"MAY_ALIAS", 0x00000001},
 };
 constexpr EnumValueSet VkStencilFaceFlagBitsSets[] = {
-    {"FRONT_BIT", 0x00000001},
-    {"BACK_BIT", 0x00000002},
+    {"FRONT", 0x00000001},
+    {"BACK", 0x00000002},
     {"FRONT_AND_BACK", 0x00000003},
     {"VK_STENCIL_FRONT_AND_BACK", 0x00000003},
 };
 constexpr EnumValueSet VkDescriptorPoolCreateFlagBitsSets[] = {
-    {"FREE_DESCRIPTOR_SET_BIT", 0x00000001},
+    {"FREE_DESCRIPTOR_SET", 0x00000001},
 };
 constexpr EnumValueSet VkDependencyFlagBitsSets[] = {
-    {"BY_REGION_BIT", 0x00000001},
+    {"BY_REGION", 0x00000001},
 };
 constexpr EnumValueSet VkSemaphoreTypeKHRSets[] = {
     {"BINARY", 0},
     {"TIMELINE", 1},
 };
 constexpr EnumValueSet VkSemaphoreWaitFlagBitsKHRSets[] = {
-    {"ANY_BIT", 0x00000001},
+    {"ANY", 0x00000001},
 };
 constexpr EnumValueSet VkPresentModeKHRSets[] = {
     {"IMMEDIATE", 0},
@@ -884,30 +883,30 @@ constexpr EnumValueSet VkColorSpaceKHRSets[] = {
     {"VK_COLORSPACE_SRGB_NONLINEAR", 0},
 };
 constexpr EnumValueSet VkDisplayPlaneAlphaFlagBitsKHRSets[] = {
-    {"OPAQUE_BIT", 0x00000001},
-    {"GLOBAL_BIT", 0x00000002},
-    {"PER_PIXEL_BIT", 0x00000004},
-    {"PER_PIXEL_PREMULTIPLIED_BIT", 0x00000008},
+    {"OPAQUE", 0x00000001},
+    {"GLOBAL", 0x00000002},
+    {"PER_PIXEL", 0x00000004},
+    {"PER_PIXEL_PREMULTIPLIED", 0x00000008},
 };
 constexpr EnumValueSet VkCompositeAlphaFlagBitsKHRSets[] = {
-    {"OPAQUE_BIT", 0x00000001},
-    {"PRE_MULTIPLIED_BIT", 0x00000002},
-    {"POST_MULTIPLIED_BIT", 0x00000004},
-    {"INHERIT_BIT", 0x00000008},
+    {"OPAQUE", 0x00000001},
+    {"PRE_MULTIPLIED", 0x00000002},
+    {"POST_MULTIPLIED", 0x00000004},
+    {"INHERIT", 0x00000008},
 };
 constexpr EnumValueSet VkSurfaceTransformFlagBitsKHRSets[] = {
-    {"IDENTITY_BIT", 0x00000001},
-    {"ROTATE_90_BIT", 0x00000002},
-    {"ROTATE_180_BIT", 0x00000004},
-    {"ROTATE_270_BIT", 0x00000008},
-    {"HORIZONTAL_MIRROR_BIT", 0x00000010},
-    {"HORIZONTAL_MIRROR_ROTATE_90_BIT", 0x00000020},
-    {"HORIZONTAL_MIRROR_ROTATE_180_BIT", 0x00000040},
-    {"HORIZONTAL_MIRROR_ROTATE_270_BIT", 0x00000080},
-    {"INHERIT_BIT", 0x00000100},
+    {"IDENTITY", 0x00000001},
+    {"ROTATE_90", 0x00000002},
+    {"ROTATE_180", 0x00000004},
+    {"ROTATE_270", 0x00000008},
+    {"HORIZONTAL_MIRROR", 0x00000010},
+    {"HORIZONTAL_MIRROR_ROTATE_90", 0x00000020},
+    {"HORIZONTAL_MIRROR_ROTATE_180", 0x00000040},
+    {"HORIZONTAL_MIRROR_ROTATE_270", 0x00000080},
+    {"INHERIT", 0x00000100},
 };
 constexpr EnumValueSet VkSwapchainImageUsageFlagBitsANDROIDSets[] = {
-    {"SHARED_BIT", 0x00000001},
+    {"SHARED", 0x00000001},
 };
 constexpr EnumValueSet VkTimeDomainEXTSets[] = {
     {"DEVICE", 0},
@@ -916,11 +915,8 @@ constexpr EnumValueSet VkTimeDomainEXTSets[] = {
     {"QUERY_PERFORMANCE_COUNTER", 3},
 };
 constexpr EnumValueSet VkDebugReportFlagBitsEXTSets[] = {
-    {"INFORMATION_BIT", 0x00000001},
-    {"WARNING_BIT", 0x00000002},
-    {"PERFORMANCE_WARNING_BIT", 0x00000004},
-    {"ERROR_BIT", 0x00000008},
-    {"DEBUG_BIT", 0x00000010},
+    {"INFORMATION", 0x00000001}, {"WARNING", 0x00000002}, {"PERFORMANCE_WARNING", 0x00000004},
+    {"ERROR", 0x00000008},       {"DEBUG", 0x00000010},
 };
 constexpr EnumValueSet VkDebugReportObjectTypeEXTSets[] = {
     {"UNKNOWN", 0},
@@ -965,15 +961,15 @@ constexpr EnumValueSet VkRasterizationOrderAMDSets[] = {
     {"RELAXED", 1},
 };
 constexpr EnumValueSet VkExternalMemoryHandleTypeFlagBitsNVSets[] = {
-    {"OPAQUE_WIN32_BIT", 0x00000001},
-    {"OPAQUE_WIN32_KMT_BIT", 0x00000002},
-    {"D3D11_IMAGE_BIT", 0x00000004},
-    {"D3D11_IMAGE_KMT_BIT", 0x00000008},
+    {"OPAQUE_WIN32", 0x00000001},
+    {"OPAQUE_WIN32_KMT", 0x00000002},
+    {"D3D11_IMAGE", 0x00000004},
+    {"D3D11_IMAGE_KMT", 0x00000008},
 };
 constexpr EnumValueSet VkExternalMemoryFeatureFlagBitsNVSets[] = {
-    {"DEDICATED_ONLY_BIT", 0x00000001},
-    {"EXPORTABLE_BIT", 0x00000002},
-    {"IMPORTABLE_BIT", 0x00000004},
+    {"DEDICATED_ONLY", 0x00000001},
+    {"EXPORTABLE", 0x00000002},
+    {"IMPORTABLE", 0x00000004},
 };
 constexpr EnumValueSet VkValidationCheckEXTSets[] = {
     {"ALL", 0},
@@ -994,20 +990,19 @@ constexpr EnumValueSet VkValidationFeatureDisableEXTSets[] = {
     {"UNIQUE_HANDLES", 6},
 };
 constexpr EnumValueSet VkSubgroupFeatureFlagBitsSets[] = {
-    {"BASIC_BIT", 0x00000001},      {"VOTE_BIT", 0x00000002},
-    {"ARITHMETIC_BIT", 0x00000004}, {"BALLOT_BIT", 0x00000008},
-    {"SHUFFLE_BIT", 0x00000010},    {"SHUFFLE_RELATIVE_BIT", 0x00000020},
-    {"CLUSTERED_BIT", 0x00000040},  {"QUAD_BIT", 0x00000080},
+    {"BASIC", 0x00000001},     {"VOTE", 0x00000002},    {"ARITHMETIC", 0x00000004},
+    {"BALLOT", 0x00000008},    {"SHUFFLE", 0x00000010}, {"SHUFFLE_RELATIVE", 0x00000020},
+    {"CLUSTERED", 0x00000040}, {"QUAD", 0x00000080},
 };
 constexpr EnumValueSet VkIndirectCommandsLayoutUsageFlagBitsNVXSets[] = {
-    {"UNORDERED_SEQUENCES_BIT", 0x00000001},
-    {"SPARSE_SEQUENCES_BIT", 0x00000002},
-    {"EMPTY_EXECUTIONS_BIT", 0x00000004},
-    {"INDEXED_SEQUENCES_BIT", 0x00000008},
+    {"UNORDERED_SEQUENCES", 0x00000001},
+    {"SPARSE_SEQUENCES", 0x00000002},
+    {"EMPTY_EXECUTIONS", 0x00000004},
+    {"INDEXED_SEQUENCES", 0x00000008},
 };
 constexpr EnumValueSet VkObjectEntryUsageFlagBitsNVXSets[] = {
-    {"GRAPHICS_BIT", 0x00000001},
-    {"COMPUTE_BIT", 0x00000002},
+    {"GRAPHICS", 0x00000001},
+    {"COMPUTE", 0x00000002},
 };
 constexpr EnumValueSet VkIndirectCommandsTokenTypeNVXSets[] = {
     {"PIPELINE", 0},      {"DESCRIPTOR_SET", 1}, {"INDEX_BUFFER", 2}, {"VERTEX_BUFFER", 3},
@@ -1018,40 +1013,39 @@ constexpr EnumValueSet VkObjectEntryTypeNVXSets[] = {
     {"VERTEX_BUFFER", 3},  {"PUSH_CONSTANT", 4},
 };
 constexpr EnumValueSet VkExternalMemoryHandleTypeFlagBitsSets[] = {
-    {"OPAQUE_FD_BIT", 0x00000001},         {"OPAQUE_WIN32_BIT", 0x00000002},
-    {"OPAQUE_WIN32_KMT_BIT", 0x00000004},  {"D3D11_TEXTURE_BIT", 0x00000008},
-    {"D3D11_TEXTURE_KMT_BIT", 0x00000010}, {"D3D12_HEAP_BIT", 0x00000020},
-    {"D3D12_RESOURCE_BIT", 0x00000040},
+    {"OPAQUE_FD", 0x00000001},         {"OPAQUE_WIN32", 0x00000002},
+    {"OPAQUE_WIN32_KMT", 0x00000004},  {"D3D11_TEXTURE", 0x00000008},
+    {"D3D11_TEXTURE_KMT", 0x00000010}, {"D3D12_HEAP", 0x00000020},
+    {"D3D12_RESOURCE", 0x00000040},
 };
 constexpr EnumValueSet VkExternalMemoryFeatureFlagBitsSets[] = {
-    {"DEDICATED_ONLY_BIT", 0x00000001},
-    {"EXPORTABLE_BIT", 0x00000002},
-    {"IMPORTABLE_BIT", 0x00000004},
+    {"DEDICATED_ONLY", 0x00000001},
+    {"EXPORTABLE", 0x00000002},
+    {"IMPORTABLE", 0x00000004},
 };
 constexpr EnumValueSet VkExternalSemaphoreHandleTypeFlagBitsSets[] = {
-    {"OPAQUE_FD_BIT", 0x00000001},        {"OPAQUE_WIN32_BIT", 0x00000002},
-    {"OPAQUE_WIN32_KMT_BIT", 0x00000004}, {"D3D12_FENCE_BIT", 0x00000008},
-    {"SYNC_FD_BIT", 0x00000010},
+    {"OPAQUE_FD", 0x00000001},   {"OPAQUE_WIN32", 0x00000002}, {"OPAQUE_WIN32_KMT", 0x00000004},
+    {"D3D12_FENCE", 0x00000008}, {"SYNC_FD", 0x00000010},
 };
 constexpr EnumValueSet VkExternalSemaphoreFeatureFlagBitsSets[] = {
-    {"EXPORTABLE_BIT", 0x00000001},
-    {"IMPORTABLE_BIT", 0x00000002},
+    {"EXPORTABLE", 0x00000001},
+    {"IMPORTABLE", 0x00000002},
 };
 constexpr EnumValueSet VkSemaphoreImportFlagBitsSets[] = {
-    {"TEMPORARY_BIT", 0x00000001},
+    {"TEMPORARY", 0x00000001},
 };
 constexpr EnumValueSet VkExternalFenceHandleTypeFlagBitsSets[] = {
-    {"OPAQUE_FD_BIT", 0x00000001},
-    {"OPAQUE_WIN32_BIT", 0x00000002},
-    {"OPAQUE_WIN32_KMT_BIT", 0x00000004},
-    {"SYNC_FD_BIT", 0x00000008},
+    {"OPAQUE_FD", 0x00000001},
+    {"OPAQUE_WIN32", 0x00000002},
+    {"OPAQUE_WIN32_KMT", 0x00000004},
+    {"SYNC_FD", 0x00000008},
 };
 constexpr EnumValueSet VkExternalFenceFeatureFlagBitsSets[] = {
-    {"EXPORTABLE_BIT", 0x00000001},
-    {"IMPORTABLE_BIT", 0x00000002},
+    {"EXPORTABLE", 0x00000001},
+    {"IMPORTABLE", 0x00000002},
 };
 constexpr EnumValueSet VkFenceImportFlagBitsSets[] = {
-    {"TEMPORARY_BIT", 0x00000001},
+    {"TEMPORARY", 0x00000001},
 };
 constexpr EnumValueSet VkSurfaceCounterFlagBitsEXTSets[] = {
     {"VBLANK", 0x00000001},
@@ -1068,19 +1062,19 @@ constexpr EnumValueSet VkDisplayEventTypeEXTSets[] = {
     {"FIRST_PIXEL_OUT", 0},
 };
 constexpr EnumValueSet VkPeerMemoryFeatureFlagBitsSets[] = {
-    {"COPY_SRC_BIT", 0x00000001},
-    {"COPY_DST_BIT", 0x00000002},
-    {"GENERIC_SRC_BIT", 0x00000004},
-    {"GENERIC_DST_BIT", 0x00000008},
+    {"COPY_SRC", 0x00000001},
+    {"COPY_DST", 0x00000002},
+    {"GENERIC_SRC", 0x00000004},
+    {"GENERIC_DST", 0x00000008},
 };
 constexpr EnumValueSet VkMemoryAllocateFlagBitsSets[] = {
-    {"DEVICE_MASK_BIT", 0x00000001},
+    {"DEVICE_MASK", 0x00000001},
 };
 constexpr EnumValueSet VkDeviceGroupPresentModeFlagBitsKHRSets[] = {
-    {"LOCAL_BIT", 0x00000001},
-    {"REMOTE_BIT", 0x00000002},
-    {"SUM_BIT", 0x00000004},
-    {"LOCAL_MULTI_DEVICE_BIT", 0x00000008},
+    {"LOCAL", 0x00000001},
+    {"REMOTE", 0x00000002},
+    {"SUM", 0x00000004},
+    {"LOCAL_MULTI_DEVICE", 0x00000008},
 };
 constexpr EnumValueSet VkViewportCoordinateSwizzleNVSets[] = {
     {"POSITIVE_X", 0}, {"NEGATIVE_X", 1}, {"POSITIVE_Y", 2}, {"NEGATIVE_Y", 3},
@@ -1145,15 +1139,15 @@ constexpr EnumValueSet VkQueueGlobalPriorityEXTSets[] = {
     {"REALTIME", 1024},
 };
 constexpr EnumValueSet VkDebugUtilsMessageSeverityFlagBitsEXTSets[] = {
-    {"VERBOSE_BIT", 0x00000001},
-    {"INFO_BIT", 0x00000010},
-    {"WARNING_BIT", 0x00000100},
-    {"ERROR_BIT", 0x00001000},
+    {"VERBOSE", 0x00000001},
+    {"INFO", 0x00000010},
+    {"WARNING", 0x00000100},
+    {"ERROR", 0x00001000},
 };
 constexpr EnumValueSet VkDebugUtilsMessageTypeFlagBitsEXTSets[] = {
-    {"GENERAL_BIT", 0x00000001},
-    {"VALIDATION_BIT", 0x00000002},
-    {"PERFORMANCE_BIT", 0x00000004},
+    {"GENERAL", 0x00000001},
+    {"VALIDATION", 0x00000002},
+    {"PERFORMANCE", 0x00000004},
 };
 constexpr EnumValueSet VkConservativeRasterizationModeEXTSets[] = {
     {"DISABLED", 0},
@@ -1161,10 +1155,10 @@ constexpr EnumValueSet VkConservativeRasterizationModeEXTSets[] = {
     {"UNDERESTIMATE", 2},
 };
 constexpr EnumValueSet VkDescriptorBindingFlagBitsEXTSets[] = {
-    {"UPDATE_AFTER_BIND_BIT", 0x00000001},
-    {"UPDATE_UNUSED_WHILE_PENDING_BIT", 0x00000002},
-    {"PARTIALLY_BOUND_BIT", 0x00000004},
-    {"VARIABLE_DESCRIPTOR_COUNT_BIT", 0x00000008},
+    {"UPDATE_AFTER_BIND", 0x00000001},
+    {"UPDATE_UNUSED_WHILE_PENDING", 0x00000002},
+    {"PARTIALLY_BOUND", 0x00000004},
+    {"VARIABLE_DESCRIPTOR_COUNT", 0x00000008},
 };
 constexpr EnumValueSet VkVendorIdSets[] = {
     {"VK_VENDOR_ID", 0x10001},
@@ -1178,14 +1172,11 @@ constexpr EnumValueSet VkDriverIdKHRSets[] = {
     {"GOOGLE_SWIFTSHADER", 10},     {"GGP_PROPRIETARY", 11},          {"BROADCOM_PROPRIETARY", 12},
 };
 constexpr EnumValueSet VkConditionalRenderingFlagBitsEXTSets[] = {
-    {"INVERTED_BIT", 0x00000001},
+    {"INVERTED", 0x00000001},
 };
 constexpr EnumValueSet VkResolveModeFlagBitsKHRSets[] = {
-    {"NONE", 0},
-    {"SAMPLE_ZERO_BIT", 0x00000001},
-    {"AVERAGE_BIT", 0x00000002},
-    {"MIN_BIT", 0x00000004},
-    {"MAX_BIT", 0x00000008},
+    {"NONE", 0},         {"SAMPLE_ZERO", 0x00000001}, {"AVERAGE", 0x00000002},
+    {"MIN", 0x00000004}, {"MAX", 0x00000008},
 };
 constexpr EnumValueSet VkShadingRatePaletteEntryNVSets[] = {
     {"NO_INVOCATIONS", 0},
@@ -1208,19 +1199,19 @@ constexpr EnumValueSet VkCoarseSampleOrderTypeNVSets[] = {
     {"SAMPLE_MAJOR", 3},
 };
 constexpr EnumValueSet VkGeometryInstanceFlagBitsNVSets[] = {
-    {"TRIANGLE_CULL_DISABLE_BIT", 0x00000001},
-    {"TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT", 0x00000002},
-    {"FORCE_OPAQUE_BIT", 0x00000004},
-    {"FORCE_NO_OPAQUE_BIT", 0x00000008},
+    {"TRIANGLE_CULL_DISABLE", 0x00000001},
+    {"TRIANGLE_FRONT_COUNTERCLOCKWISE", 0x00000002},
+    {"FORCE_OPAQUE", 0x00000004},
+    {"FORCE_NO_OPAQUE", 0x00000008},
 };
 constexpr EnumValueSet VkGeometryFlagBitsNVSets[] = {
-    {"OPAQUE_BIT", 0x00000001},
-    {"NO_DUPLICATE_ANY_HIT_INVOCATION_BIT", 0x00000002},
+    {"OPAQUE", 0x00000001},
+    {"NO_DUPLICATE_ANY_HIT_INVOCATION", 0x00000002},
 };
 constexpr EnumValueSet VkBuildAccelerationStructureFlagBitsNVSets[] = {
-    {"ALLOW_UPDATE_BIT", 0x00000001},      {"ALLOW_COMPACTION_BIT", 0x00000002},
-    {"PREFER_FAST_TRACE_BIT", 0x00000004}, {"PREFER_FAST_BUILD_BIT", 0x00000008},
-    {"LOW_MEMORY_BIT", 0x00000010},
+    {"ALLOW_UPDATE", 0x00000001},      {"ALLOW_COMPACTION", 0x00000002},
+    {"PREFER_FAST_TRACE", 0x00000004}, {"PREFER_FAST_BUILD", 0x00000008},
+    {"LOW_MEMORY", 0x00000010},
 };
 constexpr EnumValueSet VkCopyAccelerationStructureModeNVSets[] = {
     {"CLONE", 0},
@@ -1260,9 +1251,9 @@ constexpr EnumValueSet VkComponentTypeNVSets[] = {
     {"SINT64", 6},  {"UINT8", 7},   {"UINT16", 8},  {"UINT32", 9}, {"UINT64", 10},
 };
 constexpr EnumValueSet VkPipelineCreationFeedbackFlagBitsEXTSets[] = {
-    {"VALID_BIT", 0x00000001},
-    {"APPLICATION_PIPELINE_CACHE_HIT_BIT", 0x00000002},
-    {"BASE_PIPELINE_ACCELERATION_BIT", 0x00000004},
+    {"VALID", 0x00000001},
+    {"APPLICATION_PIPELINE_CACHE_HIT", 0x00000002},
+    {"BASE_PIPELINE_ACCELERATION", 0x00000004},
 };
 constexpr EnumValueSet VkFullScreenExclusiveEXTSets[] = {
     {"DEFAULT", 0},
@@ -1487,6 +1478,19 @@ std::string_view removeVendorTag(std::string_view view) {
 }
 
 /**
+ * @brief Strips '_BIT' from the end of a string, if there
+ */
+std::string_view stripBit(std::string_view view) {
+    if (view.size() > strlen("_BIT")) {
+        if (view.substr(view.size() - strlen("_BIT")) == "_BIT") {
+            return view.substr(0, view.size() - strlen("_BIT"));
+        }
+    }
+
+    return view;
+}
+
+/**
  * @brief Returns the start->end pointer range for valid value sets for the given typename
  * @param enumType Vulkan enum typename
  * @return Pointer range, or nullopt if type not found
@@ -1599,6 +1603,9 @@ std::optional<uint32_t> findValue(std::string_view enumType,
     enumName = removeVendorTag(enumName);
     if (enumName[enumName.size() - 1] == '_')
         enumName = enumName.substr(0, enumName.size() - 1);
+
+    // Remove the '_BIT' if its there
+    enumName = stripBit(enumName);
 
     // With the given sets/count, iterate until we find the value
     while (start != end) {

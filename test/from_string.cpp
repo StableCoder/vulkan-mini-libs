@@ -75,29 +75,43 @@ TEST_CASE("De-stringify: Checking bitmask conversions from string to bitmask val
     SECTION("With original shortened strings") {
         REQUIRE(VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
                 parseBitmask("VkDebugReportFlagBitsEXT", "PERFORMANCE_WARNING_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "PERFORMANCE_WARNING"));
+
         REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
                 parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT == parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG"));
         REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
                 parseBitmask("VkDebugReportFlagBitsEXT", "ERROR_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT == parseBitmask("VkDebugReportFlagBitsEXT", "ERROR"));
 
         REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
                 parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG_BIT | ERROR_BIT"));
+        REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG | ERROR"));
     }
     SECTION("With full strings") {
         REQUIRE(
             VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
             parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING"));
+
         REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
                 parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_DEBUG_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_DEBUG"));
         REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
                 parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR_BIT"));
+        REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
+                parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR"));
 
         REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
                 parseBitmask("VkDebugReportFlagBitsEXT",
                              "VK_DEBUG_REPORT_DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT"));
         REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
                 parseBitmask("VkDebugReportFlagBitsEXT",
-                             "VK_DEBUG_REPORT_ERROR_BIT | VK_DEBUG_REPORT_DEBUG_BIT"));
+                             "VK_DEBUG_REPORT_ERROR | VK_DEBUG_REPORT_DEBUG"));
     }
     SECTION("With mixed short/full strings") {
         REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
