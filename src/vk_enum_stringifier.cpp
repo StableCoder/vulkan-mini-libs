@@ -653,6 +653,10 @@ constexpr const EnumValueSet *valueSets[] = {
     enumDecl << "constexpr std::size_t enumTypesCount = " << enumsCount << ";\n";
 
     { // Source File
+        if (outputDir[outputDir.size() - 1] != '/' && outputDir[outputDir.size() - 1] != '\\') {
+            outputDir += '/';
+        }
+
         std::ofstream outFile(outputDir + outputFile);
         if (!outFile.is_open()) {
             std::cerr << "Error: Failed to open output file for writing: " << outputDir
