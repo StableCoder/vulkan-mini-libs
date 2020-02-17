@@ -445,14 +445,14 @@ int main(int argc, char **argv) {
 
     if (inputFile == "") {
         std::cout << "Error: No input file given. Type --help for help." << std::endl;
-        return 0;
+        return 1;
     }
 
     // In order to parse a file, we need to load the whole thing into memory.
     std::ifstream inFile(inputFile.c_str(), std::ifstream::in);
     if (!inFile.is_open()) {
         std::cout << "Error: Failed to open file " << inputFile << std::endl;
-        return 0;
+        return 1;
     }
     // Seek to the end.
     inFile.seekg(0, std::ifstream::end);
@@ -605,8 +605,7 @@ constexpr const EnumValueSet *valueSets[] = {
                         std::string_view aliasView = alias->value();
                         aliasView = removeVendorTag(vendorTagList, aliasView);
                         aliasView = trimNonAlNum(aliasView);
-                        if (strncmp(std::get<0>(it).data(), aliasView.data(), aliasView.size()) ==
-                            0) {
+                        if (std::get<0>(it) == aliasView) {
                             enums.emplace_back(name, std::get<1>(it));
                             found = true;
                             break;
