@@ -39,4 +39,9 @@ Output directory
 Output file name, note that there will be both a .cpp and .hpp variant generated. (Default: `vk_enum_stringifier`)
 
 
+## Generated Usage
+
+Quite simply, use the version of the source that works best (can choose from pre-generated items from the pre-generated/ directory) and pair it with the common header file in the include/ directory into your application.
+
+
 ## Uses RapidXML from http://rapidxml.sourceforge.net/
