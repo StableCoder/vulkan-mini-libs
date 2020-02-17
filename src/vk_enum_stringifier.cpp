@@ -42,6 +42,9 @@ const char *headerFileStr = R"HEADER(/**
 
 namespace vkEnum {
 
+// Returns the Vulkan header version the data was generated from
+uint32_t vulkanHeaderVersion();
+
 /**
  * @brief Parses a given enum type/value for an enum type
  * @param enumType Vulkan enum typename as a string
@@ -239,6 +242,10 @@ uint32_t findValue(std::string_view enumType,
 }
 
 namespace vkEnum {
+
+uint32_t vulkanHeaderVersion() {
+    return generatedVulkanVersion;
+}
 
 uint32_t parseEnum(std::string_view enumType, std::string value) {
     auto prefix = processEnumPrefix(removeVendorTag(enumType));
@@ -673,8 +680,6 @@ constexpr const EnumValueSet *valueSets[] = {
             return 1;
         }
 
-        outFile << "\n/* !! Generated using Vulkan XML spec version " << vkHeaderVersion
-                << " !! */\n\n";
         outFile << headerFileStr;
     }
 
@@ -687,11 +692,10 @@ constexpr const EnumValueSet *valueSets[] = {
         }
 
         // First, write the license/disclaimer
-        outFile << "\n/* !! Generated using Vulkan XML spec version " << vkHeaderVersion
-                << " !! */\n\n";
         outFile << descriptionStr;
         outFile << includesStr;
 
+        outFile << "constexpr uint32_t generatedVulkanVersion = " << vkHeaderVersion << "u;\n\n";
         outFile << vendorTags.str();
 
         outFile << enumDecl.str();
