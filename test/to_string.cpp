@@ -20,9 +20,18 @@
 
 using namespace vkEnum;
 
+TEST_CASE("Stringify: Failure cases") {
+    REQUIRE_FALSE(stringifyBitmask("", 0).has_value());
+    REQUIRE_FALSE(stringifyBitmask("", 0).has_value());
+}
+
 TEST_CASE("Stringify: Enum") {
     SECTION("Failure case where a bad type is given") {
-        REQUIRE(stringifyEnum("VkGarbagio", VK_IMAGE_TYPE_3D).empty());
+        REQUIRE_FALSE(stringifyEnum("VkGarbagio", VK_IMAGE_TYPE_3D).has_value());
+    }
+    SECTION("Failure case where bad enum given") {
+        stringifyEnum("VkImageType", -1U);
+        REQUIRE_FALSE(stringifyEnum("VkImageType", -1U).has_value());
     }
     SECTION("Success cases") {
         REQUIRE(stringifyEnum("VkImageType", VK_IMAGE_TYPE_3D) == "3D");
@@ -36,7 +45,7 @@ TEST_CASE("Stringify: Enum") {
 
 TEST_CASE("Stringify: Bitmask") {
     SECTION("Failure case where a bad type is given") {
-        REQUIRE(stringifyBitmask("VkGarbagio", VK_CULL_MODE_BACK_BIT).empty());
+        REQUIRE_FALSE(stringifyBitmask("VkGarbagio", VK_CULL_MODE_BACK_BIT).has_value());
     }
     SECTION("Regular success cases") {
         REQUIRE(stringifyBitmask("VkDebugReportFlagBitsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT) ==

@@ -10,6 +10,7 @@
 #include <cctype>
 #include <cstring>
 #include <memory>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <tuple>
@@ -1509,18 +1510,47 @@ constexpr const EnumValueSet *valueSets[] = {
 };
 
 /**
+ * @brief Removes a vendor tag from the end of the given string view
+ * @param view String view to remove the vendor tag from
+ * @return A string_view without the vendor tag, if it was suffixed
+ */
+std::string_view removeVendorTag(std::string_view view) {
+    for (std::size_t i = 0; i < vendorTagCount; ++i) {
+        std::size_t vendorSize = strlen(vendorTags[i]);
+        if (strncmp(view.data() + view.size() - vendorSize, vendorTags[i], vendorSize) == 0) {
+            view = view.substr(0, view.size() - strlen(vendorTags[i]));
+            break;
+        }
+    }
+
+    return view;
+}
+
+/**
  * @brief Returns the start->end pointer range for valid value sets for the given typename
  * @param enumType Vulkan enum typename
- * @return Pointer range, or nullptr's if type isn't found.
+ * @return Pointer range, or nullopt if type not found
+ *
+ * First tries the original typename, then tries the typename with any vendor strings removed
  */
-std::tuple<const EnumValueSet *, const EnumValueSet *> getValueSets(std::string_view enumType) {
+std::optional<std::tuple<const EnumValueSet *, const EnumValueSet *>> getValueSets(
+    std::string_view enumType) {
+    // Try the original name
     for (std::size_t i = 0; i < enumTypesCount; ++i) {
         if (enumType == std::string_view{enumTypes[i].name}) {
             return std::make_tuple(valueSets[i], valueSets[i] + enumTypes[i].count);
         }
     }
 
-    return std::make_tuple(nullptr, nullptr);
+    // Try a vendor-stripped name
+    enumType = removeVendorTag(enumType);
+    for (std::size_t i = 0; i < enumTypesCount; ++i) {
+        if (enumType == std::string_view{enumTypes[i].name}) {
+            return std::make_tuple(valueSets[i], valueSets[i] + enumTypes[i].count);
+        }
+    }
+
+    return std::nullopt;
 }
 
 /**
@@ -1555,23 +1585,6 @@ std::string formatString(std::string str) {
     std::for_each(str.begin(), str.end(), [](char &c) { c = ::toupper(c); });
 
     return str;
-}
-
-/**
- * @brief Removes a vendor tag from the end of the given string view
- * @param view String view to remove the vendor tag from
- * @return A string_view without the vendor tag, if it was suffixed
- */
-std::string_view removeVendorTag(std::string_view view) {
-    for (std::size_t i = 0; i < vendorTagCount; ++i) {
-        std::size_t vendorSize = strlen(vendorTags[i]);
-        if (strncmp(view.data() + view.size() - vendorSize, vendorTags[i], vendorSize) == 0) {
-            view = view.substr(0, view.size() - strlen(vendorTags[i]));
-            break;
-        }
-    }
-
-    return view;
 }
 
 /**
@@ -1613,11 +1626,19 @@ std::string processEnumPrefix(std::string_view typeName) {
  * @param enumName Name of the enum value to find
  * @return The associated value, or zero if not found otherwise.
  */
-uint32_t findValue(std::string_view enumType,
-                   std::string_view enumPrefix,
-                   std::string_view enumName) {
+std::optional<uint32_t> findValue(std::string_view enumType,
+                                  std::string_view enumPrefix,
+                                  std::string_view enumName) {
     // Figure out which ValueSet the enum given corresponds to
-    auto [start, end] = getValueSets(enumType);
+    auto range = getValueSets(enumType);
+    if (!range.has_value())
+        return std::nullopt;
+    auto [start, end] = range.value();
+
+    // Remove the vendor tag suffix if it's there
+    enumName = removeVendorTag(enumName);
+    if (enumName[enumName.size() - 1] == '_')
+        enumName = enumName.substr(0, enumName.size() - 1);
 
     // With the given sets/count, iterate until we find the value
     while (start != end) {
@@ -1634,7 +1655,7 @@ uint32_t findValue(std::string_view enumType,
         ++start;
     }
 
-    return 0;
+    return std::nullopt;
 }
 
 } // namespace
@@ -1645,14 +1666,18 @@ uint32_t vulkanHeaderVersion() {
     return generatedVulkanVersion;
 }
 
-uint32_t parseEnum(std::string_view enumType, std::string value) {
+std::optional<uint32_t> parseEnum(std::string_view enumType, std::string value) {
+    // If empty, just return 0
+    if (value.empty())
+        return 0;
+
     auto prefix = processEnumPrefix(removeVendorTag(enumType));
     value = formatString(value);
 
     return findValue(enumType, prefix, value);
 }
 
-uint32_t parseBitmask(std::string_view enumType, std::string value) {
+std::optional<uint32_t> parseBitmask(std::string_view enumType, std::string value) {
     auto prefix = processEnumPrefix(removeVendorTag(enumType));
     uint32_t retVal = 0;
 
@@ -1663,7 +1688,10 @@ uint32_t parseBitmask(std::string_view enumType, std::string value) {
             std::string token(startCh, endCh);
             token = formatString(token);
 
-            retVal |= findValue(enumType, prefix, token);
+            auto val = findValue(enumType, prefix, token);
+            if (!val.has_value())
+                return std::nullopt;
+            retVal |= val.value();
 
             startCh = endCh + 1;
         }
@@ -1672,14 +1700,20 @@ uint32_t parseBitmask(std::string_view enumType, std::string value) {
         std::string token(startCh, endCh);
         token = formatString(token);
 
-        retVal |= findValue(enumType, prefix, token);
+        auto val = findValue(enumType, prefix, token);
+        if (!val.has_value())
+            return std::nullopt;
+        retVal |= val.value();
     }
 
     return retVal;
 }
 
-std::string stringifyEnum(std::string_view enumType, uint32_t enumValue) {
-    auto [start, end] = getValueSets(enumType);
+std::optional<std::string> stringifyEnum(std::string_view enumType, uint32_t enumValue) {
+    auto range = getValueSets(enumType);
+    if (!range.has_value())
+        return std::nullopt;
+    auto [start, end] = range.value();
 
     while (start != end) {
         if (start->value == enumValue) {
@@ -1689,11 +1723,20 @@ std::string stringifyEnum(std::string_view enumType, uint32_t enumValue) {
         ++start;
     }
 
-    return "";
+    // If there was a value and we couldn't find it, then that's an error alright. If it was zero,
+    // then it was probably just an empty enum set anyways
+    if (enumValue == 0) {
+        return "";
+    }
+
+    return std::nullopt;
 }
 
-std::string stringifyBitmask(std::string_view enumType, uint32_t enumValue) {
-    auto [end, start] = getValueSets(enumType);
+std::optional<std::string> stringifyBitmask(std::string_view enumType, uint32_t enumValue) {
+    auto range = getValueSets(enumType);
+    if (!range.has_value())
+        return std::nullopt;
+    auto [end, start] = range.value();
     --end;
     --start;
 

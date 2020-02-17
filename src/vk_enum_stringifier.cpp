@@ -37,6 +37,7 @@ const char *headerFileStr = R"HEADER(/**
 #define VK_ENUM_STRINGIFIER_HPP
 
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <string_view>
 
@@ -49,39 +50,41 @@ uint32_t vulkanHeaderVersion();
  * @brief Parses a given enum type/value for an enum type
  * @param enumType Vulkan enum typename as a string
  * @param value String of the value to parse
+ * @return The value if the type/values are found. Returns nullopt is something can't be found.
  *
  * Formats the string and attempts to find a match, and returns it. Enums can only match one.
  */
-uint32_t parseEnum(std::string_view enumType, std::string value);
+std::optional<uint32_t> parseEnum(std::string_view enumType, std::string value);
 
 /**
  * @brief Parses a given enum type/value(s) for a mask type
  * @param enumType Vulkan enum typename as a string
  * @param value String of the value(s) to parse.
+ * @return The value if the type/values are found. Returns nullopt is something can't be found.
  *
  * Tokenizes the given value string, delimited by '|', and for each token attempts to find the value
  * in the provided enum value set, and if found, OR's it witht eh current return value.
  */
-uint32_t parseBitmask(std::string_view enumType, std::string value);
+std::optional<uint32_t> parseBitmask(std::string_view enumType, std::string value);
 
 /**
  * @brief Stringifies a given Vk type/value for an enum
  * @param enumType Vulkan enum typename as a string
  * @param enumValue Value to convert into a string
- * @return Short string representing the enum value, or an empty string if not found.
+ * @return The value if the type/values are found. Returns nullopt is something can't be found.
  */
-std::string stringifyEnum(std::string_view enumType, uint32_t enumValue);
+std::optional<std::string> stringifyEnum(std::string_view enumType, uint32_t enumValue);
 
 /**
  * @brief Stringifies a given Vk type/value for a bitmask
  * @param enumType Vulkan enum typename as a string
  * @param enumValue Value to convert into a string
- * @return Short string representing the bitmask values delimited by the '|' symbol, or an empty
- * string if not found.
+ * @return Short string representing the bitmask values delimited by the '|' symbol, nullopt if the
+ * type or a value is not found.
  */
-std::string stringifyBitmask(std::string_view enumType, uint32_t enumValue);
+std::optional<std::string> stringifyBitmask(std::string_view enumType, uint32_t enumValue);
 
-}
+} // namespace vkEnum
 
 #endif // VK_ENUM_STRINGIFIER_HPP
 )HEADER";
@@ -100,6 +103,7 @@ const char *includesStr = R"HEADER(
 #include <cctype>
 #include <cstring>
 #include <memory>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <tuple>
@@ -110,18 +114,47 @@ namespace {
 
 const char *commonFunctionsStr = R"COMMON(
 /**
+ * @brief Removes a vendor tag from the end of the given string view
+ * @param view String view to remove the vendor tag from
+ * @return A string_view without the vendor tag, if it was suffixed
+ */
+std::string_view removeVendorTag(std::string_view view) {
+    for (std::size_t i = 0; i < vendorTagCount; ++i) {
+        std::size_t vendorSize = strlen(vendorTags[i]);
+        if (strncmp(view.data() + view.size() - vendorSize, vendorTags[i], vendorSize) == 0) {
+            view = view.substr(0, view.size() - strlen(vendorTags[i]));
+            break;
+        }
+    }
+
+    return view;
+}
+
+/**
  * @brief Returns the start->end pointer range for valid value sets for the given typename
  * @param enumType Vulkan enum typename
- * @return Pointer range, or nullptr's if type isn't found.
+ * @return Pointer range, or nullopt if type not found
+ *
+ * First tries the original typename, then tries the typename with any vendor strings removed
  */
-std::tuple<const EnumValueSet *, const EnumValueSet *> getValueSets(std::string_view enumType) {
+std::optional<std::tuple<const EnumValueSet *, const EnumValueSet *>> getValueSets(
+    std::string_view enumType) {
+    // Try the original name
     for (std::size_t i = 0; i < enumTypesCount; ++i) {
         if (enumType == std::string_view{enumTypes[i].name}) {
             return std::make_tuple(valueSets[i], valueSets[i] + enumTypes[i].count);
         }
     }
 
-    return std::make_tuple(nullptr, nullptr);
+    // Try a vendor-stripped name
+    enumType = removeVendorTag(enumType);
+    for (std::size_t i = 0; i < enumTypesCount; ++i) {
+        if (enumType == std::string_view{enumTypes[i].name}) {
+            return std::make_tuple(valueSets[i], valueSets[i] + enumTypes[i].count);
+        }
+    }
+
+    return std::nullopt;
 }
 
 /**
@@ -147,7 +180,7 @@ std::string formatString(std::string str) {
     // Trim right
     cutOffset = 0;
     for (std::size_t i = 0; i < str.size(); ++i) {
-        if (isalnum(str[i]))
+        if (::isalnum(str[i]))
             cutOffset = i + 1;
     }
     str = str.substr(0, cutOffset);
@@ -156,23 +189,6 @@ std::string formatString(std::string str) {
     std::for_each(str.begin(), str.end(), [](char &c) { c = ::toupper(c); });
 
     return str;
-}
-
-/**
- * @brief Removes a vendor tag from the end of the given string view
- * @param view String view to remove the vendor tag from
- * @return A string_view without the vendor tag, if it was suffixed
- */
-std::string_view removeVendorTag(std::string_view view) {
-    for (std::size_t i = 0; i < vendorTagCount; ++i) {
-        std::size_t vendorSize = strlen(vendorTags[i]);
-        if (strncmp(view.data() + view.size() - vendorSize, vendorTags[i], vendorSize) == 0) {
-            view = view.substr(0, view.size() - strlen(vendorTags[i]));
-            break;
-        }
-    }
-
-    return view;
 }
 
 /**
@@ -191,7 +207,7 @@ std::string processEnumPrefix(std::string_view typeName) {
         }
     }
 
-        std::string retStr;
+    std::string retStr;
     for (auto it = typeName.begin(); it != typeName.end(); ++it) {
         if (it == typeName.begin()) {
             retStr += ::toupper(*it);
@@ -214,11 +230,19 @@ std::string processEnumPrefix(std::string_view typeName) {
  * @param enumName Name of the enum value to find
  * @return The associated value, or zero if not found otherwise.
  */
-uint32_t findValue(std::string_view enumType,
-                   std::string_view enumPrefix,
-                   std::string_view enumName) {
+std::optional<uint32_t> findValue(std::string_view enumType,
+                                  std::string_view enumPrefix,
+                                  std::string_view enumName) {
     // Figure out which ValueSet the enum given corresponds to
-    auto [start, end] = getValueSets(enumType);
+    auto range = getValueSets(enumType);
+    if (!range.has_value())
+        return std::nullopt;
+    auto [start, end] = range.value();
+
+    // Remove the vendor tag suffix if it's there
+    enumName = removeVendorTag(enumName);
+    if (enumName[enumName.size() - 1] == '_')
+        enumName = enumName.substr(0, enumName.size() - 1);
 
     // With the given sets/count, iterate until we find the value
     while (start != end) {
@@ -235,10 +259,10 @@ uint32_t findValue(std::string_view enumType,
         ++start;
     }
 
-    return 0;
+    return std::nullopt;
 }
 
-}
+} // namespace
 
 namespace vkEnum {
 
@@ -246,14 +270,18 @@ uint32_t vulkanHeaderVersion() {
     return generatedVulkanVersion;
 }
 
-uint32_t parseEnum(std::string_view enumType, std::string value) {
+std::optional<uint32_t> parseEnum(std::string_view enumType, std::string value) {
+    // If empty, just return 0
+    if (value.empty())
+        return 0;
+
     auto prefix = processEnumPrefix(removeVendorTag(enumType));
     value = formatString(value);
 
     return findValue(enumType, prefix, value);
 }
 
-uint32_t parseBitmask(std::string_view enumType, std::string value) {
+std::optional<uint32_t> parseBitmask(std::string_view enumType, std::string value) {
     auto prefix = processEnumPrefix(removeVendorTag(enumType));
     uint32_t retVal = 0;
 
@@ -264,7 +292,10 @@ uint32_t parseBitmask(std::string_view enumType, std::string value) {
             std::string token(startCh, endCh);
             token = formatString(token);
 
-            retVal |= findValue(enumType, prefix, token);
+            auto val = findValue(enumType, prefix, token);
+            if (!val.has_value())
+                return std::nullopt;
+            retVal |= val.value();
 
             startCh = endCh + 1;
         }
@@ -273,14 +304,20 @@ uint32_t parseBitmask(std::string_view enumType, std::string value) {
         std::string token(startCh, endCh);
         token = formatString(token);
 
-        retVal |= findValue(enumType, prefix, token);
+        auto val = findValue(enumType, prefix, token);
+        if (!val.has_value())
+            return std::nullopt;
+        retVal |= val.value();
     }
 
     return retVal;
 }
 
-std::string stringifyEnum(std::string_view enumType, uint32_t enumValue) {
-    auto [start, end] = getValueSets(enumType);
+std::optional<std::string> stringifyEnum(std::string_view enumType, uint32_t enumValue) {
+    auto range = getValueSets(enumType);
+    if (!range.has_value())
+        return std::nullopt;
+    auto [start, end] = range.value();
 
     while (start != end) {
         if (start->value == enumValue) {
@@ -290,11 +327,20 @@ std::string stringifyEnum(std::string_view enumType, uint32_t enumValue) {
         ++start;
     }
 
-    return "";
+    // If there was a value and we couldn't find it, then that's an error alright. If it was zero,
+    // then it was probably just an empty enum set anyways
+    if (enumValue == 0) {
+        return "";
+    }
+
+    return std::nullopt;
 }
 
-std::string stringifyBitmask(std::string_view enumType, uint32_t enumValue) {
-    auto [end, start] = getValueSets(enumType);
+std::optional<std::string> stringifyBitmask(std::string_view enumType, uint32_t enumValue) {
+    auto range = getValueSets(enumType);
+    if (!range.has_value())
+        return std::nullopt;
+    auto [end, start] = range.value();
     --end;
     --start;
 
@@ -316,7 +362,7 @@ std::string stringifyBitmask(std::string_view enumType, uint32_t enumValue) {
     return retStr;
 }
 
-}
+} // namespace vkEnum
 )COMMON";
 
 const char *helpStr = R"HELP(

@@ -21,16 +21,16 @@
 using namespace vkEnum;
 
 TEST_CASE("De-stringify: Failure Cases") {
-    SECTION("Garbage type returns nothing") {
-        REQUIRE(0 == parseEnum("VkGarbagio", "2D"));
-        REQUIRE(0 == parseBitmask("VkGarbagio", "2D"));
+    SECTION("Garbage type returns nullopt") {
+        REQUIRE_FALSE(parseEnum("VkGarbagio", "2D").has_value());
+        REQUIRE_FALSE(parseBitmask("VkGarbagio", "2D").has_value());
     }
     SECTION("Garbage values return nothing") {
-        REQUIRE(0 == parseEnum("VkImageType", "6D"));
-        REQUIRE(0 == parseBitmask("VkDebugReportFlagBitsEXT", "NOT_EXIST"));
+        REQUIRE_FALSE(parseEnum("VkImageType", "6D").has_value());
+        REQUIRE_FALSE(parseBitmask("VkDebugReportFlagBitsEXT", "NOT_EXIST").has_value());
     }
     SECTION("Attempting to do a bitmask for an enum returns nothing") {
-        REQUIRE(0 == parseEnum("VkImageType", "2D | 3D"));
+        REQUIRE_FALSE(parseEnum("VkImageType", "2D | 3D").has_value());
     }
 }
 
@@ -49,7 +49,7 @@ TEST_CASE(
     }
     SECTION("With mixed capitalization and mixture of underscores/spaces") {
         REQUIRE(VK_IMAGE_LAYOUT_UNDEFINED ==
-                parseEnum("VkImageLayout", "    vK IMgeE_LAyOUt UNDEFIned    "));
+                parseEnum("VkImageLayout", "    vK IMagE_LAyOUt UNDEFIned    "));
     }
     SECTION("With full strings") {
         REQUIRE(VK_IMAGE_LAYOUT_UNDEFINED ==

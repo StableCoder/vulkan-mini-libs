@@ -10,6 +10,7 @@
 #define VK_ENUM_STRINGIFIER_HPP
 
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <string_view>
 
@@ -22,37 +23,39 @@ uint32_t vulkanHeaderVersion();
  * @brief Parses a given enum type/value for an enum type
  * @param enumType Vulkan enum typename as a string
  * @param value String of the value to parse
+ * @return The value if the type/values are found. Returns nullopt is something can't be found.
  *
  * Formats the string and attempts to find a match, and returns it. Enums can only match one.
  */
-uint32_t parseEnum(std::string_view enumType, std::string value);
+std::optional<uint32_t> parseEnum(std::string_view enumType, std::string value);
 
 /**
  * @brief Parses a given enum type/value(s) for a mask type
  * @param enumType Vulkan enum typename as a string
  * @param value String of the value(s) to parse.
+ * @return The value if the type/values are found. Returns nullopt is something can't be found.
  *
  * Tokenizes the given value string, delimited by '|', and for each token attempts to find the value
  * in the provided enum value set, and if found, OR's it witht eh current return value.
  */
-uint32_t parseBitmask(std::string_view enumType, std::string value);
+std::optional<uint32_t> parseBitmask(std::string_view enumType, std::string value);
 
 /**
  * @brief Stringifies a given Vk type/value for an enum
  * @param enumType Vulkan enum typename as a string
  * @param enumValue Value to convert into a string
- * @return Short string representing the enum value, or an empty string if not found.
+ * @return The value if the type/values are found. Returns nullopt is something can't be found.
  */
-std::string stringifyEnum(std::string_view enumType, uint32_t enumValue);
+std::optional<std::string> stringifyEnum(std::string_view enumType, uint32_t enumValue);
 
 /**
  * @brief Stringifies a given Vk type/value for a bitmask
  * @param enumType Vulkan enum typename as a string
  * @param enumValue Value to convert into a string
- * @return Short string representing the bitmask values delimited by the '|' symbol, or an empty
- * string if not found.
+ * @return Short string representing the bitmask values delimited by the '|' symbol, nullopt if the
+ * type or a value is not found.
  */
-std::string stringifyBitmask(std::string_view enumType, uint32_t enumValue);
+std::optional<std::string> stringifyBitmask(std::string_view enumType, uint32_t enumValue);
 
 } // namespace vkEnum
 
