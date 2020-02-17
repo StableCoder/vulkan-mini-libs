@@ -9,7 +9,6 @@
 #include <algorithm>
 #include <cctype>
 #include <cstring>
-#include <locale>
 #include <memory>
 #include <string>
 #include <string_view>
@@ -1537,7 +1536,7 @@ std::string formatString(std::string str) {
     // Trim left
     std::size_t cutOffset = 0;
     for (auto c : str) {
-        if (isalnum(c, std::locale{}))
+        if (::isalnum(c))
             break;
         else
             ++cutOffset;
@@ -1547,7 +1546,7 @@ std::string formatString(std::string str) {
     // Trim right
     cutOffset = 0;
     for (std::size_t i = 0; i < str.size(); ++i) {
-        if (isalnum(str[i]))
+        if (::isalnum(str[i]))
             cutOffset = i + 1;
     }
     str = str.substr(0, cutOffset);

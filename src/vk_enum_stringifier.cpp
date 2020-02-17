@@ -99,7 +99,6 @@ const char *includesStr = R"HEADER(
 #include <algorithm>
 #include <cctype>
 #include <cstring>
-#include <locale>
 #include <memory>
 #include <string>
 #include <string_view>
@@ -138,7 +137,7 @@ std::string formatString(std::string str) {
     // Trim left
     std::size_t cutOffset = 0;
     for (auto c : str) {
-        if (isalnum(c, std::locale{}))
+        if (::isalnum(c))
             break;
         else
             ++cutOffset;
