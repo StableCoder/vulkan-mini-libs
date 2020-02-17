@@ -8,7 +8,8 @@ find_package(Vulkan REQUIRED)
 add_executable(
   VkEnumStringifierTests ../pre-generated/vk_enum_stringifier_v132.cpp
                          to_string.cpp from_string.cpp)
-target_include_directories(VkEnumStringifierTests PRIVATE ../pre-generated ${Vulkan_INCLUDE_DIRS})
+target_include_directories(VkEnumStringifierTests
+                           PRIVATE ../include ${Vulkan_INCLUDE_DIRS})
 target_link_libraries(VkEnumStringifierTests PRIVATE catch ${Vulkan_LIBRARY})
 target_code_coverage(VkEnumStringifierTests EXCLUDE ".*/test/.*")
 
