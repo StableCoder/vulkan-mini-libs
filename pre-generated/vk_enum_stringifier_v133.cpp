@@ -17,7 +17,7 @@
 
 namespace {
 
-constexpr uint32_t generatedVulkanVersion = 132u;
+constexpr uint32_t generatedVulkanVersion = 133u;
 
 constexpr const char *vendorTags[] = {
     "IMG",    "AMD",  "AMDX",   "ARM",     "FSL",     "BRCM",     "NXP",       "NV",
@@ -162,7 +162,7 @@ EnumDeclaration enumTypes[] = {
     {"VkDebugUtilsMessageTypeFlagBitsEXT", 3},
     {"VkConservativeRasterizationModeEXT", 3},
     {"VkDescriptorBindingFlagBits", 4},
-    {"VkVendorId", 3},
+    {"VkVendorId", 4},
     {"VkDriverId", 12},
     {"VkConditionalRenderingFlagBitsEXT", 1},
     {"VkResolveModeFlagBits", 5},
@@ -1176,6 +1176,7 @@ constexpr EnumValueSet VkVendorIdSets[] = {
     {"VK_VENDOR_ID", 0x10001},
     {"VK_VENDOR_ID", 0x10002},
     {"KAZAN", 0x10003},
+    {"CODEPLAY", 0x10004},
 };
 constexpr EnumValueSet VkDriverIdSets[] = {
     {"AMD_PROPRIETARY", 1},         {"AMD_OPEN_SOURCE", 2},           {"MESA_RADV", 3},

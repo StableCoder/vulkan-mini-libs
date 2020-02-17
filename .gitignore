@@ -1,5 +1,6 @@
 .clangd/
 .vscode/
+auto-gen/
 build/
 compile_commands.json
 vk.xml

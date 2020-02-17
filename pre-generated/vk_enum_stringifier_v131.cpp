@@ -17,7 +17,7 @@
 
 namespace {
 
-constexpr uint32_t generatedVulkanVersion = 132u;
+constexpr uint32_t generatedVulkanVersion = 131u;
 
 constexpr const char *vendorTags[] = {
     "IMG",    "AMD",  "AMDX",   "ARM",     "FSL",     "BRCM",     "NXP",       "NV",

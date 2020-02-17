@@ -17,15 +17,14 @@
 
 namespace {
 
-constexpr uint32_t generatedVulkanVersion = 132u;
+constexpr uint32_t generatedVulkanVersion = 76u;
 
 constexpr const char *vendorTags[] = {
-    "IMG",    "AMD",  "AMDX",   "ARM",     "FSL",     "BRCM",     "NXP",       "NV",
-    "NVX",    "VIV",  "VSI",    "KDAB",    "ANDROID", "CHROMIUM", "FUCHSIA",   "GGP",
-    "GOOGLE", "QCOM", "LUNARG", "SAMSUNG", "SEC",     "TIZEN",    "RENDERDOC", "NN",
-    "MVK",    "KHR",  "KHX",    "EXT",     "MESA",    "INTEL",
+    "IMG", "AMD",   "AMDX",      "ARM",     "FSL",      "BRCM",   "NXP",  "NV",     "NVX",
+    "VIV", "VSI",   "KDAB",      "ANDROID", "CHROMIUM", "GOOGLE", "QCOM", "LUNARG", "SAMSUNG",
+    "SEC", "TIZEN", "RENDERDOC", "NN",      "MVK",      "KHR",    "KHX",  "EXT",    "MESA",
 };
-constexpr std::size_t vendorTagCount = 30;
+constexpr std::size_t vendorTagCount = 27;
 
 struct EnumDeclaration {
     const char *name;
@@ -70,7 +69,6 @@ EnumDeclaration enumTypes[] = {
     {"VkDescriptorUpdateTemplateType", 1},
     {"VkObjectType", 26},
     {"VkQueueFlagBits", 4},
-    {"VkRenderPassCreateFlagBits", 0},
     {"VkDeviceQueueCreateFlagBits", 0},
     {"VkMemoryPropertyFlagBits", 5},
     {"VkMemoryHeapFlagBits", 1},
@@ -80,13 +78,9 @@ EnumDeclaration enumTypes[] = {
     {"VkShaderStageFlagBits", 8},
     {"VkImageUsageFlagBits", 8},
     {"VkImageCreateFlagBits", 5},
-    {"VkImageViewCreateFlagBits", 0},
-    {"VkSamplerCreateFlagBits", 0},
     {"VkPipelineCreateFlagBits", 3},
-    {"VkPipelineShaderStageCreateFlagBits", 0},
     {"VkColorComponentFlagBits", 4},
     {"VkFenceCreateFlagBits", 1},
-    {"VkSemaphoreCreateFlagBits", 0},
     {"VkFormatFeatureFlagBits", 13},
     {"VkQueryControlFlagBits", 1},
     {"VkQueryResultFlagBits", 4},
@@ -101,26 +95,20 @@ EnumDeclaration enumTypes[] = {
     {"VkCommandBufferResetFlagBits", 1},
     {"VkSampleCountFlagBits", 7},
     {"VkAttachmentDescriptionFlagBits", 1},
-    {"VkStencilFaceFlagBits", 4},
+    {"VkStencilFaceFlagBits", 3},
     {"VkDescriptorPoolCreateFlagBits", 1},
     {"VkDependencyFlagBits", 1},
-    {"VkSemaphoreType", 2},
-    {"VkSemaphoreWaitFlagBits", 1},
     {"VkPresentModeKHR", 4},
-    {"VkColorSpaceKHR", 2},
+    {"VkColorSpaceKHR", 1},
     {"VkDisplayPlaneAlphaFlagBitsKHR", 4},
     {"VkCompositeAlphaFlagBitsKHR", 4},
     {"VkSurfaceTransformFlagBitsKHR", 9},
-    {"VkSwapchainImageUsageFlagBitsANDROID", 1},
-    {"VkTimeDomainEXT", 4},
     {"VkDebugReportFlagBitsEXT", 5},
-    {"VkDebugReportObjectTypeEXT", 36},
+    {"VkDebugReportObjectTypeEXT", 34},
     {"VkRasterizationOrderAMD", 2},
     {"VkExternalMemoryHandleTypeFlagBitsNV", 4},
     {"VkExternalMemoryFeatureFlagBitsNV", 3},
     {"VkValidationCheckEXT", 2},
-    {"VkValidationFeatureEnableEXT", 3},
-    {"VkValidationFeatureDisableEXT", 7},
     {"VkSubgroupFeatureFlagBits", 8},
     {"VkIndirectCommandsLayoutUsageFlagBitsNVX", 4},
     {"VkObjectEntryUsageFlagBitsNVX", 2},
@@ -147,60 +135,22 @@ EnumDeclaration enumTypes[] = {
     {"VkDiscardRectangleModeEXT", 2},
     {"VkSubpassDescriptionFlagBits", 0},
     {"VkPointClippingBehavior", 2},
-    {"VkSamplerReductionMode", 3},
+    {"VkSamplerReductionModeEXT", 3},
     {"VkTessellationDomainOrigin", 2},
     {"VkSamplerYcbcrModelConversion", 5},
     {"VkSamplerYcbcrRange", 2},
     {"VkChromaLocation", 2},
     {"VkBlendOverlapEXT", 3},
     {"VkCoverageModulationModeNV", 4},
-    {"VkCoverageReductionModeNV", 2},
     {"VkValidationCacheHeaderVersionEXT", 1},
     {"VkShaderInfoTypeAMD", 3},
     {"VkQueueGlobalPriorityEXT", 4},
     {"VkDebugUtilsMessageSeverityFlagBitsEXT", 4},
     {"VkDebugUtilsMessageTypeFlagBitsEXT", 3},
     {"VkConservativeRasterizationModeEXT", 3},
-    {"VkDescriptorBindingFlagBits", 4},
-    {"VkVendorId", 3},
-    {"VkDriverId", 12},
-    {"VkConditionalRenderingFlagBitsEXT", 1},
-    {"VkResolveModeFlagBits", 5},
-    {"VkShadingRatePaletteEntryNV", 12},
-    {"VkCoarseSampleOrderTypeNV", 4},
-    {"VkGeometryInstanceFlagBitsNV", 4},
-    {"VkGeometryFlagBitsNV", 2},
-    {"VkBuildAccelerationStructureFlagBitsNV", 5},
-    {"VkCopyAccelerationStructureModeNV", 2},
-    {"VkAccelerationStructureTypeNV", 2},
-    {"VkGeometryTypeNV", 2},
-    {"VkAccelerationStructureMemoryRequirementsTypeNV", 3},
-    {"VkRayTracingShaderGroupTypeNV", 3},
-    {"VkMemoryOverallocationBehaviorAMD", 3},
-    {"VkFramebufferCreateFlagBits", 0},
-    {"VkScopeNV", 4},
-    {"VkComponentTypeNV", 11},
-    {"VkPipelineCreationFeedbackFlagBitsEXT", 3},
-    {"VkFullScreenExclusiveEXT", 4},
-    {"VkPerformanceCounterScopeKHR", 6},
-    {"VkPerformanceCounterUnitKHR", 11},
-    {"VkPerformanceCounterStorageKHR", 6},
-    {"VkPerformanceCounterDescriptionFlagBitsKHR", 2},
-    {"VkAcquireProfilingLockFlagBitsKHR", 0},
-    {"VkShaderCorePropertiesFlagBitsAMD", 0},
-    {"VkPerformanceConfigurationTypeINTEL", 1},
-    {"VkQueryPoolSamplingModeINTEL", 1},
-    {"VkPerformanceOverrideTypeINTEL", 2},
-    {"VkPerformanceParameterTypeINTEL", 2},
-    {"VkPerformanceValueTypeINTEL", 5},
-    {"VkShaderFloatControlsIndependence", 3},
-    {"VkPipelineExecutableStatisticFormatKHR", 4},
-    {"VkLineRasterizationModeEXT", 4},
-    {"VkShaderModuleCreateFlagBits", 0},
-    {"VkPipelineCompilerControlFlagBitsAMD", 0},
-    {"VkToolPurposeFlagBitsEXT", 5},
+    {"VkDescriptorBindingFlagBitsEXT", 4},
 };
-constexpr std::size_t enumTypesCount = 167;
+constexpr std::size_t enumTypesCount = 118;
 
 struct EnumValueSet {
     const char *name;
@@ -863,7 +813,6 @@ constexpr EnumValueSet VkAttachmentDescriptionFlagBitsSets[] = {
 constexpr EnumValueSet VkStencilFaceFlagBitsSets[] = {
     {"FRONT_BIT", 0x00000001},
     {"BACK_BIT", 0x00000002},
-    {"FRONT_AND_BACK", 0x00000003},
     {"VK_STENCIL_FRONT_AND_BACK", 0x00000003},
 };
 constexpr EnumValueSet VkDescriptorPoolCreateFlagBitsSets[] = {
@@ -871,13 +820,6 @@ constexpr EnumValueSet VkDescriptorPoolCreateFlagBitsSets[] = {
 };
 constexpr EnumValueSet VkDependencyFlagBitsSets[] = {
     {"BY_REGION_BIT", 0x00000001},
-};
-constexpr EnumValueSet VkSemaphoreTypeSets[] = {
-    {"BINARY", 0},
-    {"TIMELINE", 1},
-};
-constexpr EnumValueSet VkSemaphoreWaitFlagBitsSets[] = {
-    {"ANY_BIT", 0x00000001},
 };
 constexpr EnumValueSet VkPresentModeKHRSets[] = {
     {"IMMEDIATE", 0},
@@ -887,7 +829,6 @@ constexpr EnumValueSet VkPresentModeKHRSets[] = {
 };
 constexpr EnumValueSet VkColorSpaceKHRSets[] = {
     {"SRGB_NONLINEAR", 0},
-    {"VK_COLORSPACE_SRGB_NONLINEAR", 0},
 };
 constexpr EnumValueSet VkDisplayPlaneAlphaFlagBitsKHRSets[] = {
     {"OPAQUE_BIT", 0x00000001},
@@ -911,15 +852,6 @@ constexpr EnumValueSet VkSurfaceTransformFlagBitsKHRSets[] = {
     {"HORIZONTAL_MIRROR_ROTATE_180_BIT", 0x00000040},
     {"HORIZONTAL_MIRROR_ROTATE_270_BIT", 0x00000080},
     {"INHERIT_BIT", 0x00000100},
-};
-constexpr EnumValueSet VkSwapchainImageUsageFlagBitsANDROIDSets[] = {
-    {"SHARED_BIT", 0x00000001},
-};
-constexpr EnumValueSet VkTimeDomainEXTSets[] = {
-    {"DEVICE", 0},
-    {"CLOCK_MONOTONIC", 1},
-    {"CLOCK_MONOTONIC_RAW", 2},
-    {"QUERY_PERFORMANCE_COUNTER", 3},
 };
 constexpr EnumValueSet VkDebugReportFlagBitsEXTSets[] = {
     {"INFORMATION_BIT", 0x00000001},
@@ -958,13 +890,11 @@ constexpr EnumValueSet VkDebugReportObjectTypeEXTSets[] = {
     {"SURFACE_KHR", 26},
     {"SWAPCHAIN_KHR", 27},
     {"DEBUG_REPORT_CALLBACK_EXT", 28},
-    {"DEBUG_REPORT", 28},
     {"DISPLAY_KHR", 29},
     {"DISPLAY_MODE_KHR", 30},
     {"OBJECT_TABLE_NVX", 31},
     {"INDIRECT_COMMANDS_LAYOUT_NVX", 32},
     {"VALIDATION_CACHE_EXT", 33},
-    {"VALIDATION_CACHE", 33},
 };
 constexpr EnumValueSet VkRasterizationOrderAMDSets[] = {
     {"STRICT", 0},
@@ -984,20 +914,6 @@ constexpr EnumValueSet VkExternalMemoryFeatureFlagBitsNVSets[] = {
 constexpr EnumValueSet VkValidationCheckEXTSets[] = {
     {"ALL", 0},
     {"SHADERS", 1},
-};
-constexpr EnumValueSet VkValidationFeatureEnableEXTSets[] = {
-    {"GPU_ASSISTED", 0},
-    {"GPU_ASSISTED_RESERVE_BINDING_SLOT", 1},
-    {"BEST_PRACTICES", 2},
-};
-constexpr EnumValueSet VkValidationFeatureDisableEXTSets[] = {
-    {"ALL", 0},
-    {"SHADERS", 1},
-    {"THREAD_SAFETY", 2},
-    {"API_PARAMETERS", 3},
-    {"OBJECT_LIFETIMES", 4},
-    {"CORE_CHECKS", 5},
-    {"UNIQUE_HANDLES", 6},
 };
 constexpr EnumValueSet VkSubgroupFeatureFlagBitsSets[] = {
     {"BASIC_BIT", 0x00000001},      {"VOTE_BIT", 0x00000002},
@@ -1100,7 +1016,7 @@ constexpr EnumValueSet VkPointClippingBehaviorSets[] = {
     {"ALL_CLIP_PLANES", 0},
     {"USER_CLIP_PLANES_ONLY", 1},
 };
-constexpr EnumValueSet VkSamplerReductionModeSets[] = {
+constexpr EnumValueSet VkSamplerReductionModeEXTSets[] = {
     {"WEIGHTED_AVERAGE", 0},
     {"MIN", 1},
     {"MAX", 2},
@@ -1132,10 +1048,6 @@ constexpr EnumValueSet VkCoverageModulationModeNVSets[] = {
     {"ALPHA", 2},
     {"RGBA", 3},
 };
-constexpr EnumValueSet VkCoverageReductionModeNVSets[] = {
-    {"MERGE", 0},
-    {"TRUNCATE", 1},
-};
 constexpr EnumValueSet VkValidationCacheHeaderVersionEXTSets[] = {
     {"ONE", 1},
 };
@@ -1166,176 +1078,11 @@ constexpr EnumValueSet VkConservativeRasterizationModeEXTSets[] = {
     {"OVERESTIMATE", 1},
     {"UNDERESTIMATE", 2},
 };
-constexpr EnumValueSet VkDescriptorBindingFlagBitsSets[] = {
+constexpr EnumValueSet VkDescriptorBindingFlagBitsEXTSets[] = {
     {"UPDATE_AFTER_BIND_BIT", 0x00000001},
     {"UPDATE_UNUSED_WHILE_PENDING_BIT", 0x00000002},
     {"PARTIALLY_BOUND_BIT", 0x00000004},
     {"VARIABLE_DESCRIPTOR_COUNT_BIT", 0x00000008},
-};
-constexpr EnumValueSet VkVendorIdSets[] = {
-    {"VK_VENDOR_ID", 0x10001},
-    {"VK_VENDOR_ID", 0x10002},
-    {"KAZAN", 0x10003},
-};
-constexpr EnumValueSet VkDriverIdSets[] = {
-    {"AMD_PROPRIETARY", 1},         {"AMD_OPEN_SOURCE", 2},           {"MESA_RADV", 3},
-    {"NVIDIA_PROPRIETARY", 4},      {"INTEL_PROPRIETARY_WINDOWS", 5}, {"INTEL_OPEN_SOURCE", 6},
-    {"IMAGINATION_PROPRIETARY", 7}, {"QUALCOMM_PROPRIETARY", 8},      {"ARM_PROPRIETARY", 9},
-    {"GOOGLE_SWIFTSHADER", 10},     {"GGP_PROPRIETARY", 11},          {"BROADCOM_PROPRIETARY", 12},
-};
-constexpr EnumValueSet VkConditionalRenderingFlagBitsEXTSets[] = {
-    {"INVERTED_BIT", 0x00000001},
-};
-constexpr EnumValueSet VkResolveModeFlagBitsSets[] = {
-    {"NONE", 0},
-    {"SAMPLE_ZERO_BIT", 0x00000001},
-    {"AVERAGE_BIT", 0x00000002},
-    {"MIN_BIT", 0x00000004},
-    {"MAX_BIT", 0x00000008},
-};
-constexpr EnumValueSet VkShadingRatePaletteEntryNVSets[] = {
-    {"NO_INVOCATIONS", 0},
-    {"16_INVOCATIONS_PER_PIXEL", 1},
-    {"8_INVOCATIONS_PER_PIXEL", 2},
-    {"4_INVOCATIONS_PER_PIXEL", 3},
-    {"2_INVOCATIONS_PER_PIXEL", 4},
-    {"1_INVOCATION_PER_PIXEL", 5},
-    {"1_INVOCATION_PER_2X1_PIXELS", 6},
-    {"1_INVOCATION_PER_1X2_PIXELS", 7},
-    {"1_INVOCATION_PER_2X2_PIXELS", 8},
-    {"1_INVOCATION_PER_4X2_PIXELS", 9},
-    {"1_INVOCATION_PER_2X4_PIXELS", 10},
-    {"1_INVOCATION_PER_4X4_PIXELS", 11},
-};
-constexpr EnumValueSet VkCoarseSampleOrderTypeNVSets[] = {
-    {"DEFAULT", 0},
-    {"CUSTOM", 1},
-    {"PIXEL_MAJOR", 2},
-    {"SAMPLE_MAJOR", 3},
-};
-constexpr EnumValueSet VkGeometryInstanceFlagBitsNVSets[] = {
-    {"TRIANGLE_CULL_DISABLE_BIT", 0x00000001},
-    {"TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT", 0x00000002},
-    {"FORCE_OPAQUE_BIT", 0x00000004},
-    {"FORCE_NO_OPAQUE_BIT", 0x00000008},
-};
-constexpr EnumValueSet VkGeometryFlagBitsNVSets[] = {
-    {"OPAQUE_BIT", 0x00000001},
-    {"NO_DUPLICATE_ANY_HIT_INVOCATION_BIT", 0x00000002},
-};
-constexpr EnumValueSet VkBuildAccelerationStructureFlagBitsNVSets[] = {
-    {"ALLOW_UPDATE_BIT", 0x00000001},      {"ALLOW_COMPACTION_BIT", 0x00000002},
-    {"PREFER_FAST_TRACE_BIT", 0x00000004}, {"PREFER_FAST_BUILD_BIT", 0x00000008},
-    {"LOW_MEMORY_BIT", 0x00000010},
-};
-constexpr EnumValueSet VkCopyAccelerationStructureModeNVSets[] = {
-    {"CLONE", 0},
-    {"COMPACT", 1},
-};
-constexpr EnumValueSet VkAccelerationStructureTypeNVSets[] = {
-    {"TOP_LEVEL", 0},
-    {"BOTTOM_LEVEL", 1},
-};
-constexpr EnumValueSet VkGeometryTypeNVSets[] = {
-    {"TRIANGLES", 0},
-    {"AABBS", 1},
-};
-constexpr EnumValueSet VkAccelerationStructureMemoryRequirementsTypeNVSets[] = {
-    {"OBJECT", 0},
-    {"BUILD_SCRATCH", 1},
-    {"UPDATE_SCRATCH", 2},
-};
-constexpr EnumValueSet VkRayTracingShaderGroupTypeNVSets[] = {
-    {"GENERAL", 0},
-    {"TRIANGLES_HIT_GROUP", 1},
-    {"PROCEDURAL_HIT_GROUP", 2},
-};
-constexpr EnumValueSet VkMemoryOverallocationBehaviorAMDSets[] = {
-    {"DEFAULT", 0},
-    {"ALLOWED", 1},
-    {"DISALLOWED", 2},
-};
-constexpr EnumValueSet VkScopeNVSets[] = {
-    {"DEVICE", 1},
-    {"WORKGROUP", 2},
-    {"SUBGROUP", 3},
-    {"QUEUE_FAMILY", 5},
-};
-constexpr EnumValueSet VkComponentTypeNVSets[] = {
-    {"FLOAT16", 0}, {"FLOAT32", 1}, {"FLOAT64", 2}, {"SINT8", 3},  {"SINT16", 4},  {"SINT32", 5},
-    {"SINT64", 6},  {"UINT8", 7},   {"UINT16", 8},  {"UINT32", 9}, {"UINT64", 10},
-};
-constexpr EnumValueSet VkPipelineCreationFeedbackFlagBitsEXTSets[] = {
-    {"VALID_BIT", 0x00000001},
-    {"APPLICATION_PIPELINE_CACHE_HIT_BIT", 0x00000002},
-    {"BASE_PIPELINE_ACCELERATION_BIT", 0x00000004},
-};
-constexpr EnumValueSet VkFullScreenExclusiveEXTSets[] = {
-    {"DEFAULT", 0},
-    {"ALLOWED", 1},
-    {"DISALLOWED", 2},
-    {"APPLICATION_CONTROLLED", 3},
-};
-constexpr EnumValueSet VkPerformanceCounterScopeKHRSets[] = {
-    {"COMMAND_BUFFER", 0},
-    {"RENDER_PASS", 1},
-    {"COMMAND", 2},
-    {"VK_QUERY_SCOPE_COMMAND_BUFFER", 0},
-    {"VK_QUERY_SCOPE_RENDER_PASS", 1},
-    {"VK_QUERY_SCOPE_COMMAND", 0},
-};
-constexpr EnumValueSet VkPerformanceCounterUnitKHRSets[] = {
-    {"GENERIC", 0}, {"PERCENTAGE", 1}, {"NANOSECONDS", 2}, {"BYTES", 3}, {"BYTES_PER_SECOND", 4},
-    {"KELVIN", 5},  {"WATTS", 6},      {"VOLTS", 7},       {"AMPS", 8},  {"HERTZ", 9},
-    {"CYCLES", 10},
-};
-constexpr EnumValueSet VkPerformanceCounterStorageKHRSets[] = {
-    {"INT32", 0}, {"INT64", 1}, {"UINT32", 2}, {"UINT64", 3}, {"FLOAT32", 4}, {"FLOAT64", 5},
-};
-constexpr EnumValueSet VkPerformanceCounterDescriptionFlagBitsKHRSets[] = {
-    {"PERFORMANCE_IMPACTING", 0x00000001},
-    {"CONCURRENTLY_IMPACTED", 0x00000002},
-};
-constexpr EnumValueSet VkPerformanceConfigurationTypeINTELSets[] = {
-    {"COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED", 0},
-};
-constexpr EnumValueSet VkQueryPoolSamplingModeINTELSets[] = {
-    {"MANUAL", 0},
-};
-constexpr EnumValueSet VkPerformanceOverrideTypeINTELSets[] = {
-    {"NULL_HARDWARE", 0},
-    {"FLUSH_GPU_CACHES", 1},
-};
-constexpr EnumValueSet VkPerformanceParameterTypeINTELSets[] = {
-    {"HW_COUNTERS_SUPPORTED", 0},
-    {"STREAM_MARKER_VALID_BITS", 1},
-};
-constexpr EnumValueSet VkPerformanceValueTypeINTELSets[] = {
-    {"UINT32", 0}, {"UINT64", 1}, {"FLOAT", 2}, {"BOOL", 3}, {"STRING", 4},
-};
-constexpr EnumValueSet VkShaderFloatControlsIndependenceSets[] = {
-    {"32_BIT_ONLY", 0},
-    {"ALL", 1},
-    {"NONE", 2},
-};
-constexpr EnumValueSet VkPipelineExecutableStatisticFormatKHRSets[] = {
-    {"BOOL32", 0},
-    {"INT64", 1},
-    {"UINT64", 2},
-    {"FLOAT64", 3},
-};
-constexpr EnumValueSet VkLineRasterizationModeEXTSets[] = {
-    {"DEFAULT", 0},
-    {"RECTANGULAR", 1},
-    {"BRESENHAM", 2},
-    {"RECTANGULAR_SMOOTH", 3},
-};
-constexpr EnumValueSet VkToolPurposeFlagBitsEXTSets[] = {
-    {"VALIDATION_BIT", 0x00000001},
-    {"PROFILING_BIT", 0x00000002},
-    {"TRACING_BIT", 0x00000004},
-    {"ADDITIONAL_FEATURES_BIT", 0x00000008},
-    {"MODIFYING_FEATURES_BIT", 0x00000010},
 };
 
 constexpr const EnumValueSet *valueSets[] = {
@@ -1378,7 +1125,6 @@ constexpr const EnumValueSet *valueSets[] = {
     VkObjectTypeSets,
     VkQueueFlagBitsSets,
     nullptr,
-    nullptr,
     VkMemoryPropertyFlagBitsSets,
     VkMemoryHeapFlagBitsSets,
     VkAccessFlagBitsSets,
@@ -1387,13 +1133,9 @@ constexpr const EnumValueSet *valueSets[] = {
     VkShaderStageFlagBitsSets,
     VkImageUsageFlagBitsSets,
     VkImageCreateFlagBitsSets,
-    nullptr,
-    nullptr,
     VkPipelineCreateFlagBitsSets,
-    nullptr,
     VkColorComponentFlagBitsSets,
     VkFenceCreateFlagBitsSets,
-    nullptr,
     VkFormatFeatureFlagBitsSets,
     VkQueryControlFlagBitsSets,
     VkQueryResultFlagBitsSets,
@@ -1411,23 +1153,17 @@ constexpr const EnumValueSet *valueSets[] = {
     VkStencilFaceFlagBitsSets,
     VkDescriptorPoolCreateFlagBitsSets,
     VkDependencyFlagBitsSets,
-    VkSemaphoreTypeSets,
-    VkSemaphoreWaitFlagBitsSets,
     VkPresentModeKHRSets,
     VkColorSpaceKHRSets,
     VkDisplayPlaneAlphaFlagBitsKHRSets,
     VkCompositeAlphaFlagBitsKHRSets,
     VkSurfaceTransformFlagBitsKHRSets,
-    VkSwapchainImageUsageFlagBitsANDROIDSets,
-    VkTimeDomainEXTSets,
     VkDebugReportFlagBitsEXTSets,
     VkDebugReportObjectTypeEXTSets,
     VkRasterizationOrderAMDSets,
     VkExternalMemoryHandleTypeFlagBitsNVSets,
     VkExternalMemoryFeatureFlagBitsNVSets,
     VkValidationCheckEXTSets,
-    VkValidationFeatureEnableEXTSets,
-    VkValidationFeatureDisableEXTSets,
     VkSubgroupFeatureFlagBitsSets,
     VkIndirectCommandsLayoutUsageFlagBitsNVXSets,
     VkObjectEntryUsageFlagBitsNVXSets,
@@ -1454,58 +1190,20 @@ constexpr const EnumValueSet *valueSets[] = {
     VkDiscardRectangleModeEXTSets,
     nullptr,
     VkPointClippingBehaviorSets,
-    VkSamplerReductionModeSets,
+    VkSamplerReductionModeEXTSets,
     VkTessellationDomainOriginSets,
     VkSamplerYcbcrModelConversionSets,
     VkSamplerYcbcrRangeSets,
     VkChromaLocationSets,
     VkBlendOverlapEXTSets,
     VkCoverageModulationModeNVSets,
-    VkCoverageReductionModeNVSets,
     VkValidationCacheHeaderVersionEXTSets,
     VkShaderInfoTypeAMDSets,
     VkQueueGlobalPriorityEXTSets,
     VkDebugUtilsMessageSeverityFlagBitsEXTSets,
     VkDebugUtilsMessageTypeFlagBitsEXTSets,
     VkConservativeRasterizationModeEXTSets,
-    VkDescriptorBindingFlagBitsSets,
-    VkVendorIdSets,
-    VkDriverIdSets,
-    VkConditionalRenderingFlagBitsEXTSets,
-    VkResolveModeFlagBitsSets,
-    VkShadingRatePaletteEntryNVSets,
-    VkCoarseSampleOrderTypeNVSets,
-    VkGeometryInstanceFlagBitsNVSets,
-    VkGeometryFlagBitsNVSets,
-    VkBuildAccelerationStructureFlagBitsNVSets,
-    VkCopyAccelerationStructureModeNVSets,
-    VkAccelerationStructureTypeNVSets,
-    VkGeometryTypeNVSets,
-    VkAccelerationStructureMemoryRequirementsTypeNVSets,
-    VkRayTracingShaderGroupTypeNVSets,
-    VkMemoryOverallocationBehaviorAMDSets,
-    nullptr,
-    VkScopeNVSets,
-    VkComponentTypeNVSets,
-    VkPipelineCreationFeedbackFlagBitsEXTSets,
-    VkFullScreenExclusiveEXTSets,
-    VkPerformanceCounterScopeKHRSets,
-    VkPerformanceCounterUnitKHRSets,
-    VkPerformanceCounterStorageKHRSets,
-    VkPerformanceCounterDescriptionFlagBitsKHRSets,
-    nullptr,
-    nullptr,
-    VkPerformanceConfigurationTypeINTELSets,
-    VkQueryPoolSamplingModeINTELSets,
-    VkPerformanceOverrideTypeINTELSets,
-    VkPerformanceParameterTypeINTELSets,
-    VkPerformanceValueTypeINTELSets,
-    VkShaderFloatControlsIndependenceSets,
-    VkPipelineExecutableStatisticFormatKHRSets,
-    VkLineRasterizationModeEXTSets,
-    nullptr,
-    nullptr,
-    VkToolPurposeFlagBitsEXTSets,
+    VkDescriptorBindingFlagBitsEXTSets,
 };
 
 /**
