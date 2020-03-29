@@ -19,7 +19,7 @@ for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$"); do
     git checkout $TAG
 
     # Generate file
-    VkEnumStringifier -i xml/vk.xml -d ../pre-generated -o vk_enum_stringifier_v$VER.cpp
+    ../build/VkEnumStringifier -i xml/vk.xml -d ../pre-generated -o vk_enum_stringifier_v$VER.cpp
 
     # Format it
     clang-format -i ../pre-generated/vk_enum_stringifier_v$VER.cpp
