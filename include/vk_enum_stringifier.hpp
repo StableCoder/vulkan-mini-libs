@@ -44,7 +44,7 @@ std::optional<uint32_t> parseEnum(std::string_view enumType, std::string value);
  * @return The value if the type/values are found. Returns nullopt is something can't be found.
  *
  * Tokenizes the given value string, delimited by '|', and for each token attempts to find the value
- * in the provided enum value set, and if found, OR's it witht eh current return value.
+ * in the provided enum value set, and if found, OR's it with the current return value.
  */
 std::optional<uint32_t> parseBitmask(std::string_view enumType, std::string value);
 
