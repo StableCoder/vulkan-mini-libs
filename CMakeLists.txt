@@ -7,8 +7,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(VkEnumStringifier src/vk_enum_stringifier.cpp)
-target_include_directories(VkEnumStringifier PRIVATE external)
+add_executable(VkStringifier src/vk_stringifier.cpp)
+target_include_directories(VkStringifier PRIVATE external)
 
 if(BUILD_TESTS)
   enable_testing()

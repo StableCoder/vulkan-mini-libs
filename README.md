@@ -1,8 +1,8 @@
-# Vk Enum Stringifier
+# Vk Stringifier
 
-[![pipeline status](https://git.stabletec.com/utilities/vk-enum-stringifier/badges/master/pipeline.svg)](https://git.stabletec.com/utilities/vk-enum-stringifier/commits/master)
-[![coverage report](https://git.stabletec.com/utilities/vk-enum-stringifier/badges/master/coverage.svg)](https://git.stabletec.com/utilities/vk-enum-stringifier/commits/master)
-[![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://git.stabletec.com/utilities/vk-enum-stringifier/blob/master/LICENSE)
+[![pipeline status](https://git.stabletec.com/utilities/vulkan-stringifier/badges/master/pipeline.svg)](https://git.stabletec.com/utilities/vulkan-stringifier/commits/master)
+[![coverage report](https://git.stabletec.com/utilities/vulkan-stringifier/badges/master/coverage.svg)](https://git.stabletec.com/utilities/vulkan-stringifier/commits/master)
+[![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://git.stabletec.com/utilities/vulkan-stringifier/blob/master/LICENSE)
 
 This program builds a source/header file for use in C++17 or newer. It lists
 contains all Vulkan enum types/flags/values of the indicated Vulkan header spec

@@ -6,11 +6,12 @@ prepare_catch(COMPILED_CATCH)
 find_package(Vulkan REQUIRED)
 
 add_executable(
-  VkEnumStringifierTests ../pre-generated/vk_enum_stringifier_v133.cpp
-                         to_string.cpp from_string.cpp)
-target_include_directories(VkEnumStringifierTests
-                           PRIVATE ../include ${Vulkan_INCLUDE_DIRS})
-target_link_libraries(VkEnumStringifierTests PRIVATE catch ${Vulkan_LIBRARY})
-target_code_coverage(VkEnumStringifierTests EXCLUDE ".*/test/.*")
+  VkStringifierTests
+  ../pre-generated/value_stringifier/src/vk_value_stringifier_v133.cpp
+  to_string.cpp from_string.cpp)
+target_include_directories(VkStringifierTests
+                           PRIVATE ../pre-generated/value_stringifier/include)
+target_link_libraries(VkStringifierTests PRIVATE catch Vulkan::Vulkan)
+target_code_coverage(VkStringifierTests EXCLUDE ".*/test/.*")
 
-add_test(NAME VkEnumStringifier-Tests COMMAND VkEnumStringifierTests)
+add_test(NAME VkStringifier-Tests COMMAND VkStringifierTests)

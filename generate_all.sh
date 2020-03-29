@@ -3,11 +3,11 @@
 set -e
 
 # First, clone out the Vulkan-Docs repository
-if ! [ -d auto-gen ]; then
-    git clone https://github.com/KhronosGroup/Vulkan-Docs auto-gen
+if ! [ -d Vulkan-Docs ]; then
+    git clone https://github.com/KhronosGroup/Vulkan-Docs
 fi
 
-cd auto-gen
+cd Vulkan-Docs
 git fetch -p
 
 for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$"); do
@@ -19,8 +19,8 @@ for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$"); do
     git checkout $TAG
 
     # Generate file
-    ../build/VkEnumStringifier -i xml/vk.xml -d ../pre-generated -o vk_enum_stringifier_v$VER.cpp
+    ../build/VkStringifier -i xml/vk.xml -d ../pre-generated/value_stringifier/src/ -o vk_value_stringifier_v$VER.cpp
 
     # Format it
-    clang-format -i ../pre-generated/vk_enum_stringifier_v$VER.cpp
+    clang-format -i ../pre-generated/value_stringifier/src/vk_value_stringifier_v$VER.cpp
 done
