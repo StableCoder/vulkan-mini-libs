@@ -451,7 +451,7 @@ std::string_view stripBit(std::string_view view) {
 int main(int argc, char **argv) {
     std::string inputFile;
     std::string outputDir;
-    std::string outputFile = "vk_enum_stringifier.cpp";
+    std::string enumOutputFile = "vk_enum_stringifier.cpp";
 
     for (int i = 0; i < argc; ++i) {
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
@@ -467,7 +467,7 @@ int main(int argc, char **argv) {
             }
         } else if (strcmp(argv[i], "-o") == 0 || strcmp(argv[i], "--out") == 0) {
             if (i + 1 <= argc) {
-                outputFile = argv[i + 1];
+                enumOutputFile = argv[i + 1];
             }
         }
     }
@@ -687,10 +687,10 @@ constexpr const EnumValueSet *valueSets[] = {
             outputDir += '/';
         }
 
-        std::ofstream outFile(outputDir + outputFile);
+        std::ofstream outFile(outputDir + enumOutputFile);
         if (!outFile.is_open()) {
             std::cerr << "Error: Failed to open output file for writing: " << outputDir
-                      << outputFile << ".cpp" << std::endl;
+                      << enumOutputFile << ".cpp" << std::endl;
             return 1;
         }
 
