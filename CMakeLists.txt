@@ -12,6 +12,9 @@ add_subdirectory(pre-generated)
 add_executable(VkStringifier src/vk_stringifier.cpp)
 target_include_directories(VkStringifier PRIVATE external)
 
+add_executable(VkYamlGenerator src/yaml_generator.cpp)
+target_include_directories(VkYamlGenerator PRIVATE external)
+
 if(BUILD_TESTS)
   enable_testing()
   add_subdirectory(test)
