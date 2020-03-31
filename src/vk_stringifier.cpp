@@ -46,7 +46,7 @@ std::string_view removeVendorTag(const std::vector<std::string> &vendorTags,
 }
 
 /**
- * @brief Converts a Vulakn Flag typename into the prefix that is used for it's enums
+ * @brief Converts a Vulkan Flag typename into the prefix that is used for it's enums
  * @param typeName Name of the type to generate the Vk enum prefix for
  * @return Generated prefix string
  *

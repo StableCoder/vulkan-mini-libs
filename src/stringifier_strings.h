@@ -73,10 +73,20 @@ std::string_view stripBit(std::string_view view) {
  * @param enumType Vulkan enum typename
  * @return Pointer range, or nullopt if type not found
  *
- * First tries the original typename, then tries the typename with any vendor strings removed
+ * First tries the original typename, then tries the typename with any vendor strings removed.
+ * If the 'Flags' variant of a type is passed in, it is automatically converted to 'FlagBits'.
  */
 std::optional<std::tuple<const EnumValueSet *, const EnumValueSet *>> getValueSets(
     std::string_view enumType) {
+    // Check for a conversion from Flags -> FlagBits
+    std::string testStr;
+    if (enumType.rfind("Flags") != std::string::npos) {
+        testStr = enumType;
+        auto it = testStr.rfind("Flags");
+        testStr = testStr.replace(it, strlen("Flags"), "FlagBits");
+        enumType = testStr;
+    }
+
     // Try the original name
     for (std::size_t i = 0; i < enumTypesCount; ++i) {
         if (enumType == std::string_view{enumTypes[i].name}) {
@@ -130,18 +140,29 @@ std::string formatString(std::string str) {
 }
 
 /**
- * @brief Converts a Vulakn Flag typename into the prefix that is used for it's enums
+ * @brief Converts a Vulkan Flag typename into the prefix that is used for it's enums
  * @param typeName Name of the type to generate the Vk enum prefix for
  * @return Generated prefix string
  *
  * Any capitalized letters except for the first has an underscore inserted before it, an underscore
  * is added to the end, and all characters are converted to upper case.
+ *
+ * It also removed the 'Flags' or 'FlagBits' suffixes.
  */
 std::string processEnumPrefix(std::string_view typeName) {
-    std::size_t size = strlen("FlagBits");
-    if (typeName.size() > size) {
-        if (strncmp(typeName.data() + typeName.size() - size, "FlagBits", size) == 0) {
+    // Flag Bits
+    std::size_t flagBitsSize = strlen("FlagBits");
+    if (typeName.size() > flagBitsSize) {
+        if (strncmp(typeName.data() + typeName.size() - flagBitsSize, "FlagBits", flagBitsSize) ==
+            0) {
             typeName = typeName.substr(0, typeName.size() - strlen("FlagBits"));
+        }
+    }
+    // Flags
+    std::size_t flagsSize = strlen("Flags");
+    if (typeName.size() > flagsSize) {
+        if (strncmp(typeName.data() + typeName.size() - flagsSize, "Flags", flagsSize) == 0) {
+            typeName = typeName.substr(0, typeName.size() - strlen("Flags"));
         }
     }
 
@@ -339,5 +360,5 @@ Program Arguments:
                     KhronosGroup, often at this repo:
                     https://github.com/KhronosGroup/Vulkan-Docs
     -d, --dir   : Output directory
-    -o, --out   : Output file name (Default: `vk_enum_stringifier.cpp`)
+    -o, --out   : Output file name (Default: `vk_value_stringifier.cpp`)
 )HELP";
