@@ -115,8 +115,8 @@ Code Coverage:
     - mkdir build && cd build
     - cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DCODE_COVERAGE=ON -DBUILD_TESTS=ON
     - ninja
-    - ninja ccov-VkEnumStringifierTests
-    - ninja ccov-report-VkEnumStringifierTests
+    - ninja ccov-VkStringifierTests
+    - ninja ccov-report-VkStringifierTests
   artifacts:
     name: CodeCoverage
     paths: 
