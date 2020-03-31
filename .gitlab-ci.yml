@@ -66,21 +66,21 @@ Debian/Clang:
   image: stabletec/build-foe:debian-clang
   <<: *platform_unix_template
 
-Ubuntu/GCC:
-  image: stabletec/build-foe:ubuntu-gcc
-  <<: *platform_unix_template
+#Ubuntu/GCC:
+#  image: stabletec/build-foe:ubuntu-gcc
+#  <<: *platform_unix_template
 
-Ubuntu/Clang:
-  image: stabletec/build-foe:ubuntu-clang
-  <<: *platform_unix_template
+#Ubuntu/Clang:
+#  image: stabletec/build-foe:ubuntu-clang
+#  <<: *platform_unix_template
 
-openSUSE/GCC:
-  image: stabletec/build-foe:opensuse-gcc
-  <<: *platform_unix_template
+#openSUSE/GCC:
+#  image: stabletec/build-foe:opensuse-gcc
+#  <<: *platform_unix_template
 
-openSUSE/Clang:
-  image: stabletec/build-foe:opensuse-clang
-  <<: *platform_unix_template
+#openSUSE/Clang:
+#  image: stabletec/build-foe:opensuse-clang
+#  <<: *platform_unix_template
 
 Windows/MSVC:
   variables:
