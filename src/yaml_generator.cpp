@@ -159,10 +159,9 @@ int main(int argc, char **argv) {
              memberNode = memberNode->next_sibling()) {
             if (std::string_view{memberNode->name()} == "member") {
                 std::string_view memberValue = memberNode->value();
-                Member newItem{
-                    .type = memberNode->first_node("type")->value(),
-                    .name = memberNode->first_node("name")->value(),
-                };
+                Member newItem;
+                newItem.type = memberNode->first_node("type")->value();
+                newItem.name = memberNode->first_node("name")->value();
 
                 if (auto lenAttr = memberNode->first_attribute("len"); lenAttr != nullptr) {
                     std::string_view lenTarget = lenAttr->value();
