@@ -49,16 +49,32 @@ TEST_CASE("Stringify: Bitmask") {
         REQUIRE_FALSE(stringifyBitmask("VkGarbagio", VK_CULL_MODE_BACK_BIT).has_value());
     }
     SECTION("Regular success cases") {
-        REQUIRE(
-            stringifyBitmask("VkDebugReportFlagBitsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT).value() ==
-            "ERROR");
-        REQUIRE(stringifyBitmask("VkDebugReportFlagBitsEXT",
-                                 VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT)
-                    .value() == "DEBUG | ERROR");
+        SECTION("FLagBits") {
+            REQUIRE(stringifyBitmask("VkDebugReportFlagBitsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT)
+                        .value() == "ERROR");
+            REQUIRE(stringifyBitmask("VkDebugReportFlagBitsEXT",
+                                     VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT)
+                        .value() == "DEBUG | ERROR");
+        }
+        SECTION("Flags") {
+            REQUIRE(
+                stringifyBitmask("VkDebugReportFlagsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT).value() ==
+                "ERROR");
+            REQUIRE(stringifyBitmask("VkDebugReportFlagsEXT",
+                                     VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT)
+                        .value() == "DEBUG | ERROR");
+        }
     }
     SECTION("Combined bitmask will use larger items first") {
-        REQUIRE(
-            stringifyBitmask("VkCullModeFlagBits", VK_CULL_MODE_BACK_BIT | VK_CULL_MODE_FRONT_BIT)
-                .value() == "FRONT_AND_BACK");
+        SECTION("FlagBits") {
+            REQUIRE(stringifyBitmask("VkCullModeFlagBits",
+                                     VK_CULL_MODE_BACK_BIT | VK_CULL_MODE_FRONT_BIT)
+                        .value() == "FRONT_AND_BACK");
+        }
+        SECTION("Flags") {
+            REQUIRE(
+                stringifyBitmask("VkCullModeFlags", VK_CULL_MODE_BACK_BIT | VK_CULL_MODE_FRONT_BIT)
+                    .value() == "FRONT_AND_BACK");
+        }
     }
 }
