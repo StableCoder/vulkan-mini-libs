@@ -1571,7 +1571,11 @@ std::optional<std::string> stringifyBitmask(std::string_view enumType, uint32_t 
         --start;
     }
 
-    return retStr;
+    if (!retStr.empty()) {
+        return retStr;
+    }
+
+    return std::nullopt;
 }
 
 } // namespace vkEnum
