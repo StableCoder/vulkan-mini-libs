@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
     }
 
     if (inputFile == "") {
-        std::cout << "Error: No input file given. Type --help for help." << std::endl;
+        std::cerr << "Error: No input file given. Type --help for help." << std::endl;
         return 1;
     }
 
@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
     // In order to parse a file, we need to load the whole thing into memory.
     std::ifstream inFile(inputFile.c_str(), std::ifstream::in);
     if (!inFile.is_open()) {
-        std::cout << "Error: Failed to open file " << inputFile << std::endl;
+        std::cerr << "Error: Failed to open file " << inputFile << std::endl;
         return 1;
     }
     // Seek to the end.
@@ -138,10 +138,6 @@ int main(int argc, char **argv) {
         }
 
         structName = typeNode->first_attribute("name")->value();
-        if (structName == "VkPipelineColorBlendStateCreateInfo") {
-            int red = 5;
-        }
-
         structNames.push_back(std::string{structName});
 
         if (!whiteList.empty()) {
