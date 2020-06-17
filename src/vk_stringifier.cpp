@@ -25,6 +25,7 @@
 #include <string>
 #include <vector>
 
+#include "header_str.hpp"
 #include "stringifier_strings.h"
 
 /**
@@ -369,7 +370,7 @@ constexpr const EnumValueSet *valueSets[] = {
         }
 
         // First, write the license/disclaimer
-        outFile << descriptionStr;
+        outFile << headerStr;
         outFile << includesStr;
 
         outFile << "constexpr uint32_t generatedVulkanVersion = " << vkHeaderVersion << "u;\n\n";
