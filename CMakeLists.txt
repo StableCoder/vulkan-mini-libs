@@ -15,6 +15,9 @@ target_include_directories(VkStringifier PRIVATE external)
 add_executable(VkYamlGenerator src/yaml_generator.cpp)
 target_include_directories(VkYamlGenerator PRIVATE external)
 
+add_executable(VkEqualityCheck src/equality_check.cpp)
+target_include_directories(VkEqualityCheck PRIVATE external)
+
 if(BUILD_TESTS)
   enable_testing()
   add_subdirectory(test)
