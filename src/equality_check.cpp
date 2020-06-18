@@ -24,6 +24,7 @@
 #include <vector>
 
 #include "header_str.hpp"
+#include "parse_xml.hpp"
 
 std::string_view headerUsageStr = R"USE(
 /*
@@ -123,6 +124,15 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    // Platforms
+    auto *platformsNode = registryNode->first_node("platforms");
+    if (platformsNode == nullptr) {
+        std::cerr << "Error: Could not find the 'platforms' node." << std::endl;
+        return 1;
+    }
+
+    auto platforms = getPlatforms(platformsNode);
+
     // Need to be in the 'types' node
     auto *typesNode = registryNode->first_node("types");
     if (typesNode == nullptr) {
@@ -130,74 +140,17 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    // Process type/struct types
-    std::stringstream declarationStr;
-    std::stringstream definitionStr;
+    auto structs = getStructData(typesNode);
+    auto unions = getUnionData(typesNode);
 
-    auto const *endTypeNode = typesNode->last_node("type");
-    for (auto *typeNode = typesNode->first_node("type"); typeNode != nullptr;
-         typeNode = typeNode->next_sibling()) {
-        std::string_view structName;
-        std::vector<Member> members;
-
-        // Check for category='struct'
-        auto *categoryAttr = typeNode->first_attribute("category");
-        if (categoryAttr == nullptr || strcmp("struct", categoryAttr->value()) != 0) {
-            goto END_OF_TYPE;
-        }
-
-        structName = typeNode->first_attribute("name")->value();
-
-        for (auto memberNode = typeNode->first_node("member"); memberNode != nullptr;
-             memberNode = memberNode->next_sibling()) {
-
-            if (std::string_view{memberNode->name()} == "member") {
-                Member newItem;
-                newItem.type = memberNode->first_node("type")->value();
-                newItem.name = memberNode->first_node("name")->value();
-
-                members.emplace_back(newItem);
-            }
-
-        MEMBER_LOOP_END:
-            if (memberNode == typeNode->last_node("member"))
-                break;
-        }
-
-        if (!members.empty()) {
-            // Declarations
-            declarationStr << "\nbool operator==(" << structName << " const &lhs,\n";
-            declarationStr << "                " << structName << " const &rhs) noexcept;\n";
-            declarationStr << "bool operator!=(" << structName << " const &lhs,\n";
-            declarationStr << "                " << structName << " const &rhs) noexcept;\n";
-
-            // == definition
-            definitionStr << "\nbool operator==(" << structName << " const &lhs,\n";
-            definitionStr << "                " << structName << " const &rhs) noexcept {\n";
-            definitionStr << "  return ";
-            bool isFirst = true;
-            for (auto const &member : members) {
-                if (isFirst) {
-                    isFirst = false;
-                } else {
-                    definitionStr << " &&\n         ";
-                }
-                definitionStr << "(lhs." << member.name << " == rhs." << member.name << ")";
-            }
-            definitionStr << ";\n";
-            definitionStr << "}\n";
-
-            // != definition
-            definitionStr << "\nbool operator!=(" << structName << " const &lhs,\n";
-            definitionStr << "                " << structName << " const &rhs) noexcept {\n";
-            definitionStr << "  return !(lhs == rhs);\n";
-            definitionStr << "}\n";
-        }
-
-    END_OF_TYPE:
-        if (typeNode == endTypeNode)
-            break;
+    // Extensions for type platforms
+    auto *extensionsNode = registryNode->first_node("extensions");
+    if (extensionsNode == nullptr) {
+        std::cerr << "Error: Could not find the 'extensions' node." << std::endl;
+        return 1;
     }
+
+    getStructPlatforms(structs, extensionsNode);
 
     // Output to final file
     std::ofstream outFile(outputDir + outputFile);
@@ -221,12 +174,99 @@ int main(int argc, char **argv) {
     outFile << "static_assert(VK_HEADER_VERSION == " << vkHeaderVersion
             << ", \"Wrong VK_HEADER_VERSION!\" );\n";
 
-    outFile << declarationStr.str();
+    // Declarations
+    for (auto &it : structs) {
+        // If no members to compare, then no point
+        if (it.members.empty())
+            continue;
 
+        if (structHasUnion(it, unions))
+            continue;
+
+        std::string_view platformDefine;
+        if (!it.platform.empty()) {
+            // Find the platform
+            for (auto &platform : platforms) {
+                if (it.platform == platform.name) {
+                    platformDefine = platform.define;
+                    break;
+                }
+            }
+
+            outFile << "\n#ifdef " << platformDefine;
+        }
+
+        outFile << "\nbool operator==(" << it.name << " const &lhs,\n";
+        outFile << "                " << it.name << " const &rhs) noexcept;\n";
+        outFile << "bool operator!=(" << it.name << " const &lhs,\n";
+        outFile << "                " << it.name << " const &rhs) noexcept;\n";
+
+        if (!platformDefine.empty())
+            outFile << "#endif // " << platformDefine << "\n";
+    }
+
+    // Definitions
     outFile << "\n#ifdef VK_EQUALITY_CHECK_CONFIG_MAIN\n";
+    outFile << "\n#include <cstring>\n";
+    for (auto &it : structs) {
+        // If no members to compare, then no point
+        if (it.members.empty())
+            continue;
 
-    outFile << definitionStr.str();
+        if (structHasUnion(it, unions))
+            continue;
 
+        std::string_view platformDefine;
+        if (!it.platform.empty()) {
+            // Find the platform
+            for (auto &platform : platforms) {
+                if (it.platform == platform.name) {
+                    platformDefine = platform.define;
+                    break;
+                }
+            }
+
+            outFile << "\n#ifdef " << platformDefine;
+        }
+
+        // == definition
+        outFile << "\nbool operator==(" << it.name << " const &lhs,\n";
+        outFile << "                " << it.name << " const &rhs) noexcept {\n";
+        // Array members
+        for (auto const &member : it.members) {
+            if (member.sizeEnum.empty())
+                continue;
+
+            outFile << "  for(std::size_t i = 0; i < " << member.sizeEnum << "; ++i) {\n";
+            outFile << "    if(lhs." << member.name << "[i] != rhs." << member.name << "[i])\n";
+            outFile << "      return false;\n";
+            outFile << "  }\n";
+        }
+        // Regular members
+        outFile << "  return ";
+        bool isFirst = true;
+        for (auto const &member : it.members) {
+            if (!member.sizeEnum.empty())
+                continue;
+            if (isFirst) {
+                isFirst = false;
+            } else {
+                outFile << " &&\n         ";
+            }
+            outFile << "(lhs." << member.name << " == rhs." << member.name << ")";
+        }
+        outFile << ";\n";
+        outFile << "}\n";
+
+        // != definition
+        outFile << "\nbool operator!=(" << it.name << " const &lhs,\n";
+        outFile << "                " << it.name << " const &rhs) noexcept {\n";
+        outFile << "  return !(lhs == rhs);\n";
+        outFile << "}\n";
+
+        if (!platformDefine.empty())
+            outFile << "#endif // " << platformDefine << "\n";
+    }
     outFile << "\n#endif // VK_EQUALITY_CHECK_CONFIG_MAIN\n";
 
     outFile << "\n#endif // VK_EQUALITY_CHECK_V" << vkHeaderVersion << "_HPP\n";
