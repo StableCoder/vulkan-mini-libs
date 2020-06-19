@@ -17,7 +17,7 @@
 #include <catch.hpp>
 #include <vulkan/vulkan.h>
 
-#include "../generated_include/vk_string_parsing.hpp"
+#include "../include/vk_string_parsing.hpp"
 
 std::string cDummyStr = "AAABBBCCC";
 
