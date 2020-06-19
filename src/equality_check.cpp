@@ -27,7 +27,7 @@
 #include "parse_xml.hpp"
 
 std::string_view headerUsageStr = R"USE(
-/*
+/*  USAGE:
     To use, include this header where the declarations for the boolean checks are required.
 
     On *ONE* compilation unit, include the definition of `#define VK_EQUALITY_CHECK_CONFIG_MAIN`

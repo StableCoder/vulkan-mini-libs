@@ -1,0 +1,2 @@
+
+#endif // VK_STRING_PARSING_HPP

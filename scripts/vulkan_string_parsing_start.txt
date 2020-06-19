@@ -23,13 +23,13 @@
     Check for an updated version anytime, or state concerns/bugs.
 */
 
-#ifndef VK_EQUALITY_CHECKS_HPP
-#define VK_EQUALITY_CHECKS_HPP
+#ifndef VK_STRING_PARSING_HPP
+#define VK_STRING_PARSING_HPP
 
-/*  USAGE
+/*  USAGE:
     To use, include this header where the declarations for the boolean checks are required.
 
-    On *ONE* compilation unit, include the definition of `#define VK_EQUALITY_CHECK_CONFIG_MAIN`
+    On *ONE* compilation unit, include the definition of `#define VK_STRING_PARSING_CONFIG_MAIN`
     so that the definitions are compiled somewhere following the one definition rule.
 */
 

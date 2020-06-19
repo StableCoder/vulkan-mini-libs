@@ -7,7 +7,7 @@
 
        http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
+    Unless CHECKd by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
@@ -15,169 +15,213 @@
 */
 
 #include <catch.hpp>
-#include <vk_value_stringifier.hpp>
 #include <vulkan/vulkan.h>
 
-using namespace vkEnum;
+#define VK_STRING_PARSING_CONFIG_MAIN
+#include "../generated_include/vk_string_parsing.hpp"
 
-TEST_CASE("De-stringify: Failure Cases") {
-    SECTION("Garbage type returns nullopt") {
-        REQUIRE_FALSE(parseEnum("VkGarbagio", "2D").has_value());
-        REQUIRE_FALSE(parseBitmask("VkGarbagio", "2D").has_value());
+constexpr uint32_t cDummyNum = 999999;
+
+TEST_CASE("Parsing: Failure Cases") {
+    uint32_t dummy = cDummyNum;
+
+    SECTION("Garbage type fails") {
+        CHECK_FALSE(vk_parse("VkGarbagio", "2D", &dummy));
+        CHECK(dummy == cDummyNum);
+        CHECK_FALSE(vk_parse("VkGarbagioFlags", "2D", &dummy));
+        CHECK(dummy == cDummyNum);
     }
-    SECTION("Garbage values return nothing") {
-        REQUIRE_FALSE(parseEnum("VkImageType", "6D").has_value());
-        REQUIRE_FALSE(parseBitmask("VkDebugReportFlagBitsEXT", "NOT_EXIST").has_value());
+    SECTION("Garbage values fails") {
+        CHECK_FALSE(vk_parse("VkImageType", "6D", &dummy));
+        CHECK(dummy == cDummyNum);
+        CHECK_FALSE(vk_parse("VkDebugReportFlagBitsEXT", "NOT_EXIST", &dummy));
+        CHECK(dummy == cDummyNum);
     }
     SECTION("Attempting to do a bitmask for an enum returns nothing") {
-        REQUIRE_FALSE(parseEnum("VkImageType", "2D | 3D").has_value());
+        CHECK_FALSE(vk_parse("VkImageType", "2D | 3D", &dummy));
+        CHECK(dummy == cDummyNum);
     }
 }
 
-TEST_CASE(
-    "De-stringify: Checking enum conversions from strings to the values from the  actual header") {
+TEST_CASE("Parsing: Checking enum conversions from strings to the values from the  actual header") {
+    uint32_t retVal = cDummyNum;
     SECTION("With original shortened strings") {
-        REQUIRE(VK_IMAGE_LAYOUT_UNDEFINED == parseEnum("VkImageLayout", "UNDEFINED"));
-        REQUIRE(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL ==
-                parseEnum("VkImageLayout", "TRANSFER_DST_OPTIMAL"));
+        CHECK(vk_parse("VkImageLayout", "UNDEFINED", &retVal));
+        CHECK(retVal == VK_IMAGE_LAYOUT_UNDEFINED);
 
-        REQUIRE(VK_IMAGE_TYPE_2D == parseEnum("VkImageType", "2D"));
+        CHECK(vk_parse("VkImageLayout", "TRANSFER_DST_OPTIMAL", &retVal));
+        CHECK(retVal == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+
+        CHECK(vk_parse("VkImageType", "2D", &retVal));
+        CHECK(retVal == VK_IMAGE_TYPE_2D);
     }
     SECTION("With extra spaces around the type") {
-        REQUIRE(VK_IMAGE_LAYOUT_UNDEFINED ==
-                parseEnum("VkImageLayout", "    VK_IMAGE_LAYOUT_UNDEFINED    "));
+        CHECK(vk_parse("VkImageLayout", "    VK_IMAGE_LAYOUT_UNDEFINED    ", &retVal));
+        CHECK(retVal == VK_IMAGE_LAYOUT_UNDEFINED);
     }
     SECTION("With mixed capitalization and mixture of underscores/spaces") {
-        REQUIRE(VK_IMAGE_LAYOUT_UNDEFINED ==
-                parseEnum("VkImageLayout", "    vK IMagE_LAyOUt UNDEFIned    "));
+        CHECK(vk_parse("VkImageLayout", "    vK IMagE_LAyOUt UNDEFIned    ", &retVal));
+        CHECK(retVal == VK_IMAGE_LAYOUT_UNDEFINED);
     }
     SECTION("With full strings") {
-        REQUIRE(VK_IMAGE_LAYOUT_UNDEFINED ==
-                parseEnum("VkImageLayout", "VK_IMAGE_LAYOUT_UNDEFINED"));
-        REQUIRE(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL ==
-                parseEnum("VkImageLayout", "VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL"));
+        CHECK(vk_parse("VkImageLayout", "VK_IMAGE_LAYOUT_UNDEFINED", &retVal));
+        CHECK(retVal == VK_IMAGE_LAYOUT_UNDEFINED);
 
-        REQUIRE(VK_IMAGE_TYPE_2D == parseEnum("VkImageType", "VK_IMAGE_TYPE_2D"));
+        CHECK(vk_parse("VkImageLayout", "VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL", &retVal));
+        CHECK(retVal == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+
+        CHECK(vk_parse("VkImageType", "VK_IMAGE_TYPE_2D", &retVal));
+        CHECK(retVal == VK_IMAGE_TYPE_2D);
     }
 
     SECTION("With Vendor Tags") {
-        REQUIRE(VK_PRESENT_MODE_IMMEDIATE_KHR ==
-                parseEnum("VkPresentModeKHR", "VK_PRESENT_MODE_IMMEDIATE_KHR"));
-        REQUIRE(VK_PRESENT_MODE_IMMEDIATE_KHR == parseEnum("VkPresentModeKHR", "IMMEDIATE_KHR"));
+        CHECK(vk_parse("VkPresentModeKHR", "VK_PRESENT_MODE_IMMEDIATE_KHR", &retVal));
+        CHECK(retVal == VK_PRESENT_MODE_IMMEDIATE_KHR);
 
-        REQUIRE(VK_PRESENT_MODE_IMMEDIATE_KHR ==
-                parseEnum("VkPresentModeKHR", "VK_PRESENT_MODE_IMMEDIATE"));
-        REQUIRE(VK_PRESENT_MODE_IMMEDIATE_KHR == parseEnum("VkPresentModeKHR", "IMMEDIATE"));
+        CHECK(vk_parse("VkPresentModeKHR", "IMMEDIATE_KHR", &retVal));
+        CHECK(retVal == VK_PRESENT_MODE_IMMEDIATE_KHR);
+
+        CHECK(vk_parse("VkPresentModeKHR", "VK_PRESENT_MODE_IMMEDIATE", &retVal));
+        CHECK(retVal == VK_PRESENT_MODE_IMMEDIATE_KHR);
+
+        CHECK(vk_parse("VkPresentModeKHR", "IMMEDIATE", &retVal));
+        CHECK(retVal == VK_PRESENT_MODE_IMMEDIATE_KHR);
     }
 }
 
 TEST_CASE("De-stringify: Checking bitmask conversions from string to bitmask values") {
+    uint32_t retVal = cDummyNum;
     SECTION("With original shortened strings") {
         SECTION("FlagBits") {
-            REQUIRE(VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "PERFORMANCE_WARNING_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "PERFORMANCE_WARNING"));
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "PERFORMANCE_WARNING_BIT", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
 
-            REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG"));
-            REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "ERROR_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "ERROR"));
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "PERFORMANCE_WARNING", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
 
-            REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG_BIT | ERROR_BIT"));
-            REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG | ERROR"));
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "DEBUG_BIT", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_DEBUG_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "DEBUG", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_DEBUG_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "ERROR_BIT", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_ERROR_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "ERROR", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_ERROR_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "DEBUG_BIT | ERROR_BIT", &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "DEBUG | ERROR", &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
         }
         SECTION("Flags") {
-            REQUIRE(VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "PERFORMANCE_WARNING_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "PERFORMANCE_WARNING"));
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "PERFORMANCE_WARNING_BIT", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
 
-            REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "DEBUG_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "DEBUG"));
-            REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "ERROR_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "ERROR"));
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "PERFORMANCE_WARNING", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
 
-            REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                    parseBitmask("VkDebugReportFlagsEXT", "DEBUG_BIT | ERROR_BIT"));
-            REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                    parseBitmask("VkDebugReportFlagsEXT", "DEBUG | ERROR"));
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "DEBUG_BIT", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_DEBUG_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "DEBUG", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_DEBUG_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "ERROR_BIT", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_ERROR_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "ERROR", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_ERROR_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "DEBUG_BIT | ERROR_BIT", &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "DEBUG | ERROR", &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
         }
     }
     SECTION("With full strings") {
         SECTION("FlagBits") {
-            REQUIRE(VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT",
-                                 "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT"));
-            REQUIRE(
-                VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
-                parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING"));
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT",
+                             &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
 
-            REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_DEBUG_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_DEBUG"));
-            REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR"));
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING",
+                             &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
 
-            REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                    parseBitmask("VkDebugReportFlagBitsEXT",
-                                 "VK_DEBUG_REPORT_DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT"));
-            REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                    parseBitmask("VkDebugReportFlagBitsEXT",
-                                 "VK_DEBUG_REPORT_ERROR | VK_DEBUG_REPORT_DEBUG"));
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_DEBUG_BIT", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_DEBUG_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_DEBUG", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_DEBUG_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR_BIT", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_ERROR_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_ERROR_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT",
+                             "VK_DEBUG_REPORT_DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT", &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT",
+                             "VK_DEBUG_REPORT_ERROR | VK_DEBUG_REPORT_DEBUG", &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
         }
         SECTION("Flags") {
-            REQUIRE(
-                VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
-                parseBitmask("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING"));
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT",
+                             &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
 
-            REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_DEBUG_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_DEBUG_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_DEBUG"));
-            REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_ERROR_BIT"));
-            REQUIRE(VK_DEBUG_REPORT_ERROR_BIT_EXT ==
-                    parseBitmask("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_ERROR"));
+            CHECK(
 
-            REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                    parseBitmask("VkDebugReportFlagsEXT",
-                                 "VK_DEBUG_REPORT_DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT"));
-            REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                    parseBitmask("VkDebugReportFlagsEXT",
-                                 "VK_DEBUG_REPORT_ERROR | VK_DEBUG_REPORT_DEBUG"));
+                vk_parse("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_DEBUG_BIT", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_DEBUG_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_DEBUG", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_DEBUG_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_ERROR_BIT", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_ERROR_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_ERROR", &retVal));
+            CHECK(retVal == VK_DEBUG_REPORT_ERROR_BIT_EXT);
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT",
+                             "VK_DEBUG_REPORT_DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT", &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT",
+                             "VK_DEBUG_REPORT_ERROR | VK_DEBUG_REPORT_DEBUG", &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
         }
     }
     SECTION("With mixed short/full strings") {
         SECTION("FlagBits") {
-            REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                    parseBitmask("VkDebugReportFlagBitsEXT", "DEBUG_BIT | "
-                                                             "VK_DEBUG_REPORT_ERROR_BIT"));
-            REQUIRE(
-                (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                parseBitmask("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR_BIT | DEBUG_BIT"));
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT",
+                             &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
+
+            CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR_BIT | DEBUG_BIT",
+                             &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
         }
         SECTION("Flags") {
-            // REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-            parseBitmask("VkDebugReportFlagsEXT", "DEBUG_BIT | "
-                                                  "VK_DEBUG_REPORT_ERROR_BIT"); //);
-            REQUIRE((VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT) ==
-                    parseBitmask("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_ERROR_BIT | DEBUG_BIT"));
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT",
+                             &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
+
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_ERROR_BIT | DEBUG_BIT",
+                             &retVal));
+            CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
         }
     }
 }

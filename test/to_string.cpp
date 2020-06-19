@@ -7,7 +7,7 @@
 
        http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
+    Unless CHECKd by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
@@ -15,66 +15,82 @@
 */
 
 #include <catch.hpp>
-#include <vk_value_stringifier.hpp>
 #include <vulkan/vulkan.h>
 
-using namespace vkEnum;
+#include "../generated_include/vk_string_parsing.hpp"
 
-TEST_CASE("Stringify: Failure cases") {
-    REQUIRE_FALSE(stringifyBitmask("", 0).has_value());
-    REQUIRE_FALSE(stringifyBitmask("", 0).has_value());
+std::string cDummyStr = "AAABBBCCC";
+
+TEST_CASE("Serialize: Failure cases") {
+    std::string dummyStr = cDummyStr;
+    CHECK_FALSE(vk_serialize("", 0, &dummyStr));
+    CHECK(dummyStr == cDummyStr);
+    CHECK_FALSE(vk_serialize("", 0, &dummyStr));
+    CHECK(dummyStr == cDummyStr);
 }
 
-TEST_CASE("Stringify: Enum") {
+TEST_CASE("Serialize: Enum") {
+    std::string retVal = cDummyStr;
+
     SECTION("Failure case where a bad type is given") {
-        REQUIRE_FALSE(stringifyEnum("VkGarbagio", VK_IMAGE_TYPE_3D).has_value());
+        CHECK_FALSE(vk_serialize("VkGarbagio", VK_IMAGE_TYPE_3D, &retVal));
+        CHECK(retVal == cDummyStr);
     }
     SECTION("Failure case where bad enum given") {
-        stringifyEnum("VkImageType", -1U);
-        REQUIRE_FALSE(stringifyEnum("VkImageType", -1U).has_value());
+        CHECK_FALSE(vk_serialize("VkImageType", -1U, &retVal));
+        CHECK(retVal == cDummyStr);
     }
     SECTION("Success cases") {
-        REQUIRE(stringifyEnum("VkImageType", VK_IMAGE_TYPE_3D).value() == "3D");
-        REQUIRE(stringifyEnum("VkImageType", VK_IMAGE_TYPE_2D).value() == "2D");
+        CHECK(vk_serialize("VkImageType", VK_IMAGE_TYPE_3D, &retVal));
+        CHECK(retVal == "3D");
+
+        CHECK(vk_serialize("VkImageType", VK_IMAGE_TYPE_2D, &retVal));
+        CHECK(retVal == "2D");
     }
 
     SECTION("Vendor Tag Success") {
-        REQUIRE(stringifyEnum("VkPresentModeKHR", VK_PRESENT_MODE_IMMEDIATE_KHR).value() ==
-                "IMMEDIATE");
+        CHECK(vk_serialize("VkPresentModeKHR", VK_PRESENT_MODE_IMMEDIATE_KHR, &retVal));
+        CHECK(retVal == "IMMEDIATE");
     }
 }
 
-TEST_CASE("Stringify: Bitmask") {
+TEST_CASE("Serialize: Bitmask") {
+    std::string retVal = cDummyStr;
+
     SECTION("Failure case where a bad type is given") {
-        REQUIRE_FALSE(stringifyBitmask("VkGarbagio", VK_CULL_MODE_BACK_BIT).has_value());
+        CHECK_FALSE(vk_serialize("VkGarbagio", VK_CULL_MODE_BACK_BIT, &retVal));
+        CHECK(retVal == cDummyStr);
     }
     SECTION("Regular success cases") {
         SECTION("FLagBits") {
-            REQUIRE(stringifyBitmask("VkDebugReportFlagBitsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT)
-                        .value() == "ERROR");
-            REQUIRE(stringifyBitmask("VkDebugReportFlagBitsEXT",
-                                     VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT)
-                        .value() == "DEBUG | ERROR");
+            CHECK(vk_serialize("VkDebugReportFlagBitsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT, &retVal));
+            CHECK(retVal == "ERROR");
+
+            CHECK(vk_serialize("VkDebugReportFlagBitsEXT",
+                               VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT,
+                               &retVal));
+            CHECK(retVal == "DEBUG | ERROR");
         }
         SECTION("Flags") {
-            REQUIRE(
-                stringifyBitmask("VkDebugReportFlagsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT).value() ==
-                "ERROR");
-            REQUIRE(stringifyBitmask("VkDebugReportFlagsEXT",
-                                     VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT)
-                        .value() == "DEBUG | ERROR");
+            CHECK(vk_serialize("VkDebugReportFlagsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT, &retVal));
+            CHECK(retVal == "ERROR");
+
+            CHECK(vk_serialize("VkDebugReportFlagsEXT",
+                               VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT,
+                               &retVal));
+            CHECK(retVal == "DEBUG | ERROR");
         }
     }
     SECTION("Combined bitmask will use larger items first") {
         SECTION("FlagBits") {
-            REQUIRE(stringifyBitmask("VkCullModeFlagBits",
-                                     VK_CULL_MODE_BACK_BIT | VK_CULL_MODE_FRONT_BIT)
-                        .value() == "FRONT_AND_BACK");
+            CHECK(vk_serialize("VkCullModeFlagBits", VK_CULL_MODE_BACK_BIT | VK_CULL_MODE_FRONT_BIT,
+                               &retVal));
+            CHECK(retVal == "FRONT_AND_BACK");
         }
         SECTION("Flags") {
-            REQUIRE(
-                stringifyBitmask("VkCullModeFlags", VK_CULL_MODE_BACK_BIT | VK_CULL_MODE_FRONT_BIT)
-                    .value() == "FRONT_AND_BACK");
+            CHECK(vk_serialize("VkCullModeFlags", VK_CULL_MODE_BACK_BIT | VK_CULL_MODE_FRONT_BIT,
+                               &retVal));
+            CHECK(retVal == "FRONT_AND_BACK");
         }
     }
 }

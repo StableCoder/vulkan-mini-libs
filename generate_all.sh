@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-
 set -e
 
 # Clone/update the Vulkan-Docs repository
@@ -10,7 +9,9 @@ cd Vulkan-Docs
 git fetch -p
 
 # Prepare the top-level headers
+mkdir -p ../generated_include/vk_mini_libs_detail/
 cat ../scripts/equality_check_start.txt >../generated_include/vk_equality_checks.hpp
+cat ../scripts/vulkan_string_parsing_start.txt >../generated_include/vk_string_parsing.hpp
 
 # Generate the per-version files
 for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$"); do
@@ -22,17 +23,20 @@ for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$"); do
     git checkout $TAG
 
     # Generate stringifier
-    ../build/VkStringifier -i xml/vk.xml -d ../pre-generated/value_stringifier/src/ -o vk_value_stringifier_v$VER.cpp
+    ../build/VkStringifier -i xml/vk.xml -d ../generated_include/vk_mini_libs_detail/ -o vk_string_parsing_v$VER.hpp
 
-    # Format it
-    clang-format -i ../pre-generated/value_stringifier/src/vk_value_stringifier_v$VER.cpp
+    cat >>../generated_include/vk_string_parsing.hpp <<EOL
+#if VK_HEADER_VERSION == ${VER}
+    #include "vk_mini_libs_detail/vk_string_parsing_v${VER}.hpp"
+#endif
+EOL
 
     # Generate equality checks
-    ../build/VkEqualityCheck -i xml/vk.xml -d ../generated_include/equality_check_detail/ -o vk_equality_checks_v$VER.hpp
+    ../build/VkEqualityCheck -i xml/vk.xml -d ../generated_include/vk_mini_libs_detail/ -o vk_equality_checks_v$VER.hpp
 
     cat >>../generated_include/vk_equality_checks.hpp <<EOL
 #if VK_HEADER_VERSION == ${VER}
-    #include <equality_check_detail/vk_equality_checks_v${VER}.hpp>
+    #include "vk_mini_libs_detail/vk_equality_checks_v${VER}.hpp"
 #endif
 EOL
 
@@ -40,3 +44,4 @@ done
 
 # Complete the top-level headers
 cat ../scripts/equality_check_end.txt >>../generated_include/vk_equality_checks.hpp
+cat ../scripts/vulkan_string_parsing_end.txt >>../generated_include/vk_string_parsing.hpp

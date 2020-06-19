@@ -26,6 +26,7 @@
 #include <vector>
 
 #include "header_str.hpp"
+#include "parse_xml.hpp"
 #include "stringifier_strings.h"
 
 /**
@@ -37,6 +38,9 @@
 std::string_view removeVendorTag(const std::vector<std::string> &vendorTags,
                                  std::string_view view) {
     for (auto &it : vendorTags) {
+        if (view == it)
+            break;
+
         if (strncmp(view.data() + view.size() - it.size(), it.data(), it.size()) == 0) {
             view = view.substr(0, view.size() - it.size());
             break;
@@ -123,10 +127,21 @@ std::string_view stripBit(std::string_view view) {
     return view;
 }
 
+std::string replaceFlagBitsSuffix(std::string str) {
+    if (str.size() > strlen("FlagBits")) {
+        if (str.substr(str.size() - strlen("FlagBits")) == "FlagBits") {
+            str = str.substr(0, str.size() - strlen("FlagBits"));
+            str += "Flags";
+        }
+    }
+
+    return str;
+}
+
 int main(int argc, char **argv) {
     std::string inputFile;
     std::string outputDir;
-    std::string enumOutputFile = "vk_enum_stringifier.cpp";
+    std::string outputFile = "vk_string_parsing.hpp";
 
     for (int i = 0; i < argc; ++i) {
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
@@ -142,7 +157,7 @@ int main(int argc, char **argv) {
             }
         } else if (strcmp(argv[i], "-o") == 0 || strcmp(argv[i], "--out") == 0) {
             if (i + 1 <= argc) {
-                enumOutputFile = argv[i + 1];
+                outputFile = argv[i + 1];
             }
         }
     }
@@ -203,184 +218,149 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    std::vector<std::string> vendorTagList;
-    std::stringstream vendorTags;
-    { // Vendor Tags
-        vendorTags << "constexpr const char* vendorTags[] = {\n";
-
-        std::size_t tagCount = 0;
-
-        // Process 'tags' node
-        auto *tagsNode = registryNode->first_node("tags");
-        auto const *endTagNode = tagsNode->last_node("tag");
-        for (auto tagNode = tagsNode->first_node("tag"); true; tagNode = tagNode->next_sibling()) {
-            ++tagCount;
-            auto *name = tagNode->first_attribute("name");
-
-            vendorTags << "    \"" << name->value() << "\",\n";
-            vendorTagList.emplace_back(name->value());
-
-            if (tagNode == endTagNode)
-                break;
-        }
-
-        vendorTags << "};\n";
-        vendorTags << "constexpr std::size_t vendorTagCount = " << tagCount << ";\n";
+    // Vendors
+    auto *tagsNode = registryNode->first_node("tags");
+    if (tagsNode == nullptr) {
+        std::cerr << "Error: Could not find the 'tags' node." << std::endl;
+        return 1;
     }
 
-    std::stringstream enumDecl;
-    std::stringstream valueSets;
-    std::stringstream valueSetArr;
+    auto vendors = getVendorTags(tagsNode);
 
-    // Starts of each stream
-    enumDecl << R"DECL(
-struct EnumDeclaration {
-    const char *name;
-    std::size_t count;
-};
-EnumDeclaration enumTypes[] = {
-)DECL";
-
-    valueSets << R"SETS(
-struct EnumValueSet {
-    const char *name;
-    uint32_t value;
-};
-)SETS";
-
-    valueSetArr << R"ARR(
-constexpr const EnumValueSet *valueSets[] = {
-)ARR";
-
-    std::size_t enumsCount = 0;
-
-    // Process 'enums' nodes
-    auto const *endEnumsNode = registryNode->last_node("enums");
-    for (auto *enumsNode = registryNode->first_node("enums"); true;
-         enumsNode = enumsNode->next_sibling()) {
-        auto *nameAttr = enumsNode->first_attribute("name");
-        if (nameAttr == nullptr || strcmp("API Constants", nameAttr->value()) == 0 ||
-            strcmp("VkResult", nameAttr->value()) == 0)
-            continue;
-
-        ++enumsCount;
-        auto *typeAttr = enumsNode->first_attribute("type")->value();
-
-        // Generate prefix
-        auto nonVendorName = removeVendorTag(vendorTagList, nameAttr->value());
-        std::string prefix = processEnumPrefix(vendorTagList, nonVendorName);
-
-        std::size_t enumCount = 0;
-        if (enumsNode->first_node() != nullptr) {
-            // Process each 'enum' within
-            std::vector<std::pair<std::string, std::string>> enums;
-
-            auto const *endEnum = enumsNode->last_node("enum");
-            for (auto *enumNode = enumsNode->first_node("enum"); true;
-                 enumNode = enumNode->next_sibling()) {
-                if (strcmp(enumNode->name(), "enum") != 0)
-                    continue;
-
-                ++enumCount;
-
-                if (enumCount == 1) {
-                    valueSets << "constexpr EnumValueSet " << nameAttr->value() << "Sets[] = {\n";
-                }
-
-                std::string_view name = enumNode->first_attribute("name")->value();
-                name = removeVendorTag(vendorTagList, name);
-                name = trimNonAlNum(name);
-                name = stripBit(name);
-
-                if (const auto *value = enumNode->first_attribute("value"); value != nullptr) {
-                    // Plain value
-                    enums.emplace_back(std::pair{name, value->value()});
-                } else if (const auto *bitpos = enumNode->first_attribute("bitpos");
-                           bitpos != nullptr) {
-                    // Bitpos value
-                    std::stringstream ss;
-                    ss << "0x" << std::hex << std::setw(8) << std::uppercase << std::setfill('0')
-                       << (1U << atoi(bitpos->value()));
-                    enums.emplace_back(std::pair{name, ss.str()});
-                } else if (const auto *alias = enumNode->first_attribute("alias");
-                           alias != nullptr) {
-                    // Alias
-                    bool found = false;
-                    for (auto &it : enums) {
-                        std::string_view aliasView = alias->value();
-                        aliasView = removeVendorTag(vendorTagList, aliasView);
-                        aliasView = trimNonAlNum(aliasView);
-                        if (std::get<0>(it) == aliasView) {
-                            enums.emplace_back(name, std::get<1>(it));
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        std::cerr << "Error: Couldn't find alias for " << name << std::endl;
-                        return 1;
-                    }
-                } else {
-                    std::cerr << "Error: Enum type unsupported: " << typeAttr << std::endl;
-                    return 1;
-                }
-
-                if (endEnum == enumNode)
-                    break;
-            }
-
-            for (auto &it : enums) {
-                if (strncmp(std::get<0>(it).data(), prefix.data(), prefix.size()) == 0) {
-                    valueSets << "    {\"" << std::get<0>(it).substr(prefix.size()) << "\", ";
-                } else {
-                    valueSets << "    {\"" << std::get<0>(it) << "\", ";
-                }
-                valueSets << std::get<1>(it) << "},\n";
-            }
-        }
-
-        // Finish up the end of the enum for the streams
-        enumDecl << "    {\"" << nameAttr->value() << "\", " << enumCount << "},\n";
-        if (enumCount != 0) {
-            valueSets << "};\n";
-            valueSetArr << "    " << nameAttr->value() << "Sets,\n";
-        } else {
-            valueSetArr << "    nullptr,\n";
-        }
-
-        if (enumsNode == endEnumsNode)
-            break;
+    // Platforms
+    auto *platformsNode = registryNode->first_node("platforms");
+    if (platformsNode == nullptr) {
+        std::cerr << "Error: Could not find the 'platforms' node." << std::endl;
+        return 1;
     }
 
-    valueSetArr << "};\n";
-    enumDecl << "};\n";
-    enumDecl << "constexpr std::size_t enumTypesCount = " << enumsCount << ";\n";
+    auto platforms = getPlatforms(platformsNode);
 
-    { // Source File
-        if (!outputDir.empty() && outputDir[outputDir.size() - 1] != '/' &&
-            outputDir[outputDir.size() - 1] != '\\') {
-            outputDir += '/';
-        }
+    // Need to be in the 'registry' node
+    auto enums = getEnumData(registryNode);
 
-        std::ofstream outFile(outputDir + enumOutputFile);
+    // Extensions for type platforms
+    auto *extensionsNode = registryNode->first_node("extensions");
+    if (extensionsNode == nullptr) {
+        std::cerr << "Error: Could not find the 'extensions' node." << std::endl;
+        return 1;
+    }
+
+    getEnumPlatforms(enums, extensionsNode);
+
+    { // Header file
+        std::ofstream outFile(outputDir + outputFile);
         if (!outFile.is_open()) {
             std::cerr << "Error: Failed to open output file for writing: " << outputDir
-                      << enumOutputFile << ".cpp" << std::endl;
+                      << outputFile << std::endl;
             return 1;
         }
 
-        // First, write the license/disclaimer
         outFile << headerStr;
-        outFile << includesStr;
 
-        outFile << "constexpr uint32_t generatedVulkanVersion = " << vkHeaderVersion << "u;\n\n";
-        outFile << vendorTags.str();
+        outFile << "#ifndef VK_STRING_PARSING_V" << vkHeaderVersion << "_HPP\n";
+        outFile << "#define VK_STRING_PARSING_V" << vkHeaderVersion << "_HPP\n";
 
-        outFile << enumDecl.str();
-        outFile << valueSets.str();
-        outFile << valueSetArr.str();
+        outFile << usageStr;
 
-        outFile << commonFunctionsStr;
+        outFile << "\n#include <vulkan/vulkan.h>\n";
+
+        outFile << "\n#include <string_view>\n";
+        outFile << "#include <string>\n";
+        outFile << "\n";
+
+        // Static assert checking correct/compatible header version
+        outFile << "static_assert(VK_HEADER_VERSION == " << vkHeaderVersion
+                << ", \"Wrong VK_HEADER_VERSION!\" );\n";
+
+        // Declarations
+        outFile << declarationStr;
+
+        // Definitions
+        outFile << "\n#ifdef VK_STRING_PARSING_CONFIG_MAIN\n";
+
+        outFile << "\n#include <array>\n";
+        outFile << "#include <cstring>\n";
+        outFile << "\nnamespace {\n";
+
+        // Vendors
+        outFile << "\nconstexpr std::array<std::string_view, " << vendors.size()
+                << "> vendors = {{\n";
+        for (auto &it : vendors) {
+            outFile << "  \"" << it << "\",\n";
+        }
+        outFile << "}};\n";
+
+        // Enum value sets
+        outFile << R"(
+struct EnumValueSet {
+    std::string_view name;
+    uint32_t value;
+};
+)";
+
+        for (auto const &it : enums) {
+            if (it.values.empty()) {
+                continue;
+            }
+
+            outFile << "constexpr EnumValueSet " << it.name << "Sets[] = {\n";
+            std::string prefix = processEnumPrefix(vendors, removeVendorTag(vendors, it.name));
+            for (auto const &val : it.values) {
+                std::string_view name = val.name;
+
+                // Strip prefix
+                if (strncmp(name.data(), prefix.data(), prefix.size()) == 0)
+                    name = name.substr(prefix.size());
+
+                name = removeVendorTag(vendors, name);
+                name = trimNonAlNum(name);
+                name = stripBit(name);
+
+                if (strncmp(name.data(), prefix.data(), prefix.size()) == 0) {
+                    outFile << "    {\"" << name.substr(prefix.size());
+                } else {
+                    outFile << "    {\"" << name;
+                }
+                outFile << "\", " << val.value << "},\n";
+            }
+            outFile << "};\n";
+        }
+
+        // value set pointers
+        outFile << R"(
+struct EnumType {
+    std::string_view name;
+    EnumValueSet const* data;
+    uint32_t count;
+};
+)";
+        outFile << "\nconstexpr std::array<EnumType, " << enums.size() << "> enumTypes = {{\n";
+        for (auto const &it : enums) {
+            outFile << "  {\"" << it.name << "\", ";
+            if (it.values.empty()) {
+                outFile << "nullptr, ";
+            } else {
+                outFile << it.name << "Sets, ";
+            }
+            outFile << it.values.size() << "},\n";
+        }
+        outFile << "}};\n";
+
+        // Functions
+        outFile << stripFuncsStr;
+        outFile << otherFuncsStr;
+
+        outFile << stringifyFuncsStr;
+        outFile << parseFuncsStr;
+
+        outFile << "\n} // namespace\n";
+
+        outFile << publicFuncsStr;
+
+        outFile << "\n#endif // VK_STRING_PARSING_CONFIG_MAIN\n";
+
+        outFile << "#endif // VK_STRING_PARSING_V" << vkHeaderVersion << "_HPP\n";
     }
 
     return 0;
