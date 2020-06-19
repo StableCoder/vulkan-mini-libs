@@ -440,5 +440,5 @@ Program Arguments:
                     KhronosGroup, often at this repo:
                     https://github.com/KhronosGroup/Vulkan-Docs
     -d, --dir   : Output directory
-    -o, --out   : Output file name (Default: `vk_value_stringifier.cpp`)
+    -o, --out   : Output file name (Default: `vk_string_parsing.hpp`)
 )HELP";

@@ -35,6 +35,21 @@ std::string_view headerUsageStr = R"USE(
 */
 )USE";
 
+constexpr std::string_view helpStr = R"HELP(
+Generates header files for C++. Contains `operator==` and `operator!=`
+functions for a large set of the available Vulkan struct types, checking
+just the objects for equality. These do *NOT* peroform a deep comparison,
+such as any objects pointed to by `pNext` or any other pointed-to objects.
+
+Program Arguments:
+    -h, --help  : Help Blurb
+    -i, --input : Input vk.xml file to parse. These can be found from the 
+                    KhronosGroup, often at this repo:
+                    https://github.com/KhronosGroup/Vulkan-Docs
+    -d, --dir   : Output directory
+    -o, --out   : Output file name (Default: `vk_equality_checks.hpp`)
+)HELP";
+
 struct Member {
     std::string type;
     std::string name;
@@ -48,7 +63,7 @@ int main(int argc, char **argv) {
 
     for (int i = 0; i < argc; ++i) {
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
-            //   std::cout << helpStr << std::endl;
+            std::cout << helpStr << std::endl;
             return 0;
         } else if (strcmp(argv[i], "-i") == 0 || strcmp(argv[i], "--input") == 0) {
             if (i + 1 <= argc) {
