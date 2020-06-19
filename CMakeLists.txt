@@ -10,8 +10,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_executable(VkStringParsing src/vk_stringifier.cpp)
 target_include_directories(VkStringParsing PRIVATE external)
 
-add_executable(VkYamlGenerator src/yaml_generator.cpp)
-target_include_directories(VkYamlGenerator PRIVATE external)
+#add_executable(VkYamlGenerator src/yaml_generator.cpp)
+#target_include_directories(VkYamlGenerator PRIVATE external)
 
 add_executable(VkEqualityCheck src/equality_check.cpp)
 target_include_directories(VkEqualityCheck PRIVATE external)
