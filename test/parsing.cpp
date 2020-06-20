@@ -58,8 +58,8 @@ TEST_CASE("Parsing: Checking enum conversions from strings to the values from th
     uint32_t retVal = cDummyNum;
 
     SECTION("Success where the value is also a vendor name") {
-        CHECK(vk_parse("VkVendorId", "MESA", &retVal));
-        CHECK(retVal == VK_VENDOR_ID_MESA);
+        CHECK(vk_parse("VkVendorId", "VIV", &retVal));
+        CHECK(retVal == VK_VENDOR_ID_VIV);
     }
 
     SECTION("With original shortened strings") {
