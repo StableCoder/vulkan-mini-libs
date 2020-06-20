@@ -94,11 +94,12 @@ std::vector<StructData> getStructData(rapidxml::xml_node<> *typesNode) {
                 if (enumNode != nullptr)
                     sizeEnum = enumNode->value();
 
-                newStruct.members.emplace_back(MemberData{
-                    .type = memberNode->first_node("type")->value(),
-                    .name = memberNode->first_node("name")->value(),
-                    .sizeEnum = sizeEnum,
-                });
+                MemberData temp;
+                temp.type = memberNode->first_node("type")->value();
+                temp.name = memberNode->first_node("name")->value();
+                temp.sizeEnum = sizeEnum;
+
+                newStruct.members.emplace_back(temp);
             }
 
         MEMBER_LOOP_END:
@@ -146,11 +147,12 @@ std::vector<UnionData> getUnionData(rapidxml::xml_node<> *typesNode) {
                 if (enumNode != nullptr)
                     sizeEnum = enumNode->value();
 
-                newStruct.members.emplace_back(MemberData{
-                    .type = memberNode->first_node("type")->value(),
-                    .name = memberNode->first_node("name")->value(),
-                    .sizeEnum = sizeEnum,
-                });
+                MemberData temp;
+                temp.type = memberNode->first_node("type")->value();
+                temp.name = memberNode->first_node("name")->value();
+                temp.sizeEnum = sizeEnum;
+
+                newStruct.members.emplace_back(temp);
             }
 
         MEMBER_LOOP_END:
@@ -270,20 +272,23 @@ std::vector<EnumData> getEnumData(rapidxml::xml_node<> const *registryNode) {
 
             if (const auto *value = enumNode->first_attribute("value"); value != nullptr) {
                 // Plain value
-                newEnum.values.emplace_back(EnumMember{
-                    .name = name,
-                    .value = value->value(),
-                });
+                EnumMember temp;
+                temp.name = name;
+                temp.value = value->value();
+
+                newEnum.values.emplace_back(temp);
             } else if (const auto *bitpos = enumNode->first_attribute("bitpos");
                        bitpos != nullptr) {
                 // Bitpos value
                 std::stringstream ss;
                 ss << "0x" << std::hex << std::setw(8) << std::uppercase << std::setfill('0')
                    << (1U << atoi(bitpos->value()));
-                newEnum.values.emplace_back(EnumMember{
-                    .name = name,
-                    .value = ss.str(),
-                });
+
+                EnumMember temp;
+                temp.name = name;
+                temp.value = ss.str();
+
+                newEnum.values.emplace_back(temp);
 
                 newEnum.bitmask = true;
             } else if (const auto *alias = enumNode->first_attribute("alias"); alias != nullptr) {
@@ -293,10 +298,11 @@ std::vector<EnumData> getEnumData(rapidxml::xml_node<> const *registryNode) {
                     std::string_view aliasView = alias->value();
 
                     if (it.name == aliasView) {
-                        newEnum.values.push_back(EnumMember{
-                            .name = name,
-                            .value = it.value,
-                        });
+                        EnumMember temp;
+                        temp.name = name;
+                        temp.value = it.value;
+
+                        newEnum.values.push_back(temp);
                         found = true;
                         break;
                     }
