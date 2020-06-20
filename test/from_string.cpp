@@ -45,13 +45,23 @@ TEST_CASE("Parsing: Failure Cases") {
     SECTION("Parsing with an empty type fails") {
         CHECK_FALSE(vk_parse("", "2D", &dummy));
     }
-    SECTION("Parsing with an empty string fails") {
-        CHECK_FALSE(vk_parse("VkImageType", "", &dummy));
+}
+
+TEST_CASE("Parsing: Odd success cases") {
+    uint32_t retVal = cDummyNum;
+    SECTION("Parsing with an empty string succeeds, returns 0") {
+        CHECK(vk_parse("VkImageType", "", &retVal));
+        CHECK(retVal == 0);
     }
 }
 
 TEST_CASE("Parsing: Checking enum conversions from strings to the values from the  actual header") {
     uint32_t retVal = cDummyNum;
+
+    SECTION("Success where the value is also a vendor name") {
+        CHECK(vk_parse("VkVendorId", "MESA", &retVal));
+        CHECK(retVal == VK_VENDOR_ID_MESA);
+    }
 
     SECTION("With original shortened strings") {
         CHECK(vk_parse("VkImageLayout", "UNDEFINED", &retVal));
@@ -97,8 +107,19 @@ TEST_CASE("Parsing: Checking enum conversions from strings to the values from th
     }
 }
 
-TEST_CASE("De-stringify: Checking bitmask conversions from string to bitmask values") {
+TEST_CASE("Parsing: Checking bitmask conversions from string to bitmask values") {
     uint32_t retVal = cDummyNum;
+
+    SECTION("With a bad extra bitmask fails") {
+        CHECK_FALSE(vk_parse("VkDebugReportFlagBitsEXT",
+                             "PERFORMANCE_WARNING_BIT | NON_EXISTING_BIT", &retVal));
+        CHECK(retVal == cDummyNum);
+
+        CHECK_FALSE(vk_parse("VkDebugReportFlagBitsEXT",
+                             "NON_EXISTING_BIT | PERFORMANCE_WARNING_BIT", &retVal));
+        CHECK(retVal == cDummyNum);
+    }
+
     SECTION("With original shortened strings") {
         SECTION("FlagBits") {
             CHECK(vk_parse("VkDebugReportFlagBitsEXT", "PERFORMANCE_WARNING_BIT", &retVal));
@@ -154,11 +175,11 @@ TEST_CASE("De-stringify: Checking bitmask conversions from string to bitmask val
     SECTION("With full strings") {
         SECTION("FlagBits") {
             CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT",
-                             &retVal));
+                           &retVal));
             CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
 
             CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING",
-                             &retVal));
+                           &retVal));
             CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
 
             CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_DEBUG_BIT", &retVal));
@@ -174,16 +195,16 @@ TEST_CASE("De-stringify: Checking bitmask conversions from string to bitmask val
             CHECK(retVal == VK_DEBUG_REPORT_ERROR_BIT_EXT);
 
             CHECK(vk_parse("VkDebugReportFlagBitsEXT",
-                             "VK_DEBUG_REPORT_DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT", &retVal));
+                           "VK_DEBUG_REPORT_DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT", &retVal));
             CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
 
             CHECK(vk_parse("VkDebugReportFlagBitsEXT",
-                             "VK_DEBUG_REPORT_ERROR | VK_DEBUG_REPORT_DEBUG", &retVal));
+                           "VK_DEBUG_REPORT_ERROR | VK_DEBUG_REPORT_DEBUG", &retVal));
             CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
         }
         SECTION("Flags") {
             CHECK(vk_parse("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT",
-                             &retVal));
+                           &retVal));
             CHECK(retVal == VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT);
 
             CHECK(
@@ -204,31 +225,31 @@ TEST_CASE("De-stringify: Checking bitmask conversions from string to bitmask val
             CHECK(retVal == VK_DEBUG_REPORT_ERROR_BIT_EXT);
 
             CHECK(vk_parse("VkDebugReportFlagsEXT",
-                             "VK_DEBUG_REPORT_DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT", &retVal));
+                           "VK_DEBUG_REPORT_DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT", &retVal));
             CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
 
-            CHECK(vk_parse("VkDebugReportFlagsEXT",
-                             "VK_DEBUG_REPORT_ERROR | VK_DEBUG_REPORT_DEBUG", &retVal));
+            CHECK(vk_parse("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_ERROR | VK_DEBUG_REPORT_DEBUG",
+                           &retVal));
             CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
         }
     }
     SECTION("With mixed short/full strings") {
         SECTION("FlagBits") {
             CHECK(vk_parse("VkDebugReportFlagBitsEXT", "DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT",
-                             &retVal));
+                           &retVal));
             CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
 
             CHECK(vk_parse("VkDebugReportFlagBitsEXT", "VK_DEBUG_REPORT_ERROR_BIT | DEBUG_BIT",
-                             &retVal));
+                           &retVal));
             CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
         }
         SECTION("Flags") {
             CHECK(vk_parse("VkDebugReportFlagsEXT", "DEBUG_BIT | VK_DEBUG_REPORT_ERROR_BIT",
-                             &retVal));
+                           &retVal));
             CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
 
             CHECK(vk_parse("VkDebugReportFlagsEXT", "VK_DEBUG_REPORT_ERROR_BIT | DEBUG_BIT",
-                             &retVal));
+                           &retVal));
             CHECK(retVal == (VK_DEBUG_REPORT_DEBUG_BIT_EXT | VK_DEBUG_REPORT_ERROR_BIT_EXT));
         }
     }

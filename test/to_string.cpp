@@ -23,6 +23,7 @@ std::string cDummyStr = "AAABBBCCC";
 
 TEST_CASE("Serialize: Failure cases") {
     std::string dummyStr = cDummyStr;
+
     CHECK_FALSE(vk_serialize("", 0, &dummyStr));
     CHECK(dummyStr == cDummyStr);
     CHECK_FALSE(vk_serialize("", 0, &dummyStr));
@@ -36,10 +37,12 @@ TEST_CASE("Serialize: Enum") {
         CHECK_FALSE(vk_serialize("VkGarbagio", VK_IMAGE_TYPE_3D, &retVal));
         CHECK(retVal == cDummyStr);
     }
+
     SECTION("Failure case where bad enum given") {
         CHECK_FALSE(vk_serialize("VkImageType", -1U, &retVal));
         CHECK(retVal == cDummyStr);
     }
+
     SECTION("Success cases") {
         CHECK(vk_serialize("VkImageType", VK_IMAGE_TYPE_3D, &retVal));
         CHECK(retVal == "3D");
@@ -61,8 +64,28 @@ TEST_CASE("Serialize: Bitmask") {
         CHECK_FALSE(vk_serialize("VkGarbagio", VK_CULL_MODE_BACK_BIT, &retVal));
         CHECK(retVal == cDummyStr);
     }
+
+    SECTION("Failure case where a garbage non-existant bit is given") {
+        CHECK_FALSE(vk_serialize("VkCullModeFlagBits", VK_CULL_MODE_BACK_BIT | 0x777, &retVal));
+        CHECK(retVal == cDummyStr);
+    }
+
+    SECTION("Success case where there's extra vendor bits on the type name (such as after a "
+            "promoted extension)") {
+        CHECK(vk_serialize("VkCullModeFlagBitsVIV", VK_CULL_MODE_BACK_BIT, &retVal));
+        CHECK(retVal == "BACK");
+    }
+
+    SECTION("Success where there's a given type that has no values") {
+        CHECK(vk_serialize("VkShaderModuleCreateFlagBits", 0, &retVal));
+        CHECK(retVal == "");
+
+        CHECK(vk_serialize("VkShaderModuleCreateFlagBitsVIV", 0, &retVal));
+        CHECK(retVal == "");
+    }
+
     SECTION("Regular success cases") {
-        SECTION("FLagBits") {
+        SECTION("FlagBits") {
             CHECK(vk_serialize("VkDebugReportFlagBitsEXT", VK_DEBUG_REPORT_ERROR_BIT_EXT, &retVal));
             CHECK(retVal == "ERROR");
 
@@ -81,6 +104,7 @@ TEST_CASE("Serialize: Bitmask") {
             CHECK(retVal == "DEBUG | ERROR");
         }
     }
+
     SECTION("Combined bitmask will use larger items first") {
         SECTION("FlagBits") {
             CHECK(vk_serialize("VkCullModeFlagBits", VK_CULL_MODE_BACK_BIT | VK_CULL_MODE_FRONT_BIT,
