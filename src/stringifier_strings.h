@@ -26,7 +26,6 @@ constexpr std::string_view usageStr = R"(
 )";
 
 constexpr std::string_view declarationStr = R"(
-
 /**
  * @brief Macro that automatically stringifies the given Vulkan type for serialization
  * @param VKTYPE Actual Vulkan type
@@ -137,7 +136,7 @@ std::string_view stripBit(std::string_view view) {
 )";
 
 constexpr std::string_view otherFuncsStr = R"(
-std::tuple<EnumValueSet const*, EnumValueSet const*> getEnumType(std::string_view vkType) {
+std::tuple<EnumValueSet const *, EnumValueSet const *> getEnumType(std::string_view vkType) {
     // Check for a conversion from Flags -> FlagBits
     std::string localString;
     if (vkType.rfind("Flags") != std::string::npos) {
@@ -148,7 +147,7 @@ std::tuple<EnumValueSet const*, EnumValueSet const*> getEnumType(std::string_vie
     }
 
     // Try the original name
-    for (auto const& it: enumTypes) {
+    for (auto const &it : enumTypes) {
         if (vkType == std::string_view{it.name}) {
             return std::make_tuple(it.data, it.data + it.count);
         }
@@ -156,7 +155,7 @@ std::tuple<EnumValueSet const*, EnumValueSet const*> getEnumType(std::string_vie
 
     // Try a vendor-stripped name
     vkType = stripVendor(vkType);
-    for (auto const& it: enumTypes) {
+    for (auto const &it : enumTypes) {
         if (vkType == std::string_view{it.name}) {
             return std::make_tuple(it.data, it.data + it.count);
         }
@@ -164,7 +163,6 @@ std::tuple<EnumValueSet const*, EnumValueSet const*> getEnumType(std::string_vie
 
     return std::make_tuple(nullptr, nullptr);
 }
-
 
 /**
  * @brief Converts a Vulkan Flag typename into the prefix that is used for it's enums
@@ -279,7 +277,7 @@ std::string formatString(std::string str) {
 
 constexpr std::string_view stringifyFuncsStr = R"(
 bool serializeBitmask(std::string_view vkType, uint32_t vkValue, std::string *pString) {
-  auto [end, start] = getEnumType(vkType);
+    auto [end, start] = getEnumType(vkType);
     --end;
     --start;
 
@@ -297,9 +295,9 @@ bool serializeBitmask(std::string_view vkType, uint32_t vkValue, std::string *pS
         --start;
     }
 
-    if(vkValue != 0) {
-      // Failed to find a valid bitmask for the value
-      return false;
+    if (vkValue != 0) {
+        // Failed to find a valid bitmask for the value
+        return false;
     }
 
     *pString = retStr;
@@ -307,18 +305,18 @@ bool serializeBitmask(std::string_view vkType, uint32_t vkValue, std::string *pS
 }
 
 bool serializeEnum(std::string_view vkType, uint32_t vkValue, std::string *pString) {
-  auto [start, end] = getEnumType(vkType);
+    auto [start, end] = getEnumType(vkType);
 
-  while (start != end) {
-    if(start->value == vkValue) {
-      *pString = start->name;
-      return true;
+    while (start != end) {
+        if (start->value == vkValue) {
+            *pString = start->name;
+            return true;
+        }
+
+        ++start;
     }
 
-    ++start;
-  }
-
-  return false;
+    return false;
 }
 )";
 
@@ -340,7 +338,7 @@ bool parseBitmask(std::string_view vkType, std::string_view vkString, uint32_t *
             std::string token(startCh, endCh);
             token = formatString(token);
 
-            bool foundVal = findValue(token,prefix, &retVal, start, end);
+            bool foundVal = findValue(token, prefix, &retVal, start, end);
             if (!foundVal)
                 return false;
 

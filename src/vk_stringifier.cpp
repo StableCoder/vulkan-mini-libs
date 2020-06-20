@@ -265,13 +265,14 @@ int main(int argc, char **argv) {
 
         outFile << "\n#include <vulkan/vulkan.h>\n";
 
-        outFile << "\n#include <string_view>\n";
+        outFile << "\n";
         outFile << "#include <string>\n";
+        outFile << "#include <string_view>\n";
         outFile << "\n";
 
         // Static assert checking correct/compatible header version
         outFile << "static_assert(VK_HEADER_VERSION == " << vkHeaderVersion
-                << ", \"Wrong VK_HEADER_VERSION!\" );\n";
+                << ", \"Wrong VK_HEADER_VERSION!\");\n";
 
         // Declarations
         outFile << declarationStr;
@@ -281,6 +282,7 @@ int main(int argc, char **argv) {
 
         outFile << "\n#include <array>\n";
         outFile << "#include <cstring>\n";
+        outFile << "#include <tuple>\n";
         outFile << "\nnamespace {\n";
 
         // Vendors
