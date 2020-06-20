@@ -1615,6 +1615,8 @@ std::tuple<EnumValueSet const *, EnumValueSet const *> getEnumType(std::string_v
     // Try the original name
     for (auto const &it : enumTypes) {
         if (vkType == std::string_view{it.name}) {
+            if (it.data == nullptr)
+                return std::make_tuple(nullptr, nullptr);
             return std::make_tuple(it.data, it.data + it.count);
         }
     }
@@ -1623,6 +1625,8 @@ std::tuple<EnumValueSet const *, EnumValueSet const *> getEnumType(std::string_v
     vkType = stripVendor(vkType);
     for (auto const &it : enumTypes) {
         if (vkType == std::string_view{it.name}) {
+            if (it.data == nullptr)
+                return std::make_tuple(nullptr, nullptr);
             return std::make_tuple(it.data, it.data + it.count);
         }
     }
@@ -1784,11 +1788,6 @@ bool serializeEnum(std::string_view vkType, uint32_t vkValue, std::string *pStri
 }
 
 bool parseBitmask(std::string_view vkType, std::string_view vkString, uint32_t *pValue) {
-    if (vkString.empty()) {
-        *pValue = 0;
-        return true;
-    }
-
     auto [start, end] = getEnumType(vkType);
     std::string prefix = processEnumPrefix(stripVendor(vkType));
     uint32_t retVal = 0;
@@ -1821,11 +1820,6 @@ bool parseBitmask(std::string_view vkType, std::string_view vkString, uint32_t *
 }
 
 bool parseEnum(std::string_view vkType, std::string_view vkString, uint32_t *pValue) {
-    if (vkString.empty()) {
-        *pValue = 0;
-        return true;
-    }
-
     auto [start, end] = getEnumType(vkType);
     std::string prefix = processEnumPrefix(stripVendor(vkType));
     uint32_t retVal = 0;
@@ -1854,8 +1848,12 @@ bool vk_serialize(std::string_view vkType, uint32_t vkValue, std::string *pStrin
 }
 
 bool vk_parse(std::string_view vkType, std::string vkString, uint32_t *pValue) {
-    if (vkType.empty() || vkString.empty()) {
+    if (vkType.empty()) {
         return false;
+    }
+    if(vkString.empty()) {
+        *pValue = 0;
+        return true;
     }
 
     std::string_view temp = stripVendor(vkType);
