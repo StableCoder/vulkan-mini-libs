@@ -20,7 +20,7 @@ constexpr std::string_view usageStr = R"(
 /*  USAGE:
     To use, include this header where the declarations for the boolean checks are required.
 
-    On *ONE* compilation unit, include the definition of `#define VK_STRING_PARSING_CONFIG_MAIN`
+    On *ONE* compilation unit, include the definition of `#define VK_VALUE_SERIALIZATION_CONFIG_MAIN`
     so that the definitions are compiled somewhere following the one definition rule.
 */
 )";
@@ -436,5 +436,5 @@ Program Arguments:
                     KhronosGroup, often at this repo:
                     https://github.com/KhronosGroup/Vulkan-Docs
     -d, --dir   : Output directory
-    -o, --out   : Output file name (Default: `vk_string_parsing.hpp`)
+    -o, --out   : Output file name (Default: `vk_value_serialization.hpp`)
 )HELP";

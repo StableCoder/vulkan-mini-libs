@@ -17,8 +17,8 @@
 #include <catch.hpp>
 #include <vulkan/vulkan.h>
 
-#define VK_STRING_PARSING_CONFIG_MAIN
-#include "../include/vk_string_parsing.hpp"
+#define VK_VALUE_SERIALIZATION_CONFIG_MAIN
+#include "../include/vk_value_serialization.hpp"
 
 constexpr uint32_t cDummyNum = 999999;
 

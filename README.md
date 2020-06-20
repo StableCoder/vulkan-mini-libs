@@ -36,7 +36,7 @@ be read similarly, with the above rules applicable for parsing.
 
 To use, include the header where the declarations for the boolean checks are required.
 
-On *ONE* compilation unit, include the definition of `#define VK_STRING_PARSING_CONFIG_MAIN` so that the definitions are compiled somewhere following the one definition rule.
+On *ONE* compilation unit, include the definition of `#define VK_VALUE_SERIALIZATION_CONFIG_MAIN` so that the definitions are compiled somewhere following the one definition rule.
 
 ### VkStringParsing header-generation program arguments
 #### -h, --help
@@ -46,7 +46,7 @@ Input vk.xml file to parse. These can be found from the KhronosGroup, often at t
 #### -d, --dir <dir>
 Output directory
 #### -o, --out <name>
-Output file name (Default: `vk_string_parsing.hpp`)
+Output file name (Default: `vk_value_serialization.hpp`)
 
 ## Vulkan Equality Checks
 

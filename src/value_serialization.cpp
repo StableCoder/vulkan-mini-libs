@@ -27,7 +27,7 @@
 
 #include "header_str.hpp"
 #include "parse_xml.hpp"
-#include "stringifier_strings.h"
+#include "serialization_strings.hpp"
 
 /**
  * @brief Removes a vendor tag from the end of the given string view
@@ -141,7 +141,7 @@ std::string replaceFlagBitsSuffix(std::string str) {
 int main(int argc, char **argv) {
     std::string inputFile;
     std::string outputDir;
-    std::string outputFile = "vk_string_parsing.hpp";
+    std::string outputFile = "vk_value_serialization.hpp";
 
     for (int i = 0; i < argc; ++i) {
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
@@ -258,8 +258,8 @@ int main(int argc, char **argv) {
 
         outFile << headerStr;
 
-        outFile << "#ifndef VK_STRING_PARSING_V" << vkHeaderVersion << "_HPP\n";
-        outFile << "#define VK_STRING_PARSING_V" << vkHeaderVersion << "_HPP\n";
+        outFile << "#ifndef VK_VALUE_SERIALIZATION_V" << vkHeaderVersion << "_HPP\n";
+        outFile << "#define VK_VALUE_SERIALIZATION_V" << vkHeaderVersion << "_HPP\n";
 
         outFile << usageStr;
 
@@ -278,7 +278,7 @@ int main(int argc, char **argv) {
         outFile << declarationStr;
 
         // Definitions
-        outFile << "\n#ifdef VK_STRING_PARSING_CONFIG_MAIN\n";
+        outFile << "\n#ifdef VK_VALUE_SERIALIZATION_CONFIG_MAIN\n";
 
         outFile << "\n#include <array>\n";
         outFile << "#include <cstring>\n";
@@ -360,9 +360,9 @@ struct EnumType {
 
         outFile << publicFuncsStr;
 
-        outFile << "\n#endif // VK_STRING_PARSING_CONFIG_MAIN\n";
+        outFile << "\n#endif // VK_VALUE_SERIALIZATION_CONFIG_MAIN\n";
 
-        outFile << "#endif // VK_STRING_PARSING_V" << vkHeaderVersion << "_HPP\n";
+        outFile << "#endif // VK_VALUE_SERIALIZATION_V" << vkHeaderVersion << "_HPP\n";
     }
 
     return 0;
