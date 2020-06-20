@@ -280,7 +280,9 @@ int main(int argc, char **argv) {
         // Definitions
         outFile << "\n#ifdef VK_VALUE_SERIALIZATION_CONFIG_MAIN\n";
 
-        outFile << "\n#include <array>\n";
+        outFile << "\n";
+        outFile << "#include <algorithm>\n";
+        outFile << "#include <array>\n";
         outFile << "#include <cstring>\n";
         outFile << "#include <tuple>\n";
         outFile << "\nnamespace {\n";

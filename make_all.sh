@@ -22,8 +22,8 @@ for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$"); do
     fi
     git checkout $TAG
 
-    # Generate string parsing
-    ../build/VkStringParsing -i xml/vk.xml -d ../include/vk_mini_libs_detail/ -o vk_value_serialization_v$VER.hpp
+    # Generate value serialization
+    ../build/VkValueSerialization -i xml/vk.xml -d ../include/vk_mini_libs_detail/ -o vk_value_serialization_v$VER.hpp
 
     cat >>../include/vk_value_serialization.hpp <<EOL
 #if VK_HEADER_VERSION == ${VER}
