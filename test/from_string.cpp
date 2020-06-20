@@ -16,7 +16,6 @@
 
 #include <catch.hpp>
 #include <vulkan/vulkan.h>
-#include <vulkan/vulkan_core.h>
 
 #define VK_STRING_PARSING_CONFIG_MAIN
 #include "../include/vk_string_parsing.hpp"
