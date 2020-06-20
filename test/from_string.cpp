@@ -16,6 +16,7 @@
 
 #include <catch.hpp>
 #include <vulkan/vulkan.h>
+#include <vulkan/vulkan_core.h>
 
 #define VK_STRING_PARSING_CONFIG_MAIN
 #include "../include/vk_string_parsing.hpp"
@@ -41,10 +42,17 @@ TEST_CASE("Parsing: Failure Cases") {
         CHECK_FALSE(vk_parse("VkImageType", "2D | 3D", &dummy));
         CHECK(dummy == cDummyNum);
     }
+    SECTION("Parsing with an empty type fails") {
+        CHECK_FALSE(vk_parse("", "2D", &dummy));
+    }
+    SECTION("Parsing with an empty string fails") {
+        CHECK_FALSE(vk_parse("VkImageType", "", &dummy));
+    }
 }
 
 TEST_CASE("Parsing: Checking enum conversions from strings to the values from the  actual header") {
     uint32_t retVal = cDummyNum;
+
     SECTION("With original shortened strings") {
         CHECK(vk_parse("VkImageLayout", "UNDEFINED", &retVal));
         CHECK(retVal == VK_IMAGE_LAYOUT_UNDEFINED);

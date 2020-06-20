@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 project(VkEnumStringifier)
 
-option(BUILD_TESTS "" OFF)
+option(BUILD_EXAMPLES "Build examples" OFF)
+option(BUILD_TESTS "Build tests" OFF)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -16,6 +17,9 @@ target_include_directories(VkStringParsing PRIVATE external)
 add_executable(VkEqualityCheck src/equality_check.cpp)
 target_include_directories(VkEqualityCheck PRIVATE external)
 
+if(BUILD_EXAMPLES)
+  add_subdirectory(example)
+endif()
 if(BUILD_TESTS)
   enable_testing()
   add_subdirectory(test)
