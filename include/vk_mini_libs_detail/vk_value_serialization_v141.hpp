@@ -115,6 +115,7 @@ bool vk_parse(std::string_view vkType, std::string vkString, T *pValue) {
 
 #ifdef VK_VALUE_SERIALIZATION_CONFIG_MAIN
 
+#include <algorithm>
 #include <array>
 #include <cstring>
 #include <tuple>
@@ -1847,8 +1848,8 @@ bool vk_serialize(std::string_view vkType, uint32_t vkValue, std::string *pStrin
         return false;
     }
 
-    std::string_view temp = stripVendor(vkType);
-    if (temp.ends_with("FlagBits") || temp.ends_with("Flags")) {
+    if (vkType.find("Flags") != std::string::npos || 
+        vkType.find("FlagBits") != std::string::npos) {
         return serializeBitmask(vkType, vkValue, pString);
     }
 
@@ -1864,8 +1865,8 @@ bool vk_parse(std::string_view vkType, std::string vkString, uint32_t *pValue) {
         return true;
     }
 
-    std::string_view temp = stripVendor(vkType);
-    if (temp.ends_with("FlagBits") || temp.ends_with("Flags")) {
+    if (vkType.find("Flags") != std::string::npos || 
+        vkType.find("FlagBits") != std::string::npos) {
         return parseBitmask(vkType, vkString, pValue);
     }
 
