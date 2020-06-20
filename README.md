@@ -5,9 +5,9 @@
 
 A set of small header-only libraries that are of limited scope each to perform a very specific task.
 
-## Vulkan String Parsing
+## Vulkan Value Serialization
 
-This program builds header files for use in C++20 or newer. It
+This program builds header files for use in C++17 or newer. It
 contains all Vulkan enum types/flags/values of the indicated Vulkan header spec
 version, and can convert to/from strings representing those values. 
 
@@ -38,7 +38,7 @@ To use, include the header where the declarations for the boolean checks are req
 
 On *ONE* compilation unit, include the definition of `#define VK_VALUE_SERIALIZATION_CONFIG_MAIN` so that the definitions are compiled somewhere following the one definition rule.
 
-### VkStringParsing header-generation program arguments
+### VKValueSerialization header-generation program arguments
 #### -h, --help
 Help blurb
 #### -i, --input <file>
