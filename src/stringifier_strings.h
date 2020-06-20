@@ -34,7 +34,7 @@ constexpr std::string_view declarationStr = R"(
  * returned.
  * @return True if serialization was successful. False otherwise.
  */
-#define VK_SERIALIZE(VKTYPE, VALUE, STRPTR) vk_serialize<VKTYPE>(#VKTYPE, VALUE, STRPTR);
+#define VK_SERIALIZE(VKTYPE, VALUE, STRPTR) vk_serialize<VKTYPE>(#VKTYPE, VALUE, STRPTR)
 
 /**
  * @brief Macro that automatically stringifies the given Vulkan type for parsing
@@ -44,7 +44,7 @@ constexpr std::string_view declarationStr = R"(
  * returned.
  * @return True if serialization was successful. False otherwise.
  */
-#define VK_PARSE(VKTYPE, STRING, VALPTR) vk_parse<VKTYPE>(#VKTYPE, STRING, VALPTR);
+#define VK_PARSE(VKTYPE, STRING, VALPTR) vk_parse<VKTYPE>(#VKTYPE, STRING, VALPTR)
 
 /**
  * @brief Serializes a Vulkan enumerator/flag type
