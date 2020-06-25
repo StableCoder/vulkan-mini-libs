@@ -255,5 +255,8 @@
 #if VK_HEADER_VERSION == 144
     #include "vk_mini_libs_detail/vk_value_serialization_v144.hpp"
 #endif
+#if VK_HEADER_VERSION == 145
+    #include "vk_mini_libs_detail/vk_value_serialization_v145.hpp"
+#endif
 
 #endif // VK_VALUE_SERIALIZATION_HPP

@@ -255,5 +255,8 @@
 #if VK_HEADER_VERSION == 144
     #include "vk_mini_libs_detail/vk_equality_checks_v144.hpp"
 #endif
+#if VK_HEADER_VERSION == 145
+    #include "vk_mini_libs_detail/vk_equality_checks_v145.hpp"
+#endif
 
 #endif // VK_EQUALITY_CHECKS_HPP
