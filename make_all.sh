@@ -1,6 +1,21 @@
 #!/usr/bin/env sh
 set -e
 
+# Variables
+START=72
+
+while [[ $# -gt 0 ]]; do
+    key="$1"
+
+    case $key in
+    -s | --start)
+        START="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    esac
+done
+
 # Clone/update the Vulkan-Docs repository
 if ! [ -d Vulkan-Docs ]; then
     git clone https://github.com/KhronosGroup/Vulkan-Docs
@@ -16,8 +31,8 @@ cat ../scripts/vulkan_string_parsing_start.txt >../include/vk_value_serializatio
 # Generate the per-version files
 for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$"); do
     VER=$(echo $TAG | cut -d'.' -f3)
-    if [[ $VER -lt 72 ]]; then
-        # Prior to v72, vk.xml was not published
+    if [[ $VER -lt $START ]]; then
+        # Prior to v72, vk.xml was not published, so that's the default minimum.
         continue
     fi
     git checkout $TAG
