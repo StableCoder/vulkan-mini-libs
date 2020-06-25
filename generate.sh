@@ -3,6 +3,7 @@ set -e
 
 # Variables
 START=72
+END=
 
 while [[ $# -gt 0 ]]; do
     key="$1"
@@ -13,8 +14,19 @@ while [[ $# -gt 0 ]]; do
         shift # past argument
         shift # past value
         ;;
+    -e | --end)
+        END="$2"
+        shift
+        shift
+        ;;
     esac
 done
+
+if [ ! -x VkValueSerialization ]; then
+    printf " >> Error: Could not find 'VkValueSerialization' executable\n"
+elif [ ! -x VkEqualityCheck ]; then
+    printf " >> Error: Could not find 'VkEqualityCheck' executable\n"
+fi
 
 # Clone/update the Vulkan-Docs repository
 if ! [ -d Vulkan-Docs ]; then
@@ -33,12 +45,14 @@ for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$" | sort -t '.' -k3nr);
     VER=$(echo $TAG | cut -d'.' -f3)
     if [[ $VER -lt $START ]]; then
         # Prior to v72, vk.xml was not published, so that's the default minimum.
+        break
+    elif [ "$END" != "" ] && [[ $VER -gt $END ]]; then
         continue
     fi
     git checkout $TAG
 
     # Generate value serialization
-    ../build/VkValueSerialization -i xml/vk.xml -d ../include/vk_mini_libs_detail/ -o vk_value_serialization_v$VER.hpp
+    ../VkValueSerialization -i xml/vk.xml -d ../include/vk_mini_libs_detail/ -o vk_value_serialization_v$VER.hpp
 
     cat >>../include/vk_value_serialization.hpp <<EOL
 #if VK_HEADER_VERSION == ${VER}
@@ -47,7 +61,7 @@ for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$" | sort -t '.' -k3nr);
 EOL
 
     # Generate equality checks
-    ../build/VkEqualityCheck -i xml/vk.xml -d ../include/vk_mini_libs_detail/ -o vk_equality_checks_v$VER.hpp
+    ../VkEqualityCheck -i xml/vk.xml -d ../include/vk_mini_libs_detail/ -o vk_equality_checks_v$VER.hpp
 
     cat >>../include/vk_equality_checks.hpp <<EOL
 #if VK_HEADER_VERSION == ${VER}

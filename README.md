@@ -68,4 +68,16 @@ Output directory
 #### -o, --out <name>
 Output file name (Default: `vk_equality_checks.hpp`)
 
+## Generating Header Mini-Libs
+
+In the root of the repository is a shell script, `generate.sh` that, when the programs are built from cmake and also placed in the root, automatically generates header mini-libs. The desired range can also be specified with this.
+
+### Possible Arguments
+
+#### -s, --start <INT>
+The starting version of Vulkan to generate for (default: 72)
+
+#### -e, --end <INT>
+The ending version of Vulkan to generate for (default: none)
+
 ## Utilizes RapidXML from http://rapidxml.sourceforge.net/
