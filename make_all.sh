@@ -29,7 +29,7 @@ cat ../scripts/equality_check_start.txt >../include/vk_equality_checks.hpp
 cat ../scripts/vulkan_string_parsing_start.txt >../include/vk_value_serialization.hpp
 
 # Generate the per-version files
-for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$"); do
+for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$" | sort -t '.' -k3nr); do
     VER=$(echo $TAG | cut -d'.' -f3)
     if [[ $VER -lt $START ]]; then
         # Prior to v72, vk.xml was not published, so that's the default minimum.
