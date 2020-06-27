@@ -1747,6 +1747,11 @@ std::string formatString(std::string str) {
 }
 
 bool serializeBitmask(std::string_view vkType, uint32_t vkValue, std::string *pString) {
+    if(vkValue == 0){
+        // No bitmask value has a serializable value for 0.
+        return false;
+    }
+
     auto [end, start] = getEnumType(vkType);
     --end;
     --start;
