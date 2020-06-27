@@ -5,6 +5,12 @@ set -e
 START=72
 END=
 
+help_blurb() {
+    echo " -s, --start <INT> The starting version of Vulkan to generate for (default: 72)"
+    echo " -e, --end <INT>   The ending version of Vulkan to generate for (default: none)"
+}
+
+# Command-line parsing
 while [[ $# -gt 0 ]]; do
     key="$1"
 
@@ -19,9 +25,14 @@ while [[ $# -gt 0 ]]; do
         shift
         shift
         ;;
+    -h | --help)
+        help_blurb
+        exit 0
+        ;;
     esac
 done
 
+# Check for missing executables
 if [ ! -x VkValueSerialization ]; then
     printf " >> Error: Could not find 'VkValueSerialization' executable\n"
 elif [ ! -x VkEqualityCheck ]; then
