@@ -76,12 +76,12 @@ TEST_CASE("Serialize: Bitmask") {
         CHECK(retVal == "BACK");
     }
 
-    SECTION("Success where there's a given type that has no values") {
-        CHECK(vk_serialize("VkShaderModuleCreateFlagBits", 0, &retVal));
-        CHECK(retVal == "");
+    SECTION("Failure when given a zero-value") {
+        CHECK_FALSE(vk_serialize("VkShaderModuleCreateFlagBits", 0, &retVal));
+        CHECK(retVal == cDummyStr);
 
-        CHECK(vk_serialize("VkShaderModuleCreateFlagBitsVIV", 0, &retVal));
-        CHECK(retVal == "");
+        CHECK_FALSE(vk_serialize("VkShaderModuleCreateFlagBitsVIV", 0, &retVal));
+        CHECK(retVal == cDummyStr);
     }
 
     SECTION("Regular success cases") {
