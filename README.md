@@ -1,7 +1,7 @@
 # Vulkan Mini Libs
-[![pipeline status](https://git.stabletec.com/utilities/vulkan-stringifier/badges/master/pipeline.svg)](https://git.stabletec.com/utilities/vulkan-stringifier/commits/master)
-[![coverage report](https://git.stabletec.com/utilities/vulkan-stringifier/badges/master/coverage.svg)](https://git.stabletec.com/utilities/vulkan-stringifier/commits/master)
-[![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://git.stabletec.com/utilities/vulkan-stringifier/blob/master/LICENSE)
+[![pipeline status](https://git.stabletec.com/utilities/vulkan-mini-libs/badges/master/pipeline.svg)](https://git.stabletec.com/utilities/vulkan-mini-libs/commits/master)
+[![coverage report](https://git.stabletec.com/utilities/vulkan-mini-libs/badges/master/coverage.svg)](https://git.stabletec.com/utilities/vulkan-mini-libs/commits/master)
+[![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://git.stabletec.com/utilities/vulkan-mini-libs/blob/master/LICENSE)
 
 A set of small header-only libraries that are of limited scope each to perform a very specific task.
 
