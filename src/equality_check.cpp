@@ -222,7 +222,7 @@ int main(int argc, char **argv) {
 
     // Definitions
     outFile << "\n#ifdef VK_EQUALITY_CHECK_CONFIG_MAIN\n";
-    outFile << "\n#include <cstring>\n";
+
     for (auto &it : structs) {
         // If no members to compare, then no point
         if (it.members.empty())
@@ -266,7 +266,7 @@ int main(int argc, char **argv) {
                 continue;
 
             // Don't do 'void' pointer types
-            if (member.type == "void")
+            if (member.name == "pNext" && member.type == "void" && member.typeSuffix == "*")
                 continue;
 
             // If it's the first, then we don't prefix with '&&'
