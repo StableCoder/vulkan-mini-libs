@@ -265,8 +265,8 @@ int main(int argc, char **argv) {
             if (!member.sizeEnum.empty())
                 continue;
 
-            // Don't do 'pNext' pointer members
-            if (member.name == "pNext")
+            // Don't do 'void' pointer types
+            if (member.type == "void")
                 continue;
 
             // If it's the first, then we don't prefix with '&&'
