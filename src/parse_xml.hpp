@@ -47,8 +47,11 @@ std::vector<PlatformData> getPlatforms(rapidxml::xml_node<> *platformsNode) {
 
 struct MemberData {
     std::string_view type;
+    std::string_view typePrefix;
+    std::string_view typeSuffix;
     std::string_view name;
     std::string sizeEnum;
+    bool optional;
 };
 
 struct StructData {
@@ -98,6 +101,24 @@ std::vector<StructData> getStructData(rapidxml::xml_node<> *typesNode) {
                 temp.type = memberNode->first_node("type")->value();
                 temp.name = memberNode->first_node("name")->value();
                 temp.sizeEnum = sizeEnum;
+                temp.optional = false;
+
+                if (std::string_view{memberNode->value()}.find("const ") != std::string::npos) {
+                    temp.typePrefix = memberNode->value();
+                }
+
+                if (auto nextNode = memberNode->first_node("type")->next_sibling();
+                    nextNode != nullptr) {
+                    if (std::string_view{nextNode->value()}.find('*') != std::string::npos) {
+                        temp.typeSuffix = "*";
+                    }
+                }
+
+                if (auto optAttr = memberNode->first_attribute("optional"); optAttr != nullptr) {
+                    if (std::string_view{optAttr->value()} == "true") {
+                        temp.optional = true;
+                    }
+                }
 
                 newStruct.members.emplace_back(temp);
             }
