@@ -261,8 +261,15 @@ int main(int argc, char **argv) {
         outFile << "  return ";
         bool isFirst = true;
         for (auto const &member : it.members) {
+            // Don't do array members here
             if (!member.sizeEnum.empty())
                 continue;
+
+            // Don't do 'pNext' pointer members
+            if (member.name == "pNext")
+                continue;
+
+            // If it's the first, then we don't prefix with '&&'
             if (isFirst) {
                 isFirst = false;
             } else {

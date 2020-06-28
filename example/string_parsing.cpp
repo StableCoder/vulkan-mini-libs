@@ -15,7 +15,6 @@
 */
 
 #include <vulkan/vulkan.h>
-#include <vulkan/vulkan_core.h>
 
 #define VK_VALUE_SERIALIZATION_CONFIG_MAIN
 #include "vk_value_serialization.hpp"
