@@ -2273,8 +2273,6 @@ bool operator!=(VkHeadlessSurfaceCreateInfoEXT const &lhs,
 
 #ifdef VK_EQUALITY_CHECK_CONFIG_MAIN
 
-#include <cstring>
-
 bool operator==(VkBaseOutStructure const &lhs,
                 VkBaseOutStructure const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
@@ -2454,7 +2452,6 @@ bool operator!=(VkLayerProperties const &lhs,
 bool operator==(VkApplicationInfo const &lhs,
                 VkApplicationInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pApplicationName == rhs.pApplicationName) &&
          (lhs.applicationVersion == rhs.applicationVersion) &&
          (lhs.pEngineName == rhs.pEngineName) &&
@@ -2485,7 +2482,6 @@ bool operator!=(VkAllocationCallbacks const &lhs,
 bool operator==(VkDeviceQueueCreateInfo const &lhs,
                 VkDeviceQueueCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.queueFamilyIndex == rhs.queueFamilyIndex) &&
          (lhs.queueCount == rhs.queueCount) &&
@@ -2500,7 +2496,6 @@ bool operator!=(VkDeviceQueueCreateInfo const &lhs,
 bool operator==(VkDeviceCreateInfo const &lhs,
                 VkDeviceCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.queueCreateInfoCount == rhs.queueCreateInfoCount) &&
          (lhs.pQueueCreateInfos == rhs.pQueueCreateInfos) &&
@@ -2519,7 +2514,6 @@ bool operator!=(VkDeviceCreateInfo const &lhs,
 bool operator==(VkInstanceCreateInfo const &lhs,
                 VkInstanceCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.pApplicationInfo == rhs.pApplicationInfo) &&
          (lhs.enabledLayerCount == rhs.enabledLayerCount) &&
@@ -2568,7 +2562,6 @@ bool operator!=(VkPhysicalDeviceMemoryProperties const &lhs,
 bool operator==(VkMemoryAllocateInfo const &lhs,
                 VkMemoryAllocateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.allocationSize == rhs.allocationSize) &&
          (lhs.memoryTypeIndex == rhs.memoryTypeIndex);
 }
@@ -2641,7 +2634,6 @@ bool operator!=(VkMemoryHeap const &lhs,
 bool operator==(VkMappedMemoryRange const &lhs,
                 VkMappedMemoryRange const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memory == rhs.memory) &&
          (lhs.offset == rhs.offset) &&
          (lhs.size == rhs.size);
@@ -2705,7 +2697,6 @@ bool operator!=(VkDescriptorImageInfo const &lhs,
 bool operator==(VkWriteDescriptorSet const &lhs,
                 VkWriteDescriptorSet const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.dstSet == rhs.dstSet) &&
          (lhs.dstBinding == rhs.dstBinding) &&
          (lhs.dstArrayElement == rhs.dstArrayElement) &&
@@ -2724,7 +2715,6 @@ bool operator!=(VkWriteDescriptorSet const &lhs,
 bool operator==(VkCopyDescriptorSet const &lhs,
                 VkCopyDescriptorSet const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.srcSet == rhs.srcSet) &&
          (lhs.srcBinding == rhs.srcBinding) &&
          (lhs.srcArrayElement == rhs.srcArrayElement) &&
@@ -2742,7 +2732,6 @@ bool operator!=(VkCopyDescriptorSet const &lhs,
 bool operator==(VkBufferCreateInfo const &lhs,
                 VkBufferCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.size == rhs.size) &&
          (lhs.usage == rhs.usage) &&
@@ -2759,7 +2748,6 @@ bool operator!=(VkBufferCreateInfo const &lhs,
 bool operator==(VkBufferViewCreateInfo const &lhs,
                 VkBufferViewCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.buffer == rhs.buffer) &&
          (lhs.format == rhs.format) &&
@@ -2814,7 +2802,6 @@ bool operator!=(VkImageSubresourceRange const &lhs,
 bool operator==(VkMemoryBarrier const &lhs,
                 VkMemoryBarrier const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.srcAccessMask == rhs.srcAccessMask) &&
          (lhs.dstAccessMask == rhs.dstAccessMask);
 }
@@ -2827,7 +2814,6 @@ bool operator!=(VkMemoryBarrier const &lhs,
 bool operator==(VkBufferMemoryBarrier const &lhs,
                 VkBufferMemoryBarrier const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.srcAccessMask == rhs.srcAccessMask) &&
          (lhs.dstAccessMask == rhs.dstAccessMask) &&
          (lhs.srcQueueFamilyIndex == rhs.srcQueueFamilyIndex) &&
@@ -2845,7 +2831,6 @@ bool operator!=(VkBufferMemoryBarrier const &lhs,
 bool operator==(VkImageMemoryBarrier const &lhs,
                 VkImageMemoryBarrier const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.srcAccessMask == rhs.srcAccessMask) &&
          (lhs.dstAccessMask == rhs.dstAccessMask) &&
          (lhs.oldLayout == rhs.oldLayout) &&
@@ -2864,7 +2849,6 @@ bool operator!=(VkImageMemoryBarrier const &lhs,
 bool operator==(VkImageCreateInfo const &lhs,
                 VkImageCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.imageType == rhs.imageType) &&
          (lhs.format == rhs.format) &&
@@ -2902,7 +2886,6 @@ bool operator!=(VkSubresourceLayout const &lhs,
 bool operator==(VkImageViewCreateInfo const &lhs,
                 VkImageViewCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.image == rhs.image) &&
          (lhs.viewType == rhs.viewType) &&
@@ -2996,7 +2979,6 @@ bool operator!=(VkSparseImageMemoryBindInfo const &lhs,
 bool operator==(VkBindSparseInfo const &lhs,
                 VkBindSparseInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.waitSemaphoreCount == rhs.waitSemaphoreCount) &&
          (lhs.pWaitSemaphores == rhs.pWaitSemaphores) &&
          (lhs.bufferBindCount == rhs.bufferBindCount) &&
@@ -3079,7 +3061,6 @@ bool operator!=(VkImageResolve const &lhs,
 bool operator==(VkShaderModuleCreateInfo const &lhs,
                 VkShaderModuleCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.codeSize == rhs.codeSize) &&
          (lhs.pCode == rhs.pCode);
@@ -3107,7 +3088,6 @@ bool operator!=(VkDescriptorSetLayoutBinding const &lhs,
 bool operator==(VkDescriptorSetLayoutCreateInfo const &lhs,
                 VkDescriptorSetLayoutCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.bindingCount == rhs.bindingCount) &&
          (lhs.pBindings == rhs.pBindings);
@@ -3132,7 +3112,6 @@ bool operator!=(VkDescriptorPoolSize const &lhs,
 bool operator==(VkDescriptorPoolCreateInfo const &lhs,
                 VkDescriptorPoolCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.maxSets == rhs.maxSets) &&
          (lhs.poolSizeCount == rhs.poolSizeCount) &&
@@ -3147,7 +3126,6 @@ bool operator!=(VkDescriptorPoolCreateInfo const &lhs,
 bool operator==(VkDescriptorSetAllocateInfo const &lhs,
                 VkDescriptorSetAllocateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.descriptorPool == rhs.descriptorPool) &&
          (lhs.descriptorSetCount == rhs.descriptorSetCount) &&
          (lhs.pSetLayouts == rhs.pSetLayouts);
@@ -3186,7 +3164,6 @@ bool operator!=(VkSpecializationInfo const &lhs,
 bool operator==(VkPipelineShaderStageCreateInfo const &lhs,
                 VkPipelineShaderStageCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.stage == rhs.stage) &&
          (lhs.module == rhs.module) &&
@@ -3202,7 +3179,6 @@ bool operator!=(VkPipelineShaderStageCreateInfo const &lhs,
 bool operator==(VkComputePipelineCreateInfo const &lhs,
                 VkComputePipelineCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.stage == rhs.stage) &&
          (lhs.layout == rhs.layout) &&
@@ -3243,7 +3219,6 @@ bool operator!=(VkVertexInputAttributeDescription const &lhs,
 bool operator==(VkPipelineVertexInputStateCreateInfo const &lhs,
                 VkPipelineVertexInputStateCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.vertexBindingDescriptionCount == rhs.vertexBindingDescriptionCount) &&
          (lhs.pVertexBindingDescriptions == rhs.pVertexBindingDescriptions) &&
@@ -3259,7 +3234,6 @@ bool operator!=(VkPipelineVertexInputStateCreateInfo const &lhs,
 bool operator==(VkPipelineInputAssemblyStateCreateInfo const &lhs,
                 VkPipelineInputAssemblyStateCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.topology == rhs.topology) &&
          (lhs.primitiveRestartEnable == rhs.primitiveRestartEnable);
@@ -3273,7 +3247,6 @@ bool operator!=(VkPipelineInputAssemblyStateCreateInfo const &lhs,
 bool operator==(VkPipelineTessellationStateCreateInfo const &lhs,
                 VkPipelineTessellationStateCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.patchControlPoints == rhs.patchControlPoints);
 }
@@ -3286,7 +3259,6 @@ bool operator!=(VkPipelineTessellationStateCreateInfo const &lhs,
 bool operator==(VkPipelineViewportStateCreateInfo const &lhs,
                 VkPipelineViewportStateCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.viewportCount == rhs.viewportCount) &&
          (lhs.pViewports == rhs.pViewports) &&
@@ -3302,7 +3274,6 @@ bool operator!=(VkPipelineViewportStateCreateInfo const &lhs,
 bool operator==(VkPipelineRasterizationStateCreateInfo const &lhs,
                 VkPipelineRasterizationStateCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.depthClampEnable == rhs.depthClampEnable) &&
          (lhs.rasterizerDiscardEnable == rhs.rasterizerDiscardEnable) &&
@@ -3324,7 +3295,6 @@ bool operator!=(VkPipelineRasterizationStateCreateInfo const &lhs,
 bool operator==(VkPipelineMultisampleStateCreateInfo const &lhs,
                 VkPipelineMultisampleStateCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.rasterizationSamples == rhs.rasterizationSamples) &&
          (lhs.sampleShadingEnable == rhs.sampleShadingEnable) &&
@@ -3363,7 +3333,6 @@ bool operator==(VkPipelineColorBlendStateCreateInfo const &lhs,
       return false;
   }
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.logicOpEnable == rhs.logicOpEnable) &&
          (lhs.logicOp == rhs.logicOp) &&
@@ -3379,7 +3348,6 @@ bool operator!=(VkPipelineColorBlendStateCreateInfo const &lhs,
 bool operator==(VkPipelineDynamicStateCreateInfo const &lhs,
                 VkPipelineDynamicStateCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.dynamicStateCount == rhs.dynamicStateCount) &&
          (lhs.pDynamicStates == rhs.pDynamicStates);
@@ -3409,7 +3377,6 @@ bool operator!=(VkStencilOpState const &lhs,
 bool operator==(VkPipelineDepthStencilStateCreateInfo const &lhs,
                 VkPipelineDepthStencilStateCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.depthTestEnable == rhs.depthTestEnable) &&
          (lhs.depthWriteEnable == rhs.depthWriteEnable) &&
@@ -3430,7 +3397,6 @@ bool operator!=(VkPipelineDepthStencilStateCreateInfo const &lhs,
 bool operator==(VkGraphicsPipelineCreateInfo const &lhs,
                 VkGraphicsPipelineCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.stageCount == rhs.stageCount) &&
          (lhs.pStages == rhs.pStages) &&
@@ -3458,7 +3424,6 @@ bool operator!=(VkGraphicsPipelineCreateInfo const &lhs,
 bool operator==(VkPipelineCacheCreateInfo const &lhs,
                 VkPipelineCacheCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.initialDataSize == rhs.initialDataSize) &&
          (lhs.pInitialData == rhs.pInitialData);
@@ -3484,7 +3449,6 @@ bool operator!=(VkPushConstantRange const &lhs,
 bool operator==(VkPipelineLayoutCreateInfo const &lhs,
                 VkPipelineLayoutCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.setLayoutCount == rhs.setLayoutCount) &&
          (lhs.pSetLayouts == rhs.pSetLayouts) &&
@@ -3500,7 +3464,6 @@ bool operator!=(VkPipelineLayoutCreateInfo const &lhs,
 bool operator==(VkSamplerCreateInfo const &lhs,
                 VkSamplerCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.magFilter == rhs.magFilter) &&
          (lhs.minFilter == rhs.minFilter) &&
@@ -3527,7 +3490,6 @@ bool operator!=(VkSamplerCreateInfo const &lhs,
 bool operator==(VkCommandPoolCreateInfo const &lhs,
                 VkCommandPoolCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.queueFamilyIndex == rhs.queueFamilyIndex);
 }
@@ -3540,7 +3502,6 @@ bool operator!=(VkCommandPoolCreateInfo const &lhs,
 bool operator==(VkCommandBufferAllocateInfo const &lhs,
                 VkCommandBufferAllocateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.commandPool == rhs.commandPool) &&
          (lhs.level == rhs.level) &&
          (lhs.commandBufferCount == rhs.commandBufferCount);
@@ -3554,7 +3515,6 @@ bool operator!=(VkCommandBufferAllocateInfo const &lhs,
 bool operator==(VkCommandBufferInheritanceInfo const &lhs,
                 VkCommandBufferInheritanceInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.renderPass == rhs.renderPass) &&
          (lhs.subpass == rhs.subpass) &&
          (lhs.framebuffer == rhs.framebuffer) &&
@@ -3571,7 +3531,6 @@ bool operator!=(VkCommandBufferInheritanceInfo const &lhs,
 bool operator==(VkCommandBufferBeginInfo const &lhs,
                 VkCommandBufferBeginInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.pInheritanceInfo == rhs.pInheritanceInfo);
 }
@@ -3659,7 +3618,6 @@ bool operator!=(VkSubpassDependency const &lhs,
 bool operator==(VkRenderPassCreateInfo const &lhs,
                 VkRenderPassCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.attachmentCount == rhs.attachmentCount) &&
          (lhs.pAttachments == rhs.pAttachments) &&
@@ -3677,7 +3635,6 @@ bool operator!=(VkRenderPassCreateInfo const &lhs,
 bool operator==(VkEventCreateInfo const &lhs,
                 VkEventCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags);
 }
 
@@ -3689,7 +3646,6 @@ bool operator!=(VkEventCreateInfo const &lhs,
 bool operator==(VkFenceCreateInfo const &lhs,
                 VkFenceCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags);
 }
 
@@ -3912,7 +3868,6 @@ bool operator!=(VkPhysicalDeviceLimits const &lhs,
 bool operator==(VkSemaphoreCreateInfo const &lhs,
                 VkSemaphoreCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags);
 }
 
@@ -3924,7 +3879,6 @@ bool operator!=(VkSemaphoreCreateInfo const &lhs,
 bool operator==(VkQueryPoolCreateInfo const &lhs,
                 VkQueryPoolCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.queryType == rhs.queryType) &&
          (lhs.queryCount == rhs.queryCount) &&
@@ -3939,7 +3893,6 @@ bool operator!=(VkQueryPoolCreateInfo const &lhs,
 bool operator==(VkFramebufferCreateInfo const &lhs,
                 VkFramebufferCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.renderPass == rhs.renderPass) &&
          (lhs.attachmentCount == rhs.attachmentCount) &&
@@ -3996,7 +3949,6 @@ bool operator!=(VkDispatchIndirectCommand const &lhs,
 bool operator==(VkSubmitInfo const &lhs,
                 VkSubmitInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.waitSemaphoreCount == rhs.waitSemaphoreCount) &&
          (lhs.pWaitSemaphores == rhs.pWaitSemaphores) &&
          (lhs.pWaitDstStageMask == rhs.pWaitDstStageMask) &&
@@ -4063,7 +4015,6 @@ bool operator!=(VkDisplayModePropertiesKHR const &lhs,
 bool operator==(VkDisplayModeCreateInfoKHR const &lhs,
                 VkDisplayModeCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.parameters == rhs.parameters);
 }
@@ -4094,7 +4045,6 @@ bool operator!=(VkDisplayPlaneCapabilitiesKHR const &lhs,
 bool operator==(VkDisplaySurfaceCreateInfoKHR const &lhs,
                 VkDisplaySurfaceCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.displayMode == rhs.displayMode) &&
          (lhs.planeIndex == rhs.planeIndex) &&
@@ -4113,7 +4063,6 @@ bool operator!=(VkDisplaySurfaceCreateInfoKHR const &lhs,
 bool operator==(VkDisplayPresentInfoKHR const &lhs,
                 VkDisplayPresentInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.srcRect == rhs.srcRect) &&
          (lhs.dstRect == rhs.dstRect) &&
          (lhs.persistent == rhs.persistent);
@@ -4147,7 +4096,6 @@ bool operator!=(VkSurfaceCapabilitiesKHR const &lhs,
 bool operator==(VkAndroidSurfaceCreateInfoKHR const &lhs,
                 VkAndroidSurfaceCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.window == rhs.window);
 }
@@ -4162,7 +4110,6 @@ bool operator!=(VkAndroidSurfaceCreateInfoKHR const &lhs,
 bool operator==(VkViSurfaceCreateInfoNN const &lhs,
                 VkViSurfaceCreateInfoNN const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.window == rhs.window);
 }
@@ -4177,7 +4124,6 @@ bool operator!=(VkViSurfaceCreateInfoNN const &lhs,
 bool operator==(VkWaylandSurfaceCreateInfoKHR const &lhs,
                 VkWaylandSurfaceCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.display == rhs.display) &&
          (lhs.surface == rhs.surface);
@@ -4193,7 +4139,6 @@ bool operator!=(VkWaylandSurfaceCreateInfoKHR const &lhs,
 bool operator==(VkWin32SurfaceCreateInfoKHR const &lhs,
                 VkWin32SurfaceCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.hinstance == rhs.hinstance) &&
          (lhs.hwnd == rhs.hwnd);
@@ -4209,7 +4154,6 @@ bool operator!=(VkWin32SurfaceCreateInfoKHR const &lhs,
 bool operator==(VkXlibSurfaceCreateInfoKHR const &lhs,
                 VkXlibSurfaceCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.dpy == rhs.dpy) &&
          (lhs.window == rhs.window);
@@ -4225,7 +4169,6 @@ bool operator!=(VkXlibSurfaceCreateInfoKHR const &lhs,
 bool operator==(VkXcbSurfaceCreateInfoKHR const &lhs,
                 VkXcbSurfaceCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.connection == rhs.connection) &&
          (lhs.window == rhs.window);
@@ -4241,7 +4184,6 @@ bool operator!=(VkXcbSurfaceCreateInfoKHR const &lhs,
 bool operator==(VkImagePipeSurfaceCreateInfoFUCHSIA const &lhs,
                 VkImagePipeSurfaceCreateInfoFUCHSIA const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.imagePipeHandle == rhs.imagePipeHandle);
 }
@@ -4256,7 +4198,6 @@ bool operator!=(VkImagePipeSurfaceCreateInfoFUCHSIA const &lhs,
 bool operator==(VkStreamDescriptorSurfaceCreateInfoGGP const &lhs,
                 VkStreamDescriptorSurfaceCreateInfoGGP const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.streamDescriptor == rhs.streamDescriptor);
 }
@@ -4281,7 +4222,6 @@ bool operator!=(VkSurfaceFormatKHR const &lhs,
 bool operator==(VkSwapchainCreateInfoKHR const &lhs,
                 VkSwapchainCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.surface == rhs.surface) &&
          (lhs.minImageCount == rhs.minImageCount) &&
@@ -4308,7 +4248,6 @@ bool operator!=(VkSwapchainCreateInfoKHR const &lhs,
 bool operator==(VkPresentInfoKHR const &lhs,
                 VkPresentInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.waitSemaphoreCount == rhs.waitSemaphoreCount) &&
          (lhs.pWaitSemaphores == rhs.pWaitSemaphores) &&
          (lhs.swapchainCount == rhs.swapchainCount) &&
@@ -4325,7 +4264,6 @@ bool operator!=(VkPresentInfoKHR const &lhs,
 bool operator==(VkDebugReportCallbackCreateInfoEXT const &lhs,
                 VkDebugReportCallbackCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.pfnCallback == rhs.pfnCallback) &&
          (lhs.pUserData == rhs.pUserData);
@@ -4339,7 +4277,6 @@ bool operator!=(VkDebugReportCallbackCreateInfoEXT const &lhs,
 bool operator==(VkValidationFlagsEXT const &lhs,
                 VkValidationFlagsEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.disabledValidationCheckCount == rhs.disabledValidationCheckCount) &&
          (lhs.pDisabledValidationChecks == rhs.pDisabledValidationChecks);
 }
@@ -4352,7 +4289,6 @@ bool operator!=(VkValidationFlagsEXT const &lhs,
 bool operator==(VkValidationFeaturesEXT const &lhs,
                 VkValidationFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.enabledValidationFeatureCount == rhs.enabledValidationFeatureCount) &&
          (lhs.pEnabledValidationFeatures == rhs.pEnabledValidationFeatures) &&
          (lhs.disabledValidationFeatureCount == rhs.disabledValidationFeatureCount) &&
@@ -4367,7 +4303,6 @@ bool operator!=(VkValidationFeaturesEXT const &lhs,
 bool operator==(VkPipelineRasterizationStateRasterizationOrderAMD const &lhs,
                 VkPipelineRasterizationStateRasterizationOrderAMD const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.rasterizationOrder == rhs.rasterizationOrder);
 }
 
@@ -4379,7 +4314,6 @@ bool operator!=(VkPipelineRasterizationStateRasterizationOrderAMD const &lhs,
 bool operator==(VkDebugMarkerObjectNameInfoEXT const &lhs,
                 VkDebugMarkerObjectNameInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.objectType == rhs.objectType) &&
          (lhs.object == rhs.object) &&
          (lhs.pObjectName == rhs.pObjectName);
@@ -4393,7 +4327,6 @@ bool operator!=(VkDebugMarkerObjectNameInfoEXT const &lhs,
 bool operator==(VkDebugMarkerObjectTagInfoEXT const &lhs,
                 VkDebugMarkerObjectTagInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.objectType == rhs.objectType) &&
          (lhs.object == rhs.object) &&
          (lhs.tagName == rhs.tagName) &&
@@ -4413,7 +4346,6 @@ bool operator==(VkDebugMarkerMarkerInfoEXT const &lhs,
       return false;
   }
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pMarkerName == rhs.pMarkerName);
 }
 
@@ -4425,7 +4357,6 @@ bool operator!=(VkDebugMarkerMarkerInfoEXT const &lhs,
 bool operator==(VkDedicatedAllocationImageCreateInfoNV const &lhs,
                 VkDedicatedAllocationImageCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.dedicatedAllocation == rhs.dedicatedAllocation);
 }
 
@@ -4437,7 +4368,6 @@ bool operator!=(VkDedicatedAllocationImageCreateInfoNV const &lhs,
 bool operator==(VkDedicatedAllocationBufferCreateInfoNV const &lhs,
                 VkDedicatedAllocationBufferCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.dedicatedAllocation == rhs.dedicatedAllocation);
 }
 
@@ -4449,7 +4379,6 @@ bool operator!=(VkDedicatedAllocationBufferCreateInfoNV const &lhs,
 bool operator==(VkDedicatedAllocationMemoryAllocateInfoNV const &lhs,
                 VkDedicatedAllocationMemoryAllocateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.image == rhs.image) &&
          (lhs.buffer == rhs.buffer);
 }
@@ -4475,7 +4404,6 @@ bool operator!=(VkExternalImageFormatPropertiesNV const &lhs,
 bool operator==(VkExternalMemoryImageCreateInfoNV const &lhs,
                 VkExternalMemoryImageCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleTypes == rhs.handleTypes);
 }
 
@@ -4487,7 +4415,6 @@ bool operator!=(VkExternalMemoryImageCreateInfoNV const &lhs,
 bool operator==(VkExportMemoryAllocateInfoNV const &lhs,
                 VkExportMemoryAllocateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleTypes == rhs.handleTypes);
 }
 
@@ -4500,7 +4427,6 @@ bool operator!=(VkExportMemoryAllocateInfoNV const &lhs,
 bool operator==(VkImportMemoryWin32HandleInfoNV const &lhs,
                 VkImportMemoryWin32HandleInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleType == rhs.handleType) &&
          (lhs.handle == rhs.handle);
 }
@@ -4515,7 +4441,6 @@ bool operator!=(VkImportMemoryWin32HandleInfoNV const &lhs,
 bool operator==(VkExportMemoryWin32HandleInfoNV const &lhs,
                 VkExportMemoryWin32HandleInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pAttributes == rhs.pAttributes) &&
          (lhs.dwAccess == rhs.dwAccess);
 }
@@ -4530,7 +4455,6 @@ bool operator!=(VkExportMemoryWin32HandleInfoNV const &lhs,
 bool operator==(VkWin32KeyedMutexAcquireReleaseInfoNV const &lhs,
                 VkWin32KeyedMutexAcquireReleaseInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.acquireCount == rhs.acquireCount) &&
          (lhs.pAcquireSyncs == rhs.pAcquireSyncs) &&
          (lhs.pAcquireKeys == rhs.pAcquireKeys) &&
@@ -4549,7 +4473,6 @@ bool operator!=(VkWin32KeyedMutexAcquireReleaseInfoNV const &lhs,
 bool operator==(VkDeviceGeneratedCommandsFeaturesNVX const &lhs,
                 VkDeviceGeneratedCommandsFeaturesNVX const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.computeBindingPointSupport == rhs.computeBindingPointSupport);
 }
 
@@ -4561,7 +4484,6 @@ bool operator!=(VkDeviceGeneratedCommandsFeaturesNVX const &lhs,
 bool operator==(VkDeviceGeneratedCommandsLimitsNVX const &lhs,
                 VkDeviceGeneratedCommandsLimitsNVX const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxIndirectCommandsLayoutTokenCount == rhs.maxIndirectCommandsLayoutTokenCount) &&
          (lhs.maxObjectEntryCounts == rhs.maxObjectEntryCounts) &&
          (lhs.minSequenceCountBufferOffsetAlignment == rhs.minSequenceCountBufferOffsetAlignment) &&
@@ -4602,7 +4524,6 @@ bool operator!=(VkIndirectCommandsLayoutTokenNVX const &lhs,
 bool operator==(VkIndirectCommandsLayoutCreateInfoNVX const &lhs,
                 VkIndirectCommandsLayoutCreateInfoNVX const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pipelineBindPoint == rhs.pipelineBindPoint) &&
          (lhs.flags == rhs.flags) &&
          (lhs.tokenCount == rhs.tokenCount) &&
@@ -4617,7 +4538,6 @@ bool operator!=(VkIndirectCommandsLayoutCreateInfoNVX const &lhs,
 bool operator==(VkCmdProcessCommandsInfoNVX const &lhs,
                 VkCmdProcessCommandsInfoNVX const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.objectTable == rhs.objectTable) &&
          (lhs.indirectCommandsLayout == rhs.indirectCommandsLayout) &&
          (lhs.indirectCommandsTokenCount == rhs.indirectCommandsTokenCount) &&
@@ -4638,7 +4558,6 @@ bool operator!=(VkCmdProcessCommandsInfoNVX const &lhs,
 bool operator==(VkCmdReserveSpaceForCommandsInfoNVX const &lhs,
                 VkCmdReserveSpaceForCommandsInfoNVX const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.objectTable == rhs.objectTable) &&
          (lhs.indirectCommandsLayout == rhs.indirectCommandsLayout) &&
          (lhs.maxSequencesCount == rhs.maxSequencesCount);
@@ -4652,7 +4571,6 @@ bool operator!=(VkCmdReserveSpaceForCommandsInfoNVX const &lhs,
 bool operator==(VkObjectTableCreateInfoNVX const &lhs,
                 VkObjectTableCreateInfoNVX const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.objectCount == rhs.objectCount) &&
          (lhs.pObjectEntryTypes == rhs.pObjectEntryTypes) &&
          (lhs.pObjectEntryCounts == rhs.pObjectEntryCounts) &&
@@ -4746,7 +4664,6 @@ bool operator!=(VkObjectTablePushConstantEntryNVX const &lhs,
 bool operator==(VkPhysicalDeviceFeatures2 const &lhs,
                 VkPhysicalDeviceFeatures2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.features == rhs.features);
 }
 
@@ -4758,7 +4675,6 @@ bool operator!=(VkPhysicalDeviceFeatures2 const &lhs,
 bool operator==(VkPhysicalDeviceProperties2 const &lhs,
                 VkPhysicalDeviceProperties2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.properties == rhs.properties);
 }
 
@@ -4770,7 +4686,6 @@ bool operator!=(VkPhysicalDeviceProperties2 const &lhs,
 bool operator==(VkFormatProperties2 const &lhs,
                 VkFormatProperties2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.formatProperties == rhs.formatProperties);
 }
 
@@ -4782,7 +4697,6 @@ bool operator!=(VkFormatProperties2 const &lhs,
 bool operator==(VkImageFormatProperties2 const &lhs,
                 VkImageFormatProperties2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.imageFormatProperties == rhs.imageFormatProperties);
 }
 
@@ -4794,7 +4708,6 @@ bool operator!=(VkImageFormatProperties2 const &lhs,
 bool operator==(VkPhysicalDeviceImageFormatInfo2 const &lhs,
                 VkPhysicalDeviceImageFormatInfo2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.format == rhs.format) &&
          (lhs.type == rhs.type) &&
          (lhs.tiling == rhs.tiling) &&
@@ -4810,7 +4723,6 @@ bool operator!=(VkPhysicalDeviceImageFormatInfo2 const &lhs,
 bool operator==(VkQueueFamilyProperties2 const &lhs,
                 VkQueueFamilyProperties2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.queueFamilyProperties == rhs.queueFamilyProperties);
 }
 
@@ -4822,7 +4734,6 @@ bool operator!=(VkQueueFamilyProperties2 const &lhs,
 bool operator==(VkPhysicalDeviceMemoryProperties2 const &lhs,
                 VkPhysicalDeviceMemoryProperties2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memoryProperties == rhs.memoryProperties);
 }
 
@@ -4834,7 +4745,6 @@ bool operator!=(VkPhysicalDeviceMemoryProperties2 const &lhs,
 bool operator==(VkSparseImageFormatProperties2 const &lhs,
                 VkSparseImageFormatProperties2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.properties == rhs.properties);
 }
 
@@ -4846,7 +4756,6 @@ bool operator!=(VkSparseImageFormatProperties2 const &lhs,
 bool operator==(VkPhysicalDeviceSparseImageFormatInfo2 const &lhs,
                 VkPhysicalDeviceSparseImageFormatInfo2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.format == rhs.format) &&
          (lhs.type == rhs.type) &&
          (lhs.samples == rhs.samples) &&
@@ -4862,7 +4771,6 @@ bool operator!=(VkPhysicalDeviceSparseImageFormatInfo2 const &lhs,
 bool operator==(VkPhysicalDevicePushDescriptorPropertiesKHR const &lhs,
                 VkPhysicalDevicePushDescriptorPropertiesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxPushDescriptors == rhs.maxPushDescriptors);
 }
 
@@ -4895,7 +4803,6 @@ bool operator==(VkPhysicalDeviceDriverPropertiesKHR const &lhs,
       return false;
   }
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.driverID == rhs.driverID) &&
          (lhs.conformanceVersion == rhs.conformanceVersion);
 }
@@ -4908,7 +4815,6 @@ bool operator!=(VkPhysicalDeviceDriverPropertiesKHR const &lhs,
 bool operator==(VkPresentRegionsKHR const &lhs,
                 VkPresentRegionsKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.swapchainCount == rhs.swapchainCount) &&
          (lhs.pRegions == rhs.pRegions);
 }
@@ -4944,7 +4850,6 @@ bool operator!=(VkRectLayerKHR const &lhs,
 bool operator==(VkPhysicalDeviceVariablePointersFeatures const &lhs,
                 VkPhysicalDeviceVariablePointersFeatures const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.variablePointersStorageBuffer == rhs.variablePointersStorageBuffer) &&
          (lhs.variablePointers == rhs.variablePointers);
 }
@@ -4969,7 +4874,6 @@ bool operator!=(VkExternalMemoryProperties const &lhs,
 bool operator==(VkPhysicalDeviceExternalImageFormatInfo const &lhs,
                 VkPhysicalDeviceExternalImageFormatInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleType == rhs.handleType);
 }
 
@@ -4981,7 +4885,6 @@ bool operator!=(VkPhysicalDeviceExternalImageFormatInfo const &lhs,
 bool operator==(VkExternalImageFormatProperties const &lhs,
                 VkExternalImageFormatProperties const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.externalMemoryProperties == rhs.externalMemoryProperties);
 }
 
@@ -4993,7 +4896,6 @@ bool operator!=(VkExternalImageFormatProperties const &lhs,
 bool operator==(VkPhysicalDeviceExternalBufferInfo const &lhs,
                 VkPhysicalDeviceExternalBufferInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.usage == rhs.usage) &&
          (lhs.handleType == rhs.handleType);
@@ -5007,7 +4909,6 @@ bool operator!=(VkPhysicalDeviceExternalBufferInfo const &lhs,
 bool operator==(VkExternalBufferProperties const &lhs,
                 VkExternalBufferProperties const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.externalMemoryProperties == rhs.externalMemoryProperties);
 }
 
@@ -5031,7 +4932,6 @@ bool operator==(VkPhysicalDeviceIDProperties const &lhs,
       return false;
   }
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.deviceNodeMask == rhs.deviceNodeMask) &&
          (lhs.deviceLUIDValid == rhs.deviceLUIDValid);
 }
@@ -5044,7 +4944,6 @@ bool operator!=(VkPhysicalDeviceIDProperties const &lhs,
 bool operator==(VkExternalMemoryImageCreateInfo const &lhs,
                 VkExternalMemoryImageCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleTypes == rhs.handleTypes);
 }
 
@@ -5056,7 +4955,6 @@ bool operator!=(VkExternalMemoryImageCreateInfo const &lhs,
 bool operator==(VkExternalMemoryBufferCreateInfo const &lhs,
                 VkExternalMemoryBufferCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleTypes == rhs.handleTypes);
 }
 
@@ -5068,7 +4966,6 @@ bool operator!=(VkExternalMemoryBufferCreateInfo const &lhs,
 bool operator==(VkExportMemoryAllocateInfo const &lhs,
                 VkExportMemoryAllocateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleTypes == rhs.handleTypes);
 }
 
@@ -5081,7 +4978,6 @@ bool operator!=(VkExportMemoryAllocateInfo const &lhs,
 bool operator==(VkImportMemoryWin32HandleInfoKHR const &lhs,
                 VkImportMemoryWin32HandleInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleType == rhs.handleType) &&
          (lhs.handle == rhs.handle) &&
          (lhs.name == rhs.name);
@@ -5097,7 +4993,6 @@ bool operator!=(VkImportMemoryWin32HandleInfoKHR const &lhs,
 bool operator==(VkExportMemoryWin32HandleInfoKHR const &lhs,
                 VkExportMemoryWin32HandleInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pAttributes == rhs.pAttributes) &&
          (lhs.dwAccess == rhs.dwAccess) &&
          (lhs.name == rhs.name);
@@ -5113,7 +5008,6 @@ bool operator!=(VkExportMemoryWin32HandleInfoKHR const &lhs,
 bool operator==(VkMemoryWin32HandlePropertiesKHR const &lhs,
                 VkMemoryWin32HandlePropertiesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memoryTypeBits == rhs.memoryTypeBits);
 }
 
@@ -5127,7 +5021,6 @@ bool operator!=(VkMemoryWin32HandlePropertiesKHR const &lhs,
 bool operator==(VkMemoryGetWin32HandleInfoKHR const &lhs,
                 VkMemoryGetWin32HandleInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memory == rhs.memory) &&
          (lhs.handleType == rhs.handleType);
 }
@@ -5141,7 +5034,6 @@ bool operator!=(VkMemoryGetWin32HandleInfoKHR const &lhs,
 bool operator==(VkImportMemoryFdInfoKHR const &lhs,
                 VkImportMemoryFdInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleType == rhs.handleType) &&
          (lhs.fd == rhs.fd);
 }
@@ -5154,7 +5046,6 @@ bool operator!=(VkImportMemoryFdInfoKHR const &lhs,
 bool operator==(VkMemoryFdPropertiesKHR const &lhs,
                 VkMemoryFdPropertiesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memoryTypeBits == rhs.memoryTypeBits);
 }
 
@@ -5166,7 +5057,6 @@ bool operator!=(VkMemoryFdPropertiesKHR const &lhs,
 bool operator==(VkMemoryGetFdInfoKHR const &lhs,
                 VkMemoryGetFdInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memory == rhs.memory) &&
          (lhs.handleType == rhs.handleType);
 }
@@ -5180,7 +5070,6 @@ bool operator!=(VkMemoryGetFdInfoKHR const &lhs,
 bool operator==(VkWin32KeyedMutexAcquireReleaseInfoKHR const &lhs,
                 VkWin32KeyedMutexAcquireReleaseInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.acquireCount == rhs.acquireCount) &&
          (lhs.pAcquireSyncs == rhs.pAcquireSyncs) &&
          (lhs.pAcquireKeys == rhs.pAcquireKeys) &&
@@ -5199,7 +5088,6 @@ bool operator!=(VkWin32KeyedMutexAcquireReleaseInfoKHR const &lhs,
 bool operator==(VkPhysicalDeviceExternalSemaphoreInfo const &lhs,
                 VkPhysicalDeviceExternalSemaphoreInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleType == rhs.handleType);
 }
 
@@ -5211,7 +5099,6 @@ bool operator!=(VkPhysicalDeviceExternalSemaphoreInfo const &lhs,
 bool operator==(VkExternalSemaphoreProperties const &lhs,
                 VkExternalSemaphoreProperties const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.exportFromImportedHandleTypes == rhs.exportFromImportedHandleTypes) &&
          (lhs.compatibleHandleTypes == rhs.compatibleHandleTypes) &&
          (lhs.externalSemaphoreFeatures == rhs.externalSemaphoreFeatures);
@@ -5225,7 +5112,6 @@ bool operator!=(VkExternalSemaphoreProperties const &lhs,
 bool operator==(VkExportSemaphoreCreateInfo const &lhs,
                 VkExportSemaphoreCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleTypes == rhs.handleTypes);
 }
 
@@ -5238,7 +5124,6 @@ bool operator!=(VkExportSemaphoreCreateInfo const &lhs,
 bool operator==(VkImportSemaphoreWin32HandleInfoKHR const &lhs,
                 VkImportSemaphoreWin32HandleInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.semaphore == rhs.semaphore) &&
          (lhs.flags == rhs.flags) &&
          (lhs.handleType == rhs.handleType) &&
@@ -5256,7 +5141,6 @@ bool operator!=(VkImportSemaphoreWin32HandleInfoKHR const &lhs,
 bool operator==(VkExportSemaphoreWin32HandleInfoKHR const &lhs,
                 VkExportSemaphoreWin32HandleInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pAttributes == rhs.pAttributes) &&
          (lhs.dwAccess == rhs.dwAccess) &&
          (lhs.name == rhs.name);
@@ -5272,7 +5156,6 @@ bool operator!=(VkExportSemaphoreWin32HandleInfoKHR const &lhs,
 bool operator==(VkD3D12FenceSubmitInfoKHR const &lhs,
                 VkD3D12FenceSubmitInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.waitSemaphoreValuesCount == rhs.waitSemaphoreValuesCount) &&
          (lhs.pWaitSemaphoreValues == rhs.pWaitSemaphoreValues) &&
          (lhs.signalSemaphoreValuesCount == rhs.signalSemaphoreValuesCount) &&
@@ -5289,7 +5172,6 @@ bool operator!=(VkD3D12FenceSubmitInfoKHR const &lhs,
 bool operator==(VkSemaphoreGetWin32HandleInfoKHR const &lhs,
                 VkSemaphoreGetWin32HandleInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.semaphore == rhs.semaphore) &&
          (lhs.handleType == rhs.handleType);
 }
@@ -5303,7 +5185,6 @@ bool operator!=(VkSemaphoreGetWin32HandleInfoKHR const &lhs,
 bool operator==(VkImportSemaphoreFdInfoKHR const &lhs,
                 VkImportSemaphoreFdInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.semaphore == rhs.semaphore) &&
          (lhs.flags == rhs.flags) &&
          (lhs.handleType == rhs.handleType) &&
@@ -5318,7 +5199,6 @@ bool operator!=(VkImportSemaphoreFdInfoKHR const &lhs,
 bool operator==(VkSemaphoreGetFdInfoKHR const &lhs,
                 VkSemaphoreGetFdInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.semaphore == rhs.semaphore) &&
          (lhs.handleType == rhs.handleType);
 }
@@ -5331,7 +5211,6 @@ bool operator!=(VkSemaphoreGetFdInfoKHR const &lhs,
 bool operator==(VkPhysicalDeviceExternalFenceInfo const &lhs,
                 VkPhysicalDeviceExternalFenceInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleType == rhs.handleType);
 }
 
@@ -5343,7 +5222,6 @@ bool operator!=(VkPhysicalDeviceExternalFenceInfo const &lhs,
 bool operator==(VkExternalFenceProperties const &lhs,
                 VkExternalFenceProperties const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.exportFromImportedHandleTypes == rhs.exportFromImportedHandleTypes) &&
          (lhs.compatibleHandleTypes == rhs.compatibleHandleTypes) &&
          (lhs.externalFenceFeatures == rhs.externalFenceFeatures);
@@ -5357,7 +5235,6 @@ bool operator!=(VkExternalFenceProperties const &lhs,
 bool operator==(VkExportFenceCreateInfo const &lhs,
                 VkExportFenceCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleTypes == rhs.handleTypes);
 }
 
@@ -5370,7 +5247,6 @@ bool operator!=(VkExportFenceCreateInfo const &lhs,
 bool operator==(VkImportFenceWin32HandleInfoKHR const &lhs,
                 VkImportFenceWin32HandleInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.fence == rhs.fence) &&
          (lhs.flags == rhs.flags) &&
          (lhs.handleType == rhs.handleType) &&
@@ -5388,7 +5264,6 @@ bool operator!=(VkImportFenceWin32HandleInfoKHR const &lhs,
 bool operator==(VkExportFenceWin32HandleInfoKHR const &lhs,
                 VkExportFenceWin32HandleInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pAttributes == rhs.pAttributes) &&
          (lhs.dwAccess == rhs.dwAccess) &&
          (lhs.name == rhs.name);
@@ -5404,7 +5279,6 @@ bool operator!=(VkExportFenceWin32HandleInfoKHR const &lhs,
 bool operator==(VkFenceGetWin32HandleInfoKHR const &lhs,
                 VkFenceGetWin32HandleInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.fence == rhs.fence) &&
          (lhs.handleType == rhs.handleType);
 }
@@ -5418,7 +5292,6 @@ bool operator!=(VkFenceGetWin32HandleInfoKHR const &lhs,
 bool operator==(VkImportFenceFdInfoKHR const &lhs,
                 VkImportFenceFdInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.fence == rhs.fence) &&
          (lhs.flags == rhs.flags) &&
          (lhs.handleType == rhs.handleType) &&
@@ -5433,7 +5306,6 @@ bool operator!=(VkImportFenceFdInfoKHR const &lhs,
 bool operator==(VkFenceGetFdInfoKHR const &lhs,
                 VkFenceGetFdInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.fence == rhs.fence) &&
          (lhs.handleType == rhs.handleType);
 }
@@ -5446,7 +5318,6 @@ bool operator!=(VkFenceGetFdInfoKHR const &lhs,
 bool operator==(VkPhysicalDeviceMultiviewFeatures const &lhs,
                 VkPhysicalDeviceMultiviewFeatures const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.multiview == rhs.multiview) &&
          (lhs.multiviewGeometryShader == rhs.multiviewGeometryShader) &&
          (lhs.multiviewTessellationShader == rhs.multiviewTessellationShader);
@@ -5460,7 +5331,6 @@ bool operator!=(VkPhysicalDeviceMultiviewFeatures const &lhs,
 bool operator==(VkPhysicalDeviceMultiviewProperties const &lhs,
                 VkPhysicalDeviceMultiviewProperties const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxMultiviewViewCount == rhs.maxMultiviewViewCount) &&
          (lhs.maxMultiviewInstanceIndex == rhs.maxMultiviewInstanceIndex);
 }
@@ -5473,7 +5343,6 @@ bool operator!=(VkPhysicalDeviceMultiviewProperties const &lhs,
 bool operator==(VkRenderPassMultiviewCreateInfo const &lhs,
                 VkRenderPassMultiviewCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.subpassCount == rhs.subpassCount) &&
          (lhs.pViewMasks == rhs.pViewMasks) &&
          (lhs.dependencyCount == rhs.dependencyCount) &&
@@ -5490,7 +5359,6 @@ bool operator!=(VkRenderPassMultiviewCreateInfo const &lhs,
 bool operator==(VkSurfaceCapabilities2EXT const &lhs,
                 VkSurfaceCapabilities2EXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.minImageCount == rhs.minImageCount) &&
          (lhs.maxImageCount == rhs.maxImageCount) &&
          (lhs.currentExtent == rhs.currentExtent) &&
@@ -5512,7 +5380,6 @@ bool operator!=(VkSurfaceCapabilities2EXT const &lhs,
 bool operator==(VkDisplayPowerInfoEXT const &lhs,
                 VkDisplayPowerInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.powerState == rhs.powerState);
 }
 
@@ -5524,7 +5391,6 @@ bool operator!=(VkDisplayPowerInfoEXT const &lhs,
 bool operator==(VkDeviceEventInfoEXT const &lhs,
                 VkDeviceEventInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.deviceEvent == rhs.deviceEvent);
 }
 
@@ -5536,7 +5402,6 @@ bool operator!=(VkDeviceEventInfoEXT const &lhs,
 bool operator==(VkDisplayEventInfoEXT const &lhs,
                 VkDisplayEventInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.displayEvent == rhs.displayEvent);
 }
 
@@ -5548,7 +5413,6 @@ bool operator!=(VkDisplayEventInfoEXT const &lhs,
 bool operator==(VkSwapchainCounterCreateInfoEXT const &lhs,
                 VkSwapchainCounterCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.surfaceCounters == rhs.surfaceCounters);
 }
 
@@ -5564,7 +5428,6 @@ bool operator==(VkPhysicalDeviceGroupProperties const &lhs,
       return false;
   }
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.physicalDeviceCount == rhs.physicalDeviceCount) &&
          (lhs.subsetAllocation == rhs.subsetAllocation);
 }
@@ -5577,7 +5440,6 @@ bool operator!=(VkPhysicalDeviceGroupProperties const &lhs,
 bool operator==(VkMemoryAllocateFlagsInfo const &lhs,
                 VkMemoryAllocateFlagsInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.deviceMask == rhs.deviceMask);
 }
@@ -5590,7 +5452,6 @@ bool operator!=(VkMemoryAllocateFlagsInfo const &lhs,
 bool operator==(VkBindBufferMemoryInfo const &lhs,
                 VkBindBufferMemoryInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.buffer == rhs.buffer) &&
          (lhs.memory == rhs.memory) &&
          (lhs.memoryOffset == rhs.memoryOffset);
@@ -5604,7 +5465,6 @@ bool operator!=(VkBindBufferMemoryInfo const &lhs,
 bool operator==(VkBindBufferMemoryDeviceGroupInfo const &lhs,
                 VkBindBufferMemoryDeviceGroupInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.deviceIndexCount == rhs.deviceIndexCount) &&
          (lhs.pDeviceIndices == rhs.pDeviceIndices);
 }
@@ -5617,7 +5477,6 @@ bool operator!=(VkBindBufferMemoryDeviceGroupInfo const &lhs,
 bool operator==(VkBindImageMemoryInfo const &lhs,
                 VkBindImageMemoryInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.image == rhs.image) &&
          (lhs.memory == rhs.memory) &&
          (lhs.memoryOffset == rhs.memoryOffset);
@@ -5631,7 +5490,6 @@ bool operator!=(VkBindImageMemoryInfo const &lhs,
 bool operator==(VkBindImageMemoryDeviceGroupInfo const &lhs,
                 VkBindImageMemoryDeviceGroupInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.deviceIndexCount == rhs.deviceIndexCount) &&
          (lhs.pDeviceIndices == rhs.pDeviceIndices) &&
          (lhs.splitInstanceBindRegionCount == rhs.splitInstanceBindRegionCount) &&
@@ -5646,7 +5504,6 @@ bool operator!=(VkBindImageMemoryDeviceGroupInfo const &lhs,
 bool operator==(VkDeviceGroupRenderPassBeginInfo const &lhs,
                 VkDeviceGroupRenderPassBeginInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.deviceMask == rhs.deviceMask) &&
          (lhs.deviceRenderAreaCount == rhs.deviceRenderAreaCount) &&
          (lhs.pDeviceRenderAreas == rhs.pDeviceRenderAreas);
@@ -5660,7 +5517,6 @@ bool operator!=(VkDeviceGroupRenderPassBeginInfo const &lhs,
 bool operator==(VkDeviceGroupCommandBufferBeginInfo const &lhs,
                 VkDeviceGroupCommandBufferBeginInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.deviceMask == rhs.deviceMask);
 }
 
@@ -5672,7 +5528,6 @@ bool operator!=(VkDeviceGroupCommandBufferBeginInfo const &lhs,
 bool operator==(VkDeviceGroupSubmitInfo const &lhs,
                 VkDeviceGroupSubmitInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.waitSemaphoreCount == rhs.waitSemaphoreCount) &&
          (lhs.pWaitSemaphoreDeviceIndices == rhs.pWaitSemaphoreDeviceIndices) &&
          (lhs.commandBufferCount == rhs.commandBufferCount) &&
@@ -5689,7 +5544,6 @@ bool operator!=(VkDeviceGroupSubmitInfo const &lhs,
 bool operator==(VkDeviceGroupBindSparseInfo const &lhs,
                 VkDeviceGroupBindSparseInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.resourceDeviceIndex == rhs.resourceDeviceIndex) &&
          (lhs.memoryDeviceIndex == rhs.memoryDeviceIndex);
 }
@@ -5706,7 +5560,6 @@ bool operator==(VkDeviceGroupPresentCapabilitiesKHR const &lhs,
       return false;
   }
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.modes == rhs.modes);
 }
 
@@ -5718,7 +5571,6 @@ bool operator!=(VkDeviceGroupPresentCapabilitiesKHR const &lhs,
 bool operator==(VkImageSwapchainCreateInfoKHR const &lhs,
                 VkImageSwapchainCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.swapchain == rhs.swapchain);
 }
 
@@ -5730,7 +5582,6 @@ bool operator!=(VkImageSwapchainCreateInfoKHR const &lhs,
 bool operator==(VkBindImageMemorySwapchainInfoKHR const &lhs,
                 VkBindImageMemorySwapchainInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.swapchain == rhs.swapchain) &&
          (lhs.imageIndex == rhs.imageIndex);
 }
@@ -5743,7 +5594,6 @@ bool operator!=(VkBindImageMemorySwapchainInfoKHR const &lhs,
 bool operator==(VkAcquireNextImageInfoKHR const &lhs,
                 VkAcquireNextImageInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.swapchain == rhs.swapchain) &&
          (lhs.timeout == rhs.timeout) &&
          (lhs.semaphore == rhs.semaphore) &&
@@ -5759,7 +5609,6 @@ bool operator!=(VkAcquireNextImageInfoKHR const &lhs,
 bool operator==(VkDeviceGroupPresentInfoKHR const &lhs,
                 VkDeviceGroupPresentInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.swapchainCount == rhs.swapchainCount) &&
          (lhs.pDeviceMasks == rhs.pDeviceMasks) &&
          (lhs.mode == rhs.mode);
@@ -5773,7 +5622,6 @@ bool operator!=(VkDeviceGroupPresentInfoKHR const &lhs,
 bool operator==(VkDeviceGroupDeviceCreateInfo const &lhs,
                 VkDeviceGroupDeviceCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.physicalDeviceCount == rhs.physicalDeviceCount) &&
          (lhs.pPhysicalDevices == rhs.pPhysicalDevices);
 }
@@ -5786,7 +5634,6 @@ bool operator!=(VkDeviceGroupDeviceCreateInfo const &lhs,
 bool operator==(VkDeviceGroupSwapchainCreateInfoKHR const &lhs,
                 VkDeviceGroupSwapchainCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.modes == rhs.modes);
 }
 
@@ -5813,7 +5660,6 @@ bool operator!=(VkDescriptorUpdateTemplateEntry const &lhs,
 bool operator==(VkDescriptorUpdateTemplateCreateInfo const &lhs,
                 VkDescriptorUpdateTemplateCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.descriptorUpdateEntryCount == rhs.descriptorUpdateEntryCount) &&
          (lhs.pDescriptorUpdateEntries == rhs.pDescriptorUpdateEntries) &&
@@ -5843,7 +5689,6 @@ bool operator!=(VkXYColorEXT const &lhs,
 bool operator==(VkHdrMetadataEXT const &lhs,
                 VkHdrMetadataEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.displayPrimaryRed == rhs.displayPrimaryRed) &&
          (lhs.displayPrimaryGreen == rhs.displayPrimaryGreen) &&
          (lhs.displayPrimaryBlue == rhs.displayPrimaryBlue) &&
@@ -5862,7 +5707,6 @@ bool operator!=(VkHdrMetadataEXT const &lhs,
 bool operator==(VkDisplayNativeHdrSurfaceCapabilitiesAMD const &lhs,
                 VkDisplayNativeHdrSurfaceCapabilitiesAMD const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.localDimmingSupport == rhs.localDimmingSupport);
 }
 
@@ -5874,7 +5718,6 @@ bool operator!=(VkDisplayNativeHdrSurfaceCapabilitiesAMD const &lhs,
 bool operator==(VkSwapchainDisplayNativeHdrCreateInfoAMD const &lhs,
                 VkSwapchainDisplayNativeHdrCreateInfoAMD const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.localDimmingEnable == rhs.localDimmingEnable);
 }
 
@@ -5910,7 +5753,6 @@ bool operator!=(VkPastPresentationTimingGOOGLE const &lhs,
 bool operator==(VkPresentTimesInfoGOOGLE const &lhs,
                 VkPresentTimesInfoGOOGLE const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.swapchainCount == rhs.swapchainCount) &&
          (lhs.pTimes == rhs.pTimes);
 }
@@ -5935,7 +5777,6 @@ bool operator!=(VkPresentTimeGOOGLE const &lhs,
 bool operator==(VkIOSSurfaceCreateInfoMVK const &lhs,
                 VkIOSSurfaceCreateInfoMVK const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.pView == rhs.pView);
 }
@@ -5950,7 +5791,6 @@ bool operator!=(VkIOSSurfaceCreateInfoMVK const &lhs,
 bool operator==(VkMacOSSurfaceCreateInfoMVK const &lhs,
                 VkMacOSSurfaceCreateInfoMVK const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.pView == rhs.pView);
 }
@@ -5965,7 +5805,6 @@ bool operator!=(VkMacOSSurfaceCreateInfoMVK const &lhs,
 bool operator==(VkMetalSurfaceCreateInfoEXT const &lhs,
                 VkMetalSurfaceCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.pLayer == rhs.pLayer);
 }
@@ -5990,7 +5829,6 @@ bool operator!=(VkViewportWScalingNV const &lhs,
 bool operator==(VkPipelineViewportWScalingStateCreateInfoNV const &lhs,
                 VkPipelineViewportWScalingStateCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.viewportWScalingEnable == rhs.viewportWScalingEnable) &&
          (lhs.viewportCount == rhs.viewportCount) &&
          (lhs.pViewportWScalings == rhs.pViewportWScalings);
@@ -6017,7 +5855,6 @@ bool operator!=(VkViewportSwizzleNV const &lhs,
 bool operator==(VkPipelineViewportSwizzleStateCreateInfoNV const &lhs,
                 VkPipelineViewportSwizzleStateCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.viewportCount == rhs.viewportCount) &&
          (lhs.pViewportSwizzles == rhs.pViewportSwizzles);
@@ -6031,7 +5868,6 @@ bool operator!=(VkPipelineViewportSwizzleStateCreateInfoNV const &lhs,
 bool operator==(VkPhysicalDeviceDiscardRectanglePropertiesEXT const &lhs,
                 VkPhysicalDeviceDiscardRectanglePropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxDiscardRectangles == rhs.maxDiscardRectangles);
 }
 
@@ -6043,7 +5879,6 @@ bool operator!=(VkPhysicalDeviceDiscardRectanglePropertiesEXT const &lhs,
 bool operator==(VkPipelineDiscardRectangleStateCreateInfoEXT const &lhs,
                 VkPipelineDiscardRectangleStateCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.discardRectangleMode == rhs.discardRectangleMode) &&
          (lhs.discardRectangleCount == rhs.discardRectangleCount) &&
@@ -6058,7 +5893,6 @@ bool operator!=(VkPipelineDiscardRectangleStateCreateInfoEXT const &lhs,
 bool operator==(VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX const &lhs,
                 VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.perViewPositionAllComponents == rhs.perViewPositionAllComponents);
 }
 
@@ -6082,7 +5916,6 @@ bool operator!=(VkInputAttachmentAspectReference const &lhs,
 bool operator==(VkRenderPassInputAttachmentAspectCreateInfo const &lhs,
                 VkRenderPassInputAttachmentAspectCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.aspectReferenceCount == rhs.aspectReferenceCount) &&
          (lhs.pAspectReferences == rhs.pAspectReferences);
 }
@@ -6095,7 +5928,6 @@ bool operator!=(VkRenderPassInputAttachmentAspectCreateInfo const &lhs,
 bool operator==(VkPhysicalDeviceSurfaceInfo2KHR const &lhs,
                 VkPhysicalDeviceSurfaceInfo2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.surface == rhs.surface);
 }
 
@@ -6107,7 +5939,6 @@ bool operator!=(VkPhysicalDeviceSurfaceInfo2KHR const &lhs,
 bool operator==(VkSurfaceCapabilities2KHR const &lhs,
                 VkSurfaceCapabilities2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.surfaceCapabilities == rhs.surfaceCapabilities);
 }
 
@@ -6119,7 +5950,6 @@ bool operator!=(VkSurfaceCapabilities2KHR const &lhs,
 bool operator==(VkSurfaceFormat2KHR const &lhs,
                 VkSurfaceFormat2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.surfaceFormat == rhs.surfaceFormat);
 }
 
@@ -6131,7 +5961,6 @@ bool operator!=(VkSurfaceFormat2KHR const &lhs,
 bool operator==(VkDisplayProperties2KHR const &lhs,
                 VkDisplayProperties2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.displayProperties == rhs.displayProperties);
 }
 
@@ -6143,7 +5972,6 @@ bool operator!=(VkDisplayProperties2KHR const &lhs,
 bool operator==(VkDisplayPlaneProperties2KHR const &lhs,
                 VkDisplayPlaneProperties2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.displayPlaneProperties == rhs.displayPlaneProperties);
 }
 
@@ -6155,7 +5983,6 @@ bool operator!=(VkDisplayPlaneProperties2KHR const &lhs,
 bool operator==(VkDisplayModeProperties2KHR const &lhs,
                 VkDisplayModeProperties2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.displayModeProperties == rhs.displayModeProperties);
 }
 
@@ -6167,7 +5994,6 @@ bool operator!=(VkDisplayModeProperties2KHR const &lhs,
 bool operator==(VkDisplayPlaneInfo2KHR const &lhs,
                 VkDisplayPlaneInfo2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.mode == rhs.mode) &&
          (lhs.planeIndex == rhs.planeIndex);
 }
@@ -6180,7 +6006,6 @@ bool operator!=(VkDisplayPlaneInfo2KHR const &lhs,
 bool operator==(VkDisplayPlaneCapabilities2KHR const &lhs,
                 VkDisplayPlaneCapabilities2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.capabilities == rhs.capabilities);
 }
 
@@ -6192,7 +6017,6 @@ bool operator!=(VkDisplayPlaneCapabilities2KHR const &lhs,
 bool operator==(VkSharedPresentSurfaceCapabilitiesKHR const &lhs,
                 VkSharedPresentSurfaceCapabilitiesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.sharedPresentSupportedUsageFlags == rhs.sharedPresentSupportedUsageFlags);
 }
 
@@ -6204,7 +6028,6 @@ bool operator!=(VkSharedPresentSurfaceCapabilitiesKHR const &lhs,
 bool operator==(VkPhysicalDevice16BitStorageFeatures const &lhs,
                 VkPhysicalDevice16BitStorageFeatures const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.storageBuffer16BitAccess == rhs.storageBuffer16BitAccess) &&
          (lhs.uniformAndStorageBuffer16BitAccess == rhs.uniformAndStorageBuffer16BitAccess) &&
          (lhs.storagePushConstant16 == rhs.storagePushConstant16) &&
@@ -6219,7 +6042,6 @@ bool operator!=(VkPhysicalDevice16BitStorageFeatures const &lhs,
 bool operator==(VkPhysicalDeviceSubgroupProperties const &lhs,
                 VkPhysicalDeviceSubgroupProperties const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.subgroupSize == rhs.subgroupSize) &&
          (lhs.supportedStages == rhs.supportedStages) &&
          (lhs.supportedOperations == rhs.supportedOperations) &&
@@ -6234,7 +6056,6 @@ bool operator!=(VkPhysicalDeviceSubgroupProperties const &lhs,
 bool operator==(VkBufferMemoryRequirementsInfo2 const &lhs,
                 VkBufferMemoryRequirementsInfo2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.buffer == rhs.buffer);
 }
 
@@ -6246,7 +6067,6 @@ bool operator!=(VkBufferMemoryRequirementsInfo2 const &lhs,
 bool operator==(VkImageMemoryRequirementsInfo2 const &lhs,
                 VkImageMemoryRequirementsInfo2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.image == rhs.image);
 }
 
@@ -6258,7 +6078,6 @@ bool operator!=(VkImageMemoryRequirementsInfo2 const &lhs,
 bool operator==(VkImageSparseMemoryRequirementsInfo2 const &lhs,
                 VkImageSparseMemoryRequirementsInfo2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.image == rhs.image);
 }
 
@@ -6270,7 +6089,6 @@ bool operator!=(VkImageSparseMemoryRequirementsInfo2 const &lhs,
 bool operator==(VkMemoryRequirements2 const &lhs,
                 VkMemoryRequirements2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memoryRequirements == rhs.memoryRequirements);
 }
 
@@ -6282,7 +6100,6 @@ bool operator!=(VkMemoryRequirements2 const &lhs,
 bool operator==(VkSparseImageMemoryRequirements2 const &lhs,
                 VkSparseImageMemoryRequirements2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memoryRequirements == rhs.memoryRequirements);
 }
 
@@ -6294,7 +6111,6 @@ bool operator!=(VkSparseImageMemoryRequirements2 const &lhs,
 bool operator==(VkPhysicalDevicePointClippingProperties const &lhs,
                 VkPhysicalDevicePointClippingProperties const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pointClippingBehavior == rhs.pointClippingBehavior);
 }
 
@@ -6306,7 +6122,6 @@ bool operator!=(VkPhysicalDevicePointClippingProperties const &lhs,
 bool operator==(VkMemoryDedicatedRequirements const &lhs,
                 VkMemoryDedicatedRequirements const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.prefersDedicatedAllocation == rhs.prefersDedicatedAllocation) &&
          (lhs.requiresDedicatedAllocation == rhs.requiresDedicatedAllocation);
 }
@@ -6319,7 +6134,6 @@ bool operator!=(VkMemoryDedicatedRequirements const &lhs,
 bool operator==(VkMemoryDedicatedAllocateInfo const &lhs,
                 VkMemoryDedicatedAllocateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.image == rhs.image) &&
          (lhs.buffer == rhs.buffer);
 }
@@ -6332,7 +6146,6 @@ bool operator!=(VkMemoryDedicatedAllocateInfo const &lhs,
 bool operator==(VkImageViewUsageCreateInfo const &lhs,
                 VkImageViewUsageCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.usage == rhs.usage);
 }
 
@@ -6344,7 +6157,6 @@ bool operator!=(VkImageViewUsageCreateInfo const &lhs,
 bool operator==(VkPipelineTessellationDomainOriginStateCreateInfo const &lhs,
                 VkPipelineTessellationDomainOriginStateCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.domainOrigin == rhs.domainOrigin);
 }
 
@@ -6356,7 +6168,6 @@ bool operator!=(VkPipelineTessellationDomainOriginStateCreateInfo const &lhs,
 bool operator==(VkSamplerYcbcrConversionInfo const &lhs,
                 VkSamplerYcbcrConversionInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.conversion == rhs.conversion);
 }
 
@@ -6368,7 +6179,6 @@ bool operator!=(VkSamplerYcbcrConversionInfo const &lhs,
 bool operator==(VkSamplerYcbcrConversionCreateInfo const &lhs,
                 VkSamplerYcbcrConversionCreateInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.format == rhs.format) &&
          (lhs.ycbcrModel == rhs.ycbcrModel) &&
          (lhs.ycbcrRange == rhs.ycbcrRange) &&
@@ -6387,7 +6197,6 @@ bool operator!=(VkSamplerYcbcrConversionCreateInfo const &lhs,
 bool operator==(VkBindImagePlaneMemoryInfo const &lhs,
                 VkBindImagePlaneMemoryInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.planeAspect == rhs.planeAspect);
 }
 
@@ -6399,7 +6208,6 @@ bool operator!=(VkBindImagePlaneMemoryInfo const &lhs,
 bool operator==(VkImagePlaneMemoryRequirementsInfo const &lhs,
                 VkImagePlaneMemoryRequirementsInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.planeAspect == rhs.planeAspect);
 }
 
@@ -6411,7 +6219,6 @@ bool operator!=(VkImagePlaneMemoryRequirementsInfo const &lhs,
 bool operator==(VkPhysicalDeviceSamplerYcbcrConversionFeatures const &lhs,
                 VkPhysicalDeviceSamplerYcbcrConversionFeatures const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.samplerYcbcrConversion == rhs.samplerYcbcrConversion);
 }
 
@@ -6423,7 +6230,6 @@ bool operator!=(VkPhysicalDeviceSamplerYcbcrConversionFeatures const &lhs,
 bool operator==(VkSamplerYcbcrConversionImageFormatProperties const &lhs,
                 VkSamplerYcbcrConversionImageFormatProperties const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.combinedImageSamplerDescriptorCount == rhs.combinedImageSamplerDescriptorCount);
 }
 
@@ -6435,7 +6241,6 @@ bool operator!=(VkSamplerYcbcrConversionImageFormatProperties const &lhs,
 bool operator==(VkTextureLODGatherFormatPropertiesAMD const &lhs,
                 VkTextureLODGatherFormatPropertiesAMD const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.supportsTextureGatherLODBiasAMD == rhs.supportsTextureGatherLODBiasAMD);
 }
 
@@ -6447,7 +6252,6 @@ bool operator!=(VkTextureLODGatherFormatPropertiesAMD const &lhs,
 bool operator==(VkConditionalRenderingBeginInfoEXT const &lhs,
                 VkConditionalRenderingBeginInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.buffer == rhs.buffer) &&
          (lhs.offset == rhs.offset) &&
          (lhs.flags == rhs.flags);
@@ -6461,7 +6265,6 @@ bool operator!=(VkConditionalRenderingBeginInfoEXT const &lhs,
 bool operator==(VkProtectedSubmitInfo const &lhs,
                 VkProtectedSubmitInfo const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.protectedSubmit == rhs.protectedSubmit);
 }
 
@@ -6473,7 +6276,6 @@ bool operator!=(VkProtectedSubmitInfo const &lhs,
 bool operator==(VkPhysicalDeviceProtectedMemoryFeatures const &lhs,
                 VkPhysicalDeviceProtectedMemoryFeatures const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.protectedMemory == rhs.protectedMemory);
 }
 
@@ -6485,7 +6287,6 @@ bool operator!=(VkPhysicalDeviceProtectedMemoryFeatures const &lhs,
 bool operator==(VkPhysicalDeviceProtectedMemoryProperties const &lhs,
                 VkPhysicalDeviceProtectedMemoryProperties const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.protectedNoFault == rhs.protectedNoFault);
 }
 
@@ -6497,7 +6298,6 @@ bool operator!=(VkPhysicalDeviceProtectedMemoryProperties const &lhs,
 bool operator==(VkDeviceQueueInfo2 const &lhs,
                 VkDeviceQueueInfo2 const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.queueFamilyIndex == rhs.queueFamilyIndex) &&
          (lhs.queueIndex == rhs.queueIndex);
@@ -6511,7 +6311,6 @@ bool operator!=(VkDeviceQueueInfo2 const &lhs,
 bool operator==(VkPipelineCoverageToColorStateCreateInfoNV const &lhs,
                 VkPipelineCoverageToColorStateCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.coverageToColorEnable == rhs.coverageToColorEnable) &&
          (lhs.coverageToColorLocation == rhs.coverageToColorLocation);
@@ -6525,7 +6324,6 @@ bool operator!=(VkPipelineCoverageToColorStateCreateInfoNV const &lhs,
 bool operator==(VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT const &lhs,
                 VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.filterMinmaxSingleComponentFormats == rhs.filterMinmaxSingleComponentFormats) &&
          (lhs.filterMinmaxImageComponentMapping == rhs.filterMinmaxImageComponentMapping);
 }
@@ -6549,7 +6347,6 @@ bool operator!=(VkSampleLocationEXT const &lhs,
 bool operator==(VkSampleLocationsInfoEXT const &lhs,
                 VkSampleLocationsInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.sampleLocationsPerPixel == rhs.sampleLocationsPerPixel) &&
          (lhs.sampleLocationGridSize == rhs.sampleLocationGridSize) &&
          (lhs.sampleLocationsCount == rhs.sampleLocationsCount) &&
@@ -6586,7 +6383,6 @@ bool operator!=(VkSubpassSampleLocationsEXT const &lhs,
 bool operator==(VkRenderPassSampleLocationsBeginInfoEXT const &lhs,
                 VkRenderPassSampleLocationsBeginInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.attachmentInitialSampleLocationsCount == rhs.attachmentInitialSampleLocationsCount) &&
          (lhs.pAttachmentInitialSampleLocations == rhs.pAttachmentInitialSampleLocations) &&
          (lhs.postSubpassSampleLocationsCount == rhs.postSubpassSampleLocationsCount) &&
@@ -6601,7 +6397,6 @@ bool operator!=(VkRenderPassSampleLocationsBeginInfoEXT const &lhs,
 bool operator==(VkPipelineSampleLocationsStateCreateInfoEXT const &lhs,
                 VkPipelineSampleLocationsStateCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.sampleLocationsEnable == rhs.sampleLocationsEnable) &&
          (lhs.sampleLocationsInfo == rhs.sampleLocationsInfo);
 }
@@ -6618,7 +6413,6 @@ bool operator==(VkPhysicalDeviceSampleLocationsPropertiesEXT const &lhs,
       return false;
   }
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.sampleLocationSampleCounts == rhs.sampleLocationSampleCounts) &&
          (lhs.maxSampleLocationGridSize == rhs.maxSampleLocationGridSize) &&
          (lhs.sampleLocationSubPixelBits == rhs.sampleLocationSubPixelBits) &&
@@ -6633,7 +6427,6 @@ bool operator!=(VkPhysicalDeviceSampleLocationsPropertiesEXT const &lhs,
 bool operator==(VkMultisamplePropertiesEXT const &lhs,
                 VkMultisamplePropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxSampleLocationGridSize == rhs.maxSampleLocationGridSize);
 }
 
@@ -6645,7 +6438,6 @@ bool operator!=(VkMultisamplePropertiesEXT const &lhs,
 bool operator==(VkSamplerReductionModeCreateInfoEXT const &lhs,
                 VkSamplerReductionModeCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.reductionMode == rhs.reductionMode);
 }
 
@@ -6657,7 +6449,6 @@ bool operator!=(VkSamplerReductionModeCreateInfoEXT const &lhs,
 bool operator==(VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT const &lhs,
                 VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.advancedBlendCoherentOperations == rhs.advancedBlendCoherentOperations);
 }
 
@@ -6669,7 +6460,6 @@ bool operator!=(VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT const &lhs,
 bool operator==(VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT const &lhs,
                 VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.advancedBlendMaxColorAttachments == rhs.advancedBlendMaxColorAttachments) &&
          (lhs.advancedBlendIndependentBlend == rhs.advancedBlendIndependentBlend) &&
          (lhs.advancedBlendNonPremultipliedSrcColor == rhs.advancedBlendNonPremultipliedSrcColor) &&
@@ -6686,7 +6476,6 @@ bool operator!=(VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT const &lhs,
 bool operator==(VkPipelineColorBlendAdvancedStateCreateInfoEXT const &lhs,
                 VkPipelineColorBlendAdvancedStateCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.srcPremultiplied == rhs.srcPremultiplied) &&
          (lhs.dstPremultiplied == rhs.dstPremultiplied) &&
          (lhs.blendOverlap == rhs.blendOverlap);
@@ -6700,7 +6489,6 @@ bool operator!=(VkPipelineColorBlendAdvancedStateCreateInfoEXT const &lhs,
 bool operator==(VkPhysicalDeviceInlineUniformBlockFeaturesEXT const &lhs,
                 VkPhysicalDeviceInlineUniformBlockFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.inlineUniformBlock == rhs.inlineUniformBlock) &&
          (lhs.descriptorBindingInlineUniformBlockUpdateAfterBind == rhs.descriptorBindingInlineUniformBlockUpdateAfterBind);
 }
@@ -6713,7 +6501,6 @@ bool operator!=(VkPhysicalDeviceInlineUniformBlockFeaturesEXT const &lhs,
 bool operator==(VkPhysicalDeviceInlineUniformBlockPropertiesEXT const &lhs,
                 VkPhysicalDeviceInlineUniformBlockPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxInlineUniformBlockSize == rhs.maxInlineUniformBlockSize) &&
          (lhs.maxPerStageDescriptorInlineUniformBlocks == rhs.maxPerStageDescriptorInlineUniformBlocks) &&
          (lhs.maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks == rhs.maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks) &&
@@ -6729,7 +6516,6 @@ bool operator!=(VkPhysicalDeviceInlineUniformBlockPropertiesEXT const &lhs,
 bool operator==(VkWriteDescriptorSetInlineUniformBlockEXT const &lhs,
                 VkWriteDescriptorSetInlineUniformBlockEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.dataSize == rhs.dataSize) &&
          (lhs.pData == rhs.pData);
 }
@@ -6742,7 +6528,6 @@ bool operator!=(VkWriteDescriptorSetInlineUniformBlockEXT const &lhs,
 bool operator==(VkDescriptorPoolInlineUniformBlockCreateInfoEXT const &lhs,
                 VkDescriptorPoolInlineUniformBlockCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxInlineUniformBlockBindings == rhs.maxInlineUniformBlockBindings);
 }
 
@@ -6754,7 +6539,6 @@ bool operator!=(VkDescriptorPoolInlineUniformBlockCreateInfoEXT const &lhs,
 bool operator==(VkPipelineCoverageModulationStateCreateInfoNV const &lhs,
                 VkPipelineCoverageModulationStateCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.coverageModulationMode == rhs.coverageModulationMode) &&
          (lhs.coverageModulationTableEnable == rhs.coverageModulationTableEnable) &&
@@ -6770,7 +6554,6 @@ bool operator!=(VkPipelineCoverageModulationStateCreateInfoNV const &lhs,
 bool operator==(VkImageFormatListCreateInfoKHR const &lhs,
                 VkImageFormatListCreateInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.viewFormatCount == rhs.viewFormatCount) &&
          (lhs.pViewFormats == rhs.pViewFormats);
 }
@@ -6783,7 +6566,6 @@ bool operator!=(VkImageFormatListCreateInfoKHR const &lhs,
 bool operator==(VkValidationCacheCreateInfoEXT const &lhs,
                 VkValidationCacheCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.initialDataSize == rhs.initialDataSize) &&
          (lhs.pInitialData == rhs.pInitialData);
@@ -6797,7 +6579,6 @@ bool operator!=(VkValidationCacheCreateInfoEXT const &lhs,
 bool operator==(VkShaderModuleValidationCacheCreateInfoEXT const &lhs,
                 VkShaderModuleValidationCacheCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.validationCache == rhs.validationCache);
 }
 
@@ -6809,7 +6590,6 @@ bool operator!=(VkShaderModuleValidationCacheCreateInfoEXT const &lhs,
 bool operator==(VkPhysicalDeviceMaintenance3Properties const &lhs,
                 VkPhysicalDeviceMaintenance3Properties const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxPerSetDescriptors == rhs.maxPerSetDescriptors) &&
          (lhs.maxMemoryAllocationSize == rhs.maxMemoryAllocationSize);
 }
@@ -6822,7 +6602,6 @@ bool operator!=(VkPhysicalDeviceMaintenance3Properties const &lhs,
 bool operator==(VkDescriptorSetLayoutSupport const &lhs,
                 VkDescriptorSetLayoutSupport const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.supported == rhs.supported);
 }
 
@@ -6834,7 +6613,6 @@ bool operator!=(VkDescriptorSetLayoutSupport const &lhs,
 bool operator==(VkPhysicalDeviceShaderDrawParametersFeatures const &lhs,
                 VkPhysicalDeviceShaderDrawParametersFeatures const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.shaderDrawParameters == rhs.shaderDrawParameters);
 }
 
@@ -6846,7 +6624,6 @@ bool operator!=(VkPhysicalDeviceShaderDrawParametersFeatures const &lhs,
 bool operator==(VkPhysicalDeviceFloat16Int8FeaturesKHR const &lhs,
                 VkPhysicalDeviceFloat16Int8FeaturesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.shaderFloat16 == rhs.shaderFloat16) &&
          (lhs.shaderInt8 == rhs.shaderInt8);
 }
@@ -6859,7 +6636,6 @@ bool operator!=(VkPhysicalDeviceFloat16Int8FeaturesKHR const &lhs,
 bool operator==(VkPhysicalDeviceFloatControlsPropertiesKHR const &lhs,
                 VkPhysicalDeviceFloatControlsPropertiesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.separateDenormSettings == rhs.separateDenormSettings) &&
          (lhs.separateRoundingModeSettings == rhs.separateRoundingModeSettings) &&
          (lhs.shaderSignedZeroInfNanPreserveFloat16 == rhs.shaderSignedZeroInfNanPreserveFloat16) &&
@@ -6887,7 +6663,6 @@ bool operator!=(VkPhysicalDeviceFloatControlsPropertiesKHR const &lhs,
 bool operator==(VkPhysicalDeviceHostQueryResetFeaturesEXT const &lhs,
                 VkPhysicalDeviceHostQueryResetFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.hostQueryReset == rhs.hostQueryReset);
 }
 
@@ -6900,7 +6675,6 @@ bool operator!=(VkPhysicalDeviceHostQueryResetFeaturesEXT const &lhs,
 bool operator==(VkNativeBufferANDROID const &lhs,
                 VkNativeBufferANDROID const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handle == rhs.handle) &&
          (lhs.stride == rhs.stride) &&
          (lhs.format == rhs.format) &&
@@ -6949,7 +6723,6 @@ bool operator!=(VkShaderStatisticsInfoAMD const &lhs,
 bool operator==(VkDeviceQueueGlobalPriorityCreateInfoEXT const &lhs,
                 VkDeviceQueueGlobalPriorityCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.globalPriority == rhs.globalPriority);
 }
 
@@ -6961,7 +6734,6 @@ bool operator!=(VkDeviceQueueGlobalPriorityCreateInfoEXT const &lhs,
 bool operator==(VkDebugUtilsObjectNameInfoEXT const &lhs,
                 VkDebugUtilsObjectNameInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.objectType == rhs.objectType) &&
          (lhs.objectHandle == rhs.objectHandle) &&
          (lhs.pObjectName == rhs.pObjectName);
@@ -6975,7 +6747,6 @@ bool operator!=(VkDebugUtilsObjectNameInfoEXT const &lhs,
 bool operator==(VkDebugUtilsObjectTagInfoEXT const &lhs,
                 VkDebugUtilsObjectTagInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.objectType == rhs.objectType) &&
          (lhs.objectHandle == rhs.objectHandle) &&
          (lhs.tagName == rhs.tagName) &&
@@ -6995,7 +6766,6 @@ bool operator==(VkDebugUtilsLabelEXT const &lhs,
       return false;
   }
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pLabelName == rhs.pLabelName);
 }
 
@@ -7007,7 +6777,6 @@ bool operator!=(VkDebugUtilsLabelEXT const &lhs,
 bool operator==(VkDebugUtilsMessengerCreateInfoEXT const &lhs,
                 VkDebugUtilsMessengerCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.messageSeverity == rhs.messageSeverity) &&
          (lhs.messageType == rhs.messageType) &&
@@ -7023,7 +6792,6 @@ bool operator!=(VkDebugUtilsMessengerCreateInfoEXT const &lhs,
 bool operator==(VkDebugUtilsMessengerCallbackDataEXT const &lhs,
                 VkDebugUtilsMessengerCallbackDataEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.pMessageIdName == rhs.pMessageIdName) &&
          (lhs.messageIdNumber == rhs.messageIdNumber) &&
@@ -7044,7 +6812,6 @@ bool operator!=(VkDebugUtilsMessengerCallbackDataEXT const &lhs,
 bool operator==(VkImportMemoryHostPointerInfoEXT const &lhs,
                 VkImportMemoryHostPointerInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.handleType == rhs.handleType) &&
          (lhs.pHostPointer == rhs.pHostPointer);
 }
@@ -7057,7 +6824,6 @@ bool operator!=(VkImportMemoryHostPointerInfoEXT const &lhs,
 bool operator==(VkMemoryHostPointerPropertiesEXT const &lhs,
                 VkMemoryHostPointerPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memoryTypeBits == rhs.memoryTypeBits);
 }
 
@@ -7069,7 +6835,6 @@ bool operator!=(VkMemoryHostPointerPropertiesEXT const &lhs,
 bool operator==(VkPhysicalDeviceExternalMemoryHostPropertiesEXT const &lhs,
                 VkPhysicalDeviceExternalMemoryHostPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.minImportedHostPointerAlignment == rhs.minImportedHostPointerAlignment);
 }
 
@@ -7081,7 +6846,6 @@ bool operator!=(VkPhysicalDeviceExternalMemoryHostPropertiesEXT const &lhs,
 bool operator==(VkPhysicalDeviceConservativeRasterizationPropertiesEXT const &lhs,
                 VkPhysicalDeviceConservativeRasterizationPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.primitiveOverestimationSize == rhs.primitiveOverestimationSize) &&
          (lhs.maxExtraPrimitiveOverestimationSize == rhs.maxExtraPrimitiveOverestimationSize) &&
          (lhs.extraPrimitiveOverestimationSizeGranularity == rhs.extraPrimitiveOverestimationSizeGranularity) &&
@@ -7101,7 +6865,6 @@ bool operator!=(VkPhysicalDeviceConservativeRasterizationPropertiesEXT const &lh
 bool operator==(VkCalibratedTimestampInfoEXT const &lhs,
                 VkCalibratedTimestampInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.timeDomain == rhs.timeDomain);
 }
 
@@ -7113,7 +6876,6 @@ bool operator!=(VkCalibratedTimestampInfoEXT const &lhs,
 bool operator==(VkPhysicalDeviceShaderCorePropertiesAMD const &lhs,
                 VkPhysicalDeviceShaderCorePropertiesAMD const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.shaderEngineCount == rhs.shaderEngineCount) &&
          (lhs.shaderArraysPerEngineCount == rhs.shaderArraysPerEngineCount) &&
          (lhs.computeUnitsPerShaderArray == rhs.computeUnitsPerShaderArray) &&
@@ -7138,7 +6900,6 @@ bool operator!=(VkPhysicalDeviceShaderCorePropertiesAMD const &lhs,
 bool operator==(VkPipelineRasterizationConservativeStateCreateInfoEXT const &lhs,
                 VkPipelineRasterizationConservativeStateCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.conservativeRasterizationMode == rhs.conservativeRasterizationMode) &&
          (lhs.extraPrimitiveOverestimationSize == rhs.extraPrimitiveOverestimationSize);
@@ -7152,7 +6913,6 @@ bool operator!=(VkPipelineRasterizationConservativeStateCreateInfoEXT const &lhs
 bool operator==(VkPhysicalDeviceDescriptorIndexingFeaturesEXT const &lhs,
                 VkPhysicalDeviceDescriptorIndexingFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.shaderInputAttachmentArrayDynamicIndexing == rhs.shaderInputAttachmentArrayDynamicIndexing) &&
          (lhs.shaderUniformTexelBufferArrayDynamicIndexing == rhs.shaderUniformTexelBufferArrayDynamicIndexing) &&
          (lhs.shaderStorageTexelBufferArrayDynamicIndexing == rhs.shaderStorageTexelBufferArrayDynamicIndexing) &&
@@ -7183,7 +6943,6 @@ bool operator!=(VkPhysicalDeviceDescriptorIndexingFeaturesEXT const &lhs,
 bool operator==(VkPhysicalDeviceDescriptorIndexingPropertiesEXT const &lhs,
                 VkPhysicalDeviceDescriptorIndexingPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxUpdateAfterBindDescriptorsInAllPools == rhs.maxUpdateAfterBindDescriptorsInAllPools) &&
          (lhs.shaderUniformBufferArrayNonUniformIndexingNative == rhs.shaderUniformBufferArrayNonUniformIndexingNative) &&
          (lhs.shaderSampledImageArrayNonUniformIndexingNative == rhs.shaderSampledImageArrayNonUniformIndexingNative) &&
@@ -7217,7 +6976,6 @@ bool operator!=(VkPhysicalDeviceDescriptorIndexingPropertiesEXT const &lhs,
 bool operator==(VkDescriptorSetLayoutBindingFlagsCreateInfoEXT const &lhs,
                 VkDescriptorSetLayoutBindingFlagsCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.bindingCount == rhs.bindingCount) &&
          (lhs.pBindingFlags == rhs.pBindingFlags);
 }
@@ -7230,7 +6988,6 @@ bool operator!=(VkDescriptorSetLayoutBindingFlagsCreateInfoEXT const &lhs,
 bool operator==(VkDescriptorSetVariableDescriptorCountAllocateInfoEXT const &lhs,
                 VkDescriptorSetVariableDescriptorCountAllocateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.descriptorSetCount == rhs.descriptorSetCount) &&
          (lhs.pDescriptorCounts == rhs.pDescriptorCounts);
 }
@@ -7243,7 +7000,6 @@ bool operator!=(VkDescriptorSetVariableDescriptorCountAllocateInfoEXT const &lhs
 bool operator==(VkDescriptorSetVariableDescriptorCountLayoutSupportEXT const &lhs,
                 VkDescriptorSetVariableDescriptorCountLayoutSupportEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxVariableDescriptorCount == rhs.maxVariableDescriptorCount);
 }
 
@@ -7255,7 +7011,6 @@ bool operator!=(VkDescriptorSetVariableDescriptorCountLayoutSupportEXT const &lh
 bool operator==(VkAttachmentDescription2KHR const &lhs,
                 VkAttachmentDescription2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.format == rhs.format) &&
          (lhs.samples == rhs.samples) &&
@@ -7275,7 +7030,6 @@ bool operator!=(VkAttachmentDescription2KHR const &lhs,
 bool operator==(VkAttachmentReference2KHR const &lhs,
                 VkAttachmentReference2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.attachment == rhs.attachment) &&
          (lhs.layout == rhs.layout) &&
          (lhs.aspectMask == rhs.aspectMask);
@@ -7289,7 +7043,6 @@ bool operator!=(VkAttachmentReference2KHR const &lhs,
 bool operator==(VkSubpassDescription2KHR const &lhs,
                 VkSubpassDescription2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.pipelineBindPoint == rhs.pipelineBindPoint) &&
          (lhs.viewMask == rhs.viewMask) &&
@@ -7311,7 +7064,6 @@ bool operator!=(VkSubpassDescription2KHR const &lhs,
 bool operator==(VkSubpassDependency2KHR const &lhs,
                 VkSubpassDependency2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.srcSubpass == rhs.srcSubpass) &&
          (lhs.dstSubpass == rhs.dstSubpass) &&
          (lhs.srcStageMask == rhs.srcStageMask) &&
@@ -7330,7 +7082,6 @@ bool operator!=(VkSubpassDependency2KHR const &lhs,
 bool operator==(VkRenderPassCreateInfo2KHR const &lhs,
                 VkRenderPassCreateInfo2KHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.attachmentCount == rhs.attachmentCount) &&
          (lhs.pAttachments == rhs.pAttachments) &&
@@ -7350,7 +7101,6 @@ bool operator!=(VkRenderPassCreateInfo2KHR const &lhs,
 bool operator==(VkSubpassBeginInfoKHR const &lhs,
                 VkSubpassBeginInfoKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.contents == rhs.contents);
 }
 
@@ -7361,8 +7111,7 @@ bool operator!=(VkSubpassBeginInfoKHR const &lhs,
 
 bool operator==(VkSubpassEndInfoKHR const &lhs,
                 VkSubpassEndInfoKHR const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext);
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkSubpassEndInfoKHR const &lhs,
@@ -7384,7 +7133,6 @@ bool operator!=(VkVertexInputBindingDivisorDescriptionEXT const &lhs,
 bool operator==(VkPipelineVertexInputDivisorStateCreateInfoEXT const &lhs,
                 VkPipelineVertexInputDivisorStateCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.vertexBindingDivisorCount == rhs.vertexBindingDivisorCount) &&
          (lhs.pVertexBindingDivisors == rhs.pVertexBindingDivisors);
 }
@@ -7397,7 +7145,6 @@ bool operator!=(VkPipelineVertexInputDivisorStateCreateInfoEXT const &lhs,
 bool operator==(VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT const &lhs,
                 VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxVertexAttribDivisor == rhs.maxVertexAttribDivisor);
 }
 
@@ -7409,7 +7156,6 @@ bool operator!=(VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT const &lhs,
 bool operator==(VkPhysicalDevicePCIBusInfoPropertiesEXT const &lhs,
                 VkPhysicalDevicePCIBusInfoPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pciDomain == rhs.pciDomain) &&
          (lhs.pciBus == rhs.pciBus) &&
          (lhs.pciDevice == rhs.pciDevice) &&
@@ -7425,7 +7171,6 @@ bool operator!=(VkPhysicalDevicePCIBusInfoPropertiesEXT const &lhs,
 bool operator==(VkImportAndroidHardwareBufferInfoANDROID const &lhs,
                 VkImportAndroidHardwareBufferInfoANDROID const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.buffer == rhs.buffer);
 }
 
@@ -7439,7 +7184,6 @@ bool operator!=(VkImportAndroidHardwareBufferInfoANDROID const &lhs,
 bool operator==(VkAndroidHardwareBufferUsageANDROID const &lhs,
                 VkAndroidHardwareBufferUsageANDROID const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.androidHardwareBufferUsage == rhs.androidHardwareBufferUsage);
 }
 
@@ -7453,7 +7197,6 @@ bool operator!=(VkAndroidHardwareBufferUsageANDROID const &lhs,
 bool operator==(VkAndroidHardwareBufferPropertiesANDROID const &lhs,
                 VkAndroidHardwareBufferPropertiesANDROID const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.allocationSize == rhs.allocationSize) &&
          (lhs.memoryTypeBits == rhs.memoryTypeBits);
 }
@@ -7468,7 +7211,6 @@ bool operator!=(VkAndroidHardwareBufferPropertiesANDROID const &lhs,
 bool operator==(VkMemoryGetAndroidHardwareBufferInfoANDROID const &lhs,
                 VkMemoryGetAndroidHardwareBufferInfoANDROID const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memory == rhs.memory);
 }
 
@@ -7482,7 +7224,6 @@ bool operator!=(VkMemoryGetAndroidHardwareBufferInfoANDROID const &lhs,
 bool operator==(VkAndroidHardwareBufferFormatPropertiesANDROID const &lhs,
                 VkAndroidHardwareBufferFormatPropertiesANDROID const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.format == rhs.format) &&
          (lhs.externalFormat == rhs.externalFormat) &&
          (lhs.formatFeatures == rhs.formatFeatures) &&
@@ -7502,7 +7243,6 @@ bool operator!=(VkAndroidHardwareBufferFormatPropertiesANDROID const &lhs,
 bool operator==(VkCommandBufferInheritanceConditionalRenderingInfoEXT const &lhs,
                 VkCommandBufferInheritanceConditionalRenderingInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.conditionalRenderingEnable == rhs.conditionalRenderingEnable);
 }
 
@@ -7515,7 +7255,6 @@ bool operator!=(VkCommandBufferInheritanceConditionalRenderingInfoEXT const &lhs
 bool operator==(VkExternalFormatANDROID const &lhs,
                 VkExternalFormatANDROID const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.externalFormat == rhs.externalFormat);
 }
 
@@ -7528,7 +7267,6 @@ bool operator!=(VkExternalFormatANDROID const &lhs,
 bool operator==(VkPhysicalDevice8BitStorageFeaturesKHR const &lhs,
                 VkPhysicalDevice8BitStorageFeaturesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.storageBuffer8BitAccess == rhs.storageBuffer8BitAccess) &&
          (lhs.uniformAndStorageBuffer8BitAccess == rhs.uniformAndStorageBuffer8BitAccess) &&
          (lhs.storagePushConstant8 == rhs.storagePushConstant8);
@@ -7542,7 +7280,6 @@ bool operator!=(VkPhysicalDevice8BitStorageFeaturesKHR const &lhs,
 bool operator==(VkPhysicalDeviceConditionalRenderingFeaturesEXT const &lhs,
                 VkPhysicalDeviceConditionalRenderingFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.conditionalRendering == rhs.conditionalRendering) &&
          (lhs.inheritedConditionalRendering == rhs.inheritedConditionalRendering);
 }
@@ -7555,7 +7292,6 @@ bool operator!=(VkPhysicalDeviceConditionalRenderingFeaturesEXT const &lhs,
 bool operator==(VkPhysicalDeviceVulkanMemoryModelFeaturesKHR const &lhs,
                 VkPhysicalDeviceVulkanMemoryModelFeaturesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.vulkanMemoryModel == rhs.vulkanMemoryModel) &&
          (lhs.vulkanMemoryModelDeviceScope == rhs.vulkanMemoryModelDeviceScope) &&
          (lhs.vulkanMemoryModelAvailabilityVisibilityChains == rhs.vulkanMemoryModelAvailabilityVisibilityChains);
@@ -7569,7 +7305,6 @@ bool operator!=(VkPhysicalDeviceVulkanMemoryModelFeaturesKHR const &lhs,
 bool operator==(VkPhysicalDeviceShaderAtomicInt64FeaturesKHR const &lhs,
                 VkPhysicalDeviceShaderAtomicInt64FeaturesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.shaderBufferInt64Atomics == rhs.shaderBufferInt64Atomics) &&
          (lhs.shaderSharedInt64Atomics == rhs.shaderSharedInt64Atomics);
 }
@@ -7582,7 +7317,6 @@ bool operator!=(VkPhysicalDeviceShaderAtomicInt64FeaturesKHR const &lhs,
 bool operator==(VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT const &lhs,
                 VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.vertexAttributeInstanceRateDivisor == rhs.vertexAttributeInstanceRateDivisor) &&
          (lhs.vertexAttributeInstanceRateZeroDivisor == rhs.vertexAttributeInstanceRateZeroDivisor);
 }
@@ -7595,7 +7329,6 @@ bool operator!=(VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT const &lhs,
 bool operator==(VkQueueFamilyCheckpointPropertiesNV const &lhs,
                 VkQueueFamilyCheckpointPropertiesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.checkpointExecutionStageMask == rhs.checkpointExecutionStageMask);
 }
 
@@ -7607,7 +7340,6 @@ bool operator!=(VkQueueFamilyCheckpointPropertiesNV const &lhs,
 bool operator==(VkCheckpointDataNV const &lhs,
                 VkCheckpointDataNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.stage == rhs.stage) &&
          (lhs.pCheckpointMarker == rhs.pCheckpointMarker);
 }
@@ -7620,7 +7352,6 @@ bool operator!=(VkCheckpointDataNV const &lhs,
 bool operator==(VkPhysicalDeviceDepthStencilResolvePropertiesKHR const &lhs,
                 VkPhysicalDeviceDepthStencilResolvePropertiesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.supportedDepthResolveModes == rhs.supportedDepthResolveModes) &&
          (lhs.supportedStencilResolveModes == rhs.supportedStencilResolveModes) &&
          (lhs.independentResolveNone == rhs.independentResolveNone) &&
@@ -7635,7 +7366,6 @@ bool operator!=(VkPhysicalDeviceDepthStencilResolvePropertiesKHR const &lhs,
 bool operator==(VkSubpassDescriptionDepthStencilResolveKHR const &lhs,
                 VkSubpassDescriptionDepthStencilResolveKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.depthResolveMode == rhs.depthResolveMode) &&
          (lhs.stencilResolveMode == rhs.stencilResolveMode) &&
          (lhs.pDepthStencilResolveAttachment == rhs.pDepthStencilResolveAttachment);
@@ -7649,7 +7379,6 @@ bool operator!=(VkSubpassDescriptionDepthStencilResolveKHR const &lhs,
 bool operator==(VkImageViewASTCDecodeModeEXT const &lhs,
                 VkImageViewASTCDecodeModeEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.decodeMode == rhs.decodeMode);
 }
 
@@ -7661,7 +7390,6 @@ bool operator!=(VkImageViewASTCDecodeModeEXT const &lhs,
 bool operator==(VkPhysicalDeviceASTCDecodeFeaturesEXT const &lhs,
                 VkPhysicalDeviceASTCDecodeFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.decodeModeSharedExponent == rhs.decodeModeSharedExponent);
 }
 
@@ -7673,7 +7401,6 @@ bool operator!=(VkPhysicalDeviceASTCDecodeFeaturesEXT const &lhs,
 bool operator==(VkPhysicalDeviceTransformFeedbackFeaturesEXT const &lhs,
                 VkPhysicalDeviceTransformFeedbackFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.transformFeedback == rhs.transformFeedback) &&
          (lhs.geometryStreams == rhs.geometryStreams);
 }
@@ -7686,7 +7413,6 @@ bool operator!=(VkPhysicalDeviceTransformFeedbackFeaturesEXT const &lhs,
 bool operator==(VkPhysicalDeviceTransformFeedbackPropertiesEXT const &lhs,
                 VkPhysicalDeviceTransformFeedbackPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxTransformFeedbackStreams == rhs.maxTransformFeedbackStreams) &&
          (lhs.maxTransformFeedbackBuffers == rhs.maxTransformFeedbackBuffers) &&
          (lhs.maxTransformFeedbackBufferSize == rhs.maxTransformFeedbackBufferSize) &&
@@ -7707,7 +7433,6 @@ bool operator!=(VkPhysicalDeviceTransformFeedbackPropertiesEXT const &lhs,
 bool operator==(VkPipelineRasterizationStateStreamCreateInfoEXT const &lhs,
                 VkPipelineRasterizationStateStreamCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.rasterizationStream == rhs.rasterizationStream);
 }
@@ -7720,7 +7445,6 @@ bool operator!=(VkPipelineRasterizationStateStreamCreateInfoEXT const &lhs,
 bool operator==(VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV const &lhs,
                 VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.representativeFragmentTest == rhs.representativeFragmentTest);
 }
 
@@ -7732,7 +7456,6 @@ bool operator!=(VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV const &lhs,
 bool operator==(VkPipelineRepresentativeFragmentTestStateCreateInfoNV const &lhs,
                 VkPipelineRepresentativeFragmentTestStateCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.representativeFragmentTestEnable == rhs.representativeFragmentTestEnable);
 }
 
@@ -7744,7 +7467,6 @@ bool operator!=(VkPipelineRepresentativeFragmentTestStateCreateInfoNV const &lhs
 bool operator==(VkPhysicalDeviceExclusiveScissorFeaturesNV const &lhs,
                 VkPhysicalDeviceExclusiveScissorFeaturesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.exclusiveScissor == rhs.exclusiveScissor);
 }
 
@@ -7756,7 +7478,6 @@ bool operator!=(VkPhysicalDeviceExclusiveScissorFeaturesNV const &lhs,
 bool operator==(VkPipelineViewportExclusiveScissorStateCreateInfoNV const &lhs,
                 VkPipelineViewportExclusiveScissorStateCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.exclusiveScissorCount == rhs.exclusiveScissorCount) &&
          (lhs.pExclusiveScissors == rhs.pExclusiveScissors);
 }
@@ -7769,7 +7490,6 @@ bool operator!=(VkPipelineViewportExclusiveScissorStateCreateInfoNV const &lhs,
 bool operator==(VkPhysicalDeviceCornerSampledImageFeaturesNV const &lhs,
                 VkPhysicalDeviceCornerSampledImageFeaturesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.cornerSampledImage == rhs.cornerSampledImage);
 }
 
@@ -7781,7 +7501,6 @@ bool operator!=(VkPhysicalDeviceCornerSampledImageFeaturesNV const &lhs,
 bool operator==(VkPhysicalDeviceComputeShaderDerivativesFeaturesNV const &lhs,
                 VkPhysicalDeviceComputeShaderDerivativesFeaturesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.computeDerivativeGroupQuads == rhs.computeDerivativeGroupQuads) &&
          (lhs.computeDerivativeGroupLinear == rhs.computeDerivativeGroupLinear);
 }
@@ -7794,7 +7513,6 @@ bool operator!=(VkPhysicalDeviceComputeShaderDerivativesFeaturesNV const &lhs,
 bool operator==(VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV const &lhs,
                 VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.fragmentShaderBarycentric == rhs.fragmentShaderBarycentric);
 }
 
@@ -7806,7 +7524,6 @@ bool operator!=(VkPhysicalDeviceFragmentShaderBarycentricFeaturesNV const &lhs,
 bool operator==(VkPhysicalDeviceShaderImageFootprintFeaturesNV const &lhs,
                 VkPhysicalDeviceShaderImageFootprintFeaturesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.imageFootprint == rhs.imageFootprint);
 }
 
@@ -7818,7 +7535,6 @@ bool operator!=(VkPhysicalDeviceShaderImageFootprintFeaturesNV const &lhs,
 bool operator==(VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV const &lhs,
                 VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.dedicatedAllocationImageAliasing == rhs.dedicatedAllocationImageAliasing);
 }
 
@@ -7841,7 +7557,6 @@ bool operator!=(VkShadingRatePaletteNV const &lhs,
 bool operator==(VkPipelineViewportShadingRateImageStateCreateInfoNV const &lhs,
                 VkPipelineViewportShadingRateImageStateCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.shadingRateImageEnable == rhs.shadingRateImageEnable) &&
          (lhs.viewportCount == rhs.viewportCount) &&
          (lhs.pShadingRatePalettes == rhs.pShadingRatePalettes);
@@ -7855,7 +7570,6 @@ bool operator!=(VkPipelineViewportShadingRateImageStateCreateInfoNV const &lhs,
 bool operator==(VkPhysicalDeviceShadingRateImageFeaturesNV const &lhs,
                 VkPhysicalDeviceShadingRateImageFeaturesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.shadingRateImage == rhs.shadingRateImage) &&
          (lhs.shadingRateCoarseSampleOrder == rhs.shadingRateCoarseSampleOrder);
 }
@@ -7868,7 +7582,6 @@ bool operator!=(VkPhysicalDeviceShadingRateImageFeaturesNV const &lhs,
 bool operator==(VkPhysicalDeviceShadingRateImagePropertiesNV const &lhs,
                 VkPhysicalDeviceShadingRateImagePropertiesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.shadingRateTexelSize == rhs.shadingRateTexelSize) &&
          (lhs.shadingRatePaletteSize == rhs.shadingRatePaletteSize) &&
          (lhs.shadingRateMaxCoarseSamples == rhs.shadingRateMaxCoarseSamples);
@@ -7907,7 +7620,6 @@ bool operator!=(VkCoarseSampleOrderCustomNV const &lhs,
 bool operator==(VkPipelineViewportCoarseSampleOrderStateCreateInfoNV const &lhs,
                 VkPipelineViewportCoarseSampleOrderStateCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.sampleOrderType == rhs.sampleOrderType) &&
          (lhs.customSampleOrderCount == rhs.customSampleOrderCount) &&
          (lhs.pCustomSampleOrders == rhs.pCustomSampleOrders);
@@ -7921,7 +7633,6 @@ bool operator!=(VkPipelineViewportCoarseSampleOrderStateCreateInfoNV const &lhs,
 bool operator==(VkPhysicalDeviceMeshShaderFeaturesNV const &lhs,
                 VkPhysicalDeviceMeshShaderFeaturesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.taskShader == rhs.taskShader) &&
          (lhs.meshShader == rhs.meshShader);
 }
@@ -7942,7 +7653,6 @@ bool operator==(VkPhysicalDeviceMeshShaderPropertiesNV const &lhs,
       return false;
   }
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.maxDrawMeshTasksCount == rhs.maxDrawMeshTasksCount) &&
          (lhs.maxTaskWorkGroupInvocations == rhs.maxTaskWorkGroupInvocations) &&
          (lhs.maxTaskTotalMemorySize == rhs.maxTaskTotalMemorySize) &&
@@ -7975,7 +7685,6 @@ bool operator!=(VkDrawMeshTasksIndirectCommandNV const &lhs,
 bool operator==(VkRayTracingShaderGroupCreateInfoNV const &lhs,
                 VkRayTracingShaderGroupCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.type == rhs.type) &&
          (lhs.generalShader == rhs.generalShader) &&
          (lhs.closestHitShader == rhs.closestHitShader) &&
@@ -7991,7 +7700,6 @@ bool operator!=(VkRayTracingShaderGroupCreateInfoNV const &lhs,
 bool operator==(VkRayTracingPipelineCreateInfoNV const &lhs,
                 VkRayTracingPipelineCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.stageCount == rhs.stageCount) &&
          (lhs.pStages == rhs.pStages) &&
@@ -8011,7 +7719,6 @@ bool operator!=(VkRayTracingPipelineCreateInfoNV const &lhs,
 bool operator==(VkGeometryTrianglesNV const &lhs,
                 VkGeometryTrianglesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.vertexData == rhs.vertexData) &&
          (lhs.vertexOffset == rhs.vertexOffset) &&
          (lhs.vertexCount == rhs.vertexCount) &&
@@ -8033,7 +7740,6 @@ bool operator!=(VkGeometryTrianglesNV const &lhs,
 bool operator==(VkGeometryAABBNV const &lhs,
                 VkGeometryAABBNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.aabbData == rhs.aabbData) &&
          (lhs.numAABBs == rhs.numAABBs) &&
          (lhs.stride == rhs.stride) &&
@@ -8059,7 +7765,6 @@ bool operator!=(VkGeometryDataNV const &lhs,
 bool operator==(VkGeometryNV const &lhs,
                 VkGeometryNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.geometryType == rhs.geometryType) &&
          (lhs.geometry == rhs.geometry) &&
          (lhs.flags == rhs.flags);
@@ -8073,7 +7778,6 @@ bool operator!=(VkGeometryNV const &lhs,
 bool operator==(VkAccelerationStructureInfoNV const &lhs,
                 VkAccelerationStructureInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.type == rhs.type) &&
          (lhs.flags == rhs.flags) &&
          (lhs.instanceCount == rhs.instanceCount) &&
@@ -8089,7 +7793,6 @@ bool operator!=(VkAccelerationStructureInfoNV const &lhs,
 bool operator==(VkAccelerationStructureCreateInfoNV const &lhs,
                 VkAccelerationStructureCreateInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.compactedSize == rhs.compactedSize) &&
          (lhs.info == rhs.info);
 }
@@ -8102,7 +7805,6 @@ bool operator!=(VkAccelerationStructureCreateInfoNV const &lhs,
 bool operator==(VkBindAccelerationStructureMemoryInfoNV const &lhs,
                 VkBindAccelerationStructureMemoryInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.accelerationStructure == rhs.accelerationStructure) &&
          (lhs.memory == rhs.memory) &&
          (lhs.memoryOffset == rhs.memoryOffset) &&
@@ -8118,7 +7820,6 @@ bool operator!=(VkBindAccelerationStructureMemoryInfoNV const &lhs,
 bool operator==(VkWriteDescriptorSetAccelerationStructureNV const &lhs,
                 VkWriteDescriptorSetAccelerationStructureNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.accelerationStructureCount == rhs.accelerationStructureCount) &&
          (lhs.pAccelerationStructures == rhs.pAccelerationStructures);
 }
@@ -8131,7 +7832,6 @@ bool operator!=(VkWriteDescriptorSetAccelerationStructureNV const &lhs,
 bool operator==(VkAccelerationStructureMemoryRequirementsInfoNV const &lhs,
                 VkAccelerationStructureMemoryRequirementsInfoNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.type == rhs.type) &&
          (lhs.accelerationStructure == rhs.accelerationStructure);
 }
@@ -8144,7 +7844,6 @@ bool operator!=(VkAccelerationStructureMemoryRequirementsInfoNV const &lhs,
 bool operator==(VkPhysicalDeviceRayTracingPropertiesNV const &lhs,
                 VkPhysicalDeviceRayTracingPropertiesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.shaderGroupHandleSize == rhs.shaderGroupHandleSize) &&
          (lhs.maxRecursionDepth == rhs.maxRecursionDepth) &&
          (lhs.maxShaderGroupStride == rhs.maxShaderGroupStride) &&
@@ -8163,7 +7862,6 @@ bool operator!=(VkPhysicalDeviceRayTracingPropertiesNV const &lhs,
 bool operator==(VkDrmFormatModifierPropertiesListEXT const &lhs,
                 VkDrmFormatModifierPropertiesListEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.drmFormatModifierCount == rhs.drmFormatModifierCount) &&
          (lhs.pDrmFormatModifierProperties == rhs.pDrmFormatModifierProperties);
 }
@@ -8188,7 +7886,6 @@ bool operator!=(VkDrmFormatModifierPropertiesEXT const &lhs,
 bool operator==(VkPhysicalDeviceImageDrmFormatModifierInfoEXT const &lhs,
                 VkPhysicalDeviceImageDrmFormatModifierInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.drmFormatModifier == rhs.drmFormatModifier) &&
          (lhs.sharingMode == rhs.sharingMode) &&
          (lhs.queueFamilyIndexCount == rhs.queueFamilyIndexCount) &&
@@ -8203,7 +7900,6 @@ bool operator!=(VkPhysicalDeviceImageDrmFormatModifierInfoEXT const &lhs,
 bool operator==(VkImageDrmFormatModifierListCreateInfoEXT const &lhs,
                 VkImageDrmFormatModifierListCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.drmFormatModifierCount == rhs.drmFormatModifierCount) &&
          (lhs.pDrmFormatModifiers == rhs.pDrmFormatModifiers);
 }
@@ -8216,7 +7912,6 @@ bool operator!=(VkImageDrmFormatModifierListCreateInfoEXT const &lhs,
 bool operator==(VkImageDrmFormatModifierExplicitCreateInfoEXT const &lhs,
                 VkImageDrmFormatModifierExplicitCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.drmFormatModifier == rhs.drmFormatModifier) &&
          (lhs.drmFormatModifierPlaneCount == rhs.drmFormatModifierPlaneCount) &&
          (lhs.pPlaneLayouts == rhs.pPlaneLayouts);
@@ -8230,7 +7925,6 @@ bool operator!=(VkImageDrmFormatModifierExplicitCreateInfoEXT const &lhs,
 bool operator==(VkImageDrmFormatModifierPropertiesEXT const &lhs,
                 VkImageDrmFormatModifierPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.drmFormatModifier == rhs.drmFormatModifier);
 }
 
@@ -8242,7 +7936,6 @@ bool operator!=(VkImageDrmFormatModifierPropertiesEXT const &lhs,
 bool operator==(VkImageStencilUsageCreateInfoEXT const &lhs,
                 VkImageStencilUsageCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.stencilUsage == rhs.stencilUsage);
 }
 
@@ -8254,7 +7947,6 @@ bool operator!=(VkImageStencilUsageCreateInfoEXT const &lhs,
 bool operator==(VkDeviceMemoryOverallocationCreateInfoAMD const &lhs,
                 VkDeviceMemoryOverallocationCreateInfoAMD const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.overallocationBehavior == rhs.overallocationBehavior);
 }
 
@@ -8266,7 +7958,6 @@ bool operator!=(VkDeviceMemoryOverallocationCreateInfoAMD const &lhs,
 bool operator==(VkPhysicalDeviceFragmentDensityMapFeaturesEXT const &lhs,
                 VkPhysicalDeviceFragmentDensityMapFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.fragmentDensityMap == rhs.fragmentDensityMap) &&
          (lhs.fragmentDensityMapDynamic == rhs.fragmentDensityMapDynamic) &&
          (lhs.fragmentDensityMapNonSubsampledImages == rhs.fragmentDensityMapNonSubsampledImages);
@@ -8280,7 +7971,6 @@ bool operator!=(VkPhysicalDeviceFragmentDensityMapFeaturesEXT const &lhs,
 bool operator==(VkPhysicalDeviceFragmentDensityMapPropertiesEXT const &lhs,
                 VkPhysicalDeviceFragmentDensityMapPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.minFragmentDensityTexelSize == rhs.minFragmentDensityTexelSize) &&
          (lhs.maxFragmentDensityTexelSize == rhs.maxFragmentDensityTexelSize) &&
          (lhs.fragmentDensityInvocations == rhs.fragmentDensityInvocations);
@@ -8294,7 +7984,6 @@ bool operator!=(VkPhysicalDeviceFragmentDensityMapPropertiesEXT const &lhs,
 bool operator==(VkRenderPassFragmentDensityMapCreateInfoEXT const &lhs,
                 VkRenderPassFragmentDensityMapCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.fragmentDensityMapAttachment == rhs.fragmentDensityMapAttachment);
 }
 
@@ -8306,7 +7995,6 @@ bool operator!=(VkRenderPassFragmentDensityMapCreateInfoEXT const &lhs,
 bool operator==(VkPhysicalDeviceScalarBlockLayoutFeaturesEXT const &lhs,
                 VkPhysicalDeviceScalarBlockLayoutFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.scalarBlockLayout == rhs.scalarBlockLayout);
 }
 
@@ -8318,7 +8006,6 @@ bool operator!=(VkPhysicalDeviceScalarBlockLayoutFeaturesEXT const &lhs,
 bool operator==(VkSurfaceProtectedCapabilitiesKHR const &lhs,
                 VkSurfaceProtectedCapabilitiesKHR const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.supportsProtected == rhs.supportsProtected);
 }
 
@@ -8330,7 +8017,6 @@ bool operator!=(VkSurfaceProtectedCapabilitiesKHR const &lhs,
 bool operator==(VkPhysicalDeviceDepthClipEnableFeaturesEXT const &lhs,
                 VkPhysicalDeviceDepthClipEnableFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.depthClipEnable == rhs.depthClipEnable);
 }
 
@@ -8342,7 +8028,6 @@ bool operator!=(VkPhysicalDeviceDepthClipEnableFeaturesEXT const &lhs,
 bool operator==(VkPipelineRasterizationDepthClipStateCreateInfoEXT const &lhs,
                 VkPipelineRasterizationDepthClipStateCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags) &&
          (lhs.depthClipEnable == rhs.depthClipEnable);
 }
@@ -8362,8 +8047,7 @@ bool operator==(VkPhysicalDeviceMemoryBudgetPropertiesEXT const &lhs,
     if(lhs.heapUsage[i] != rhs.heapUsage[i])
       return false;
   }
-  return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext);
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkPhysicalDeviceMemoryBudgetPropertiesEXT const &lhs,
@@ -8374,7 +8058,6 @@ bool operator!=(VkPhysicalDeviceMemoryBudgetPropertiesEXT const &lhs,
 bool operator==(VkPhysicalDeviceMemoryPriorityFeaturesEXT const &lhs,
                 VkPhysicalDeviceMemoryPriorityFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.memoryPriority == rhs.memoryPriority);
 }
 
@@ -8386,7 +8069,6 @@ bool operator!=(VkPhysicalDeviceMemoryPriorityFeaturesEXT const &lhs,
 bool operator==(VkMemoryPriorityAllocateInfoEXT const &lhs,
                 VkMemoryPriorityAllocateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.priority == rhs.priority);
 }
 
@@ -8398,7 +8080,6 @@ bool operator!=(VkMemoryPriorityAllocateInfoEXT const &lhs,
 bool operator==(VkPhysicalDeviceBufferDeviceAddressFeaturesEXT const &lhs,
                 VkPhysicalDeviceBufferDeviceAddressFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.bufferDeviceAddress == rhs.bufferDeviceAddress) &&
          (lhs.bufferDeviceAddressCaptureReplay == rhs.bufferDeviceAddressCaptureReplay) &&
          (lhs.bufferDeviceAddressMultiDevice == rhs.bufferDeviceAddressMultiDevice);
@@ -8412,7 +8093,6 @@ bool operator!=(VkPhysicalDeviceBufferDeviceAddressFeaturesEXT const &lhs,
 bool operator==(VkBufferDeviceAddressInfoEXT const &lhs,
                 VkBufferDeviceAddressInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.buffer == rhs.buffer);
 }
 
@@ -8424,7 +8104,6 @@ bool operator!=(VkBufferDeviceAddressInfoEXT const &lhs,
 bool operator==(VkBufferDeviceAddressCreateInfoEXT const &lhs,
                 VkBufferDeviceAddressCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.deviceAddress == rhs.deviceAddress);
 }
 
@@ -8436,7 +8115,6 @@ bool operator!=(VkBufferDeviceAddressCreateInfoEXT const &lhs,
 bool operator==(VkPhysicalDeviceImageViewImageFormatInfoEXT const &lhs,
                 VkPhysicalDeviceImageViewImageFormatInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.imageViewType == rhs.imageViewType);
 }
 
@@ -8448,7 +8126,6 @@ bool operator!=(VkPhysicalDeviceImageViewImageFormatInfoEXT const &lhs,
 bool operator==(VkFilterCubicImageViewImageFormatPropertiesEXT const &lhs,
                 VkFilterCubicImageViewImageFormatPropertiesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.filterCubic == rhs.filterCubic) &&
          (lhs.filterCubicMinmax == rhs.filterCubicMinmax);
 }
@@ -8461,7 +8138,6 @@ bool operator!=(VkFilterCubicImageViewImageFormatPropertiesEXT const &lhs,
 bool operator==(VkPhysicalDeviceCooperativeMatrixFeaturesNV const &lhs,
                 VkPhysicalDeviceCooperativeMatrixFeaturesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.cooperativeMatrix == rhs.cooperativeMatrix) &&
          (lhs.cooperativeMatrixRobustBufferAccess == rhs.cooperativeMatrixRobustBufferAccess);
 }
@@ -8474,7 +8150,6 @@ bool operator!=(VkPhysicalDeviceCooperativeMatrixFeaturesNV const &lhs,
 bool operator==(VkPhysicalDeviceCooperativeMatrixPropertiesNV const &lhs,
                 VkPhysicalDeviceCooperativeMatrixPropertiesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.cooperativeMatrixSupportedStages == rhs.cooperativeMatrixSupportedStages);
 }
 
@@ -8486,7 +8161,6 @@ bool operator!=(VkPhysicalDeviceCooperativeMatrixPropertiesNV const &lhs,
 bool operator==(VkCooperativeMatrixPropertiesNV const &lhs,
                 VkCooperativeMatrixPropertiesNV const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.MSize == rhs.MSize) &&
          (lhs.NSize == rhs.NSize) &&
          (lhs.KSize == rhs.KSize) &&
@@ -8505,7 +8179,6 @@ bool operator!=(VkCooperativeMatrixPropertiesNV const &lhs,
 bool operator==(VkPhysicalDeviceYcbcrImageArraysFeaturesEXT const &lhs,
                 VkPhysicalDeviceYcbcrImageArraysFeaturesEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.ycbcrImageArrays == rhs.ycbcrImageArrays);
 }
 
@@ -8517,7 +8190,6 @@ bool operator!=(VkPhysicalDeviceYcbcrImageArraysFeaturesEXT const &lhs,
 bool operator==(VkImageViewHandleInfoNVX const &lhs,
                 VkImageViewHandleInfoNVX const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.imageView == rhs.imageView) &&
          (lhs.descriptorType == rhs.descriptorType) &&
          (lhs.sampler == rhs.sampler);
@@ -8532,7 +8204,6 @@ bool operator!=(VkImageViewHandleInfoNVX const &lhs,
 bool operator==(VkPresentFrameTokenGGP const &lhs,
                 VkPresentFrameTokenGGP const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.frameToken == rhs.frameToken);
 }
 
@@ -8556,7 +8227,6 @@ bool operator!=(VkPipelineCreationFeedbackEXT const &lhs,
 bool operator==(VkPipelineCreationFeedbackCreateInfoEXT const &lhs,
                 VkPipelineCreationFeedbackCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.pPipelineCreationFeedback == rhs.pPipelineCreationFeedback) &&
          (lhs.pipelineStageCreationFeedbackCount == rhs.pipelineStageCreationFeedbackCount) &&
          (lhs.pPipelineStageCreationFeedbacks == rhs.pPipelineStageCreationFeedbacks);
@@ -8571,7 +8241,6 @@ bool operator!=(VkPipelineCreationFeedbackCreateInfoEXT const &lhs,
 bool operator==(VkSurfaceFullScreenExclusiveInfoEXT const &lhs,
                 VkSurfaceFullScreenExclusiveInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.fullScreenExclusive == rhs.fullScreenExclusive);
 }
 
@@ -8585,7 +8254,6 @@ bool operator!=(VkSurfaceFullScreenExclusiveInfoEXT const &lhs,
 bool operator==(VkSurfaceFullScreenExclusiveWin32InfoEXT const &lhs,
                 VkSurfaceFullScreenExclusiveWin32InfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.hmonitor == rhs.hmonitor);
 }
 
@@ -8599,7 +8267,6 @@ bool operator!=(VkSurfaceFullScreenExclusiveWin32InfoEXT const &lhs,
 bool operator==(VkSurfaceCapabilitiesFullScreenExclusiveEXT const &lhs,
                 VkSurfaceCapabilitiesFullScreenExclusiveEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.fullScreenExclusiveSupported == rhs.fullScreenExclusiveSupported);
 }
 
@@ -8612,7 +8279,6 @@ bool operator!=(VkSurfaceCapabilitiesFullScreenExclusiveEXT const &lhs,
 bool operator==(VkHeadlessSurfaceCreateInfoEXT const &lhs,
                 VkHeadlessSurfaceCreateInfoEXT const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
-         (lhs.pNext == rhs.pNext) &&
          (lhs.flags == rhs.flags);
 }
 
