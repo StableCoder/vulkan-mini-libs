@@ -222,6 +222,7 @@ int main(int argc, char **argv) {
 
     // Definitions
     outFile << "\n#ifdef VK_EQUALITY_CHECK_CONFIG_MAIN\n";
+    outFile << "\n#include <cstdint>\n";
 
     for (auto &it : structs) {
         // If no members to compare, then no point
