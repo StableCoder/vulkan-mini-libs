@@ -1699,6 +1699,8 @@ bool operator!=(VkExternalFormatANDROID const &lhs,
 
 #ifdef VK_EQUALITY_CHECK_CONFIG_MAIN
 
+#include <cstdint>
+
 bool operator==(VkOffset2D const &lhs,
                 VkOffset2D const &rhs) noexcept {
   return (lhs.x == rhs.x) &&

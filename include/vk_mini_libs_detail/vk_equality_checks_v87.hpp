@@ -2033,6 +2033,8 @@ bool operator!=(VkImageDrmFormatModifierPropertiesEXT const &lhs,
 
 #ifdef VK_EQUALITY_CHECK_CONFIG_MAIN
 
+#include <cstdint>
+
 bool operator==(VkBaseOutStructure const &lhs,
                 VkBaseOutStructure const &rhs) noexcept {
   return (lhs.sType == rhs.sType) &&
