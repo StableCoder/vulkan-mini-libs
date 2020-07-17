@@ -5,6 +5,27 @@
 
 A set of small header-only libraries that are of limited scope each to perform a very specific task.
 
+
+## Vulkan Error Code
+
+Header files for C++. Contains the implementation details that allow the use of VkResult values with std::error_code and std::error_category.
+
+### Header Usage
+
+To use, include the header where the declarations for the boolean checks are required.
+
+On *ONE* compilation unit, include the definition of `#define VK_ERROR_CODE_CONFIG_MAIN` so that the definitions are compiled somewhere following the one definition rule.
+
+### VkEqualityChecks header-generation program arguments
+#### -h, --help
+Help blurb
+#### -i, --input <file>
+Input vk.xml file to parse. These can be found from the KhronosGroup, often at this repo: [https://github.com/KhronosGroup/Vulkan-Docs](https://github.com/KhronosGroup/Vulkan-Docs)
+#### -d, --dir <dir>
+Output directory
+#### -o, --out <name>
+Output file name (Default: `vk_error_code.hpp`)
+
 ## Vulkan Value Serialization
 
 This program builds header files for use in C++17 or newer. It
@@ -38,7 +59,7 @@ To use, include the header where the declarations for the boolean checks are req
 
 On *ONE* compilation unit, include the definition of `#define VK_VALUE_SERIALIZATION_CONFIG_MAIN` so that the definitions are compiled somewhere following the one definition rule.
 
-### VKValueSerialization header-generation program arguments
+### VkValueSerialization header-generation program arguments
 #### -h, --help
 Help blurb
 #### -i, --input <file>

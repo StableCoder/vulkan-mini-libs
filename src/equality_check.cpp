@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
     // Seek to the end.
     inFile.seekg(0, std::ifstream::end);
     // Tell us how many chars to set aside.
-    std::size_t fileSize = inFile.tellg();
+    auto fileSize = inFile.tellg();
 
     // Allocate a large enough block, and read it all into memory
     char *xmlContent = new char[fileSize];
@@ -248,7 +248,7 @@ int main(int argc, char **argv) {
             if (member.sizeEnum.empty())
                 continue;
 
-            outFile << "  for(std::size_t i = 0; i < " << member.sizeEnum << "; ++i) {\n";
+            outFile << "  for(int i = 0; i < " << member.sizeEnum << "; ++i) {\n";
             outFile << "    if(lhs." << member.name << "[i] != rhs." << member.name << "[i])\n";
             outFile << "      return false;\n";
             outFile << "  }\n";

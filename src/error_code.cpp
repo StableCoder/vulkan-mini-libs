@@ -26,10 +26,9 @@
 #include "parse_xml.hpp"
 
 constexpr std::string_view helpStr = R"HELP(
-Generates header files for C++. Contains `operator==` and `operator!=`
-functions for a large set of the available Vulkan struct types, checking
-just the objects for equality. These do *NOT* peroform a deep comparison,
-such as any objects pointed to by `pNext` or any other pointed-to objects.
+Generates header files for C++. Contains the implementation details that 
+allow the use of VkResult values with std::error_code and 
+std::error_category.
 
 Program Arguments:
     -h, --help  : Help Blurb
@@ -37,7 +36,7 @@ Program Arguments:
                     KhronosGroup, often at this repo:
                     https://github.com/KhronosGroup/Vulkan-Docs
     -d, --dir   : Output directory
-    -o, --out   : Output file name (Default: `vk_equality_checks.hpp`)
+    -o, --out   : Output file name (Default: `vk_error_code.hpp`)
 )HELP";
 
 constexpr std::string_view usageStr = R"USAGE(
