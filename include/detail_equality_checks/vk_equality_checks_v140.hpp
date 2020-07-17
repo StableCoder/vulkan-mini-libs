@@ -2934,11 +2934,11 @@ bool operator!=(VkComponentMapping const &lhs,
 
 bool operator==(VkPhysicalDeviceProperties const &lhs,
                 VkPhysicalDeviceProperties const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_PHYSICAL_DEVICE_NAME_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_PHYSICAL_DEVICE_NAME_SIZE; ++i) {
     if(lhs.deviceName[i] != rhs.deviceName[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_UUID_SIZE; ++i) {
+  for(int i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.pipelineCacheUUID[i] != rhs.pipelineCacheUUID[i])
       return false;
   }
@@ -2958,7 +2958,7 @@ bool operator!=(VkPhysicalDeviceProperties const &lhs,
 
 bool operator==(VkExtensionProperties const &lhs,
                 VkExtensionProperties const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
     if(lhs.extensionName[i] != rhs.extensionName[i])
       return false;
   }
@@ -2972,11 +2972,11 @@ bool operator!=(VkExtensionProperties const &lhs,
 
 bool operator==(VkLayerProperties const &lhs,
                 VkLayerProperties const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
     if(lhs.layerName[i] != rhs.layerName[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.description[i] != rhs.description[i])
       return false;
   }
@@ -3082,11 +3082,11 @@ bool operator!=(VkQueueFamilyProperties const &lhs,
 
 bool operator==(VkPhysicalDeviceMemoryProperties const &lhs,
                 VkPhysicalDeviceMemoryProperties const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_MEMORY_TYPES; ++i) {
+  for(int i = 0; i < VK_MAX_MEMORY_TYPES; ++i) {
     if(lhs.memoryTypes[i] != rhs.memoryTypes[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
+  for(int i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
     if(lhs.memoryHeaps[i] != rhs.memoryHeaps[i])
       return false;
   }
@@ -3552,11 +3552,11 @@ bool operator!=(VkImageCopy const &lhs,
 
 bool operator==(VkImageBlit const &lhs,
                 VkImageBlit const &rhs) noexcept {
-  for(std::size_t i = 0; i < 2; ++i) {
+  for(int i = 0; i < 2; ++i) {
     if(lhs.srcOffsets[i] != rhs.srcOffsets[i])
       return false;
   }
-  for(std::size_t i = 0; i < 2; ++i) {
+  for(int i = 0; i < 2; ++i) {
     if(lhs.dstOffsets[i] != rhs.dstOffsets[i])
       return false;
   }
@@ -3868,7 +3868,7 @@ bool operator!=(VkPipelineColorBlendAttachmentState const &lhs,
 
 bool operator==(VkPipelineColorBlendStateCreateInfo const &lhs,
                 VkPipelineColorBlendStateCreateInfo const &rhs) noexcept {
-  for(std::size_t i = 0; i < 4; ++i) {
+  for(int i = 0; i < 4; ++i) {
     if(lhs.blendConstants[i] != rhs.blendConstants[i])
       return false;
   }
@@ -4274,27 +4274,27 @@ bool operator!=(VkPhysicalDeviceSparseProperties const &lhs,
 
 bool operator==(VkPhysicalDeviceLimits const &lhs,
                 VkPhysicalDeviceLimits const &rhs) noexcept {
-  for(std::size_t i = 0; i < 3; ++i) {
+  for(int i = 0; i < 3; ++i) {
     if(lhs.maxComputeWorkGroupCount[i] != rhs.maxComputeWorkGroupCount[i])
       return false;
   }
-  for(std::size_t i = 0; i < 3; ++i) {
+  for(int i = 0; i < 3; ++i) {
     if(lhs.maxComputeWorkGroupSize[i] != rhs.maxComputeWorkGroupSize[i])
       return false;
   }
-  for(std::size_t i = 0; i < 2; ++i) {
+  for(int i = 0; i < 2; ++i) {
     if(lhs.maxViewportDimensions[i] != rhs.maxViewportDimensions[i])
       return false;
   }
-  for(std::size_t i = 0; i < 2; ++i) {
+  for(int i = 0; i < 2; ++i) {
     if(lhs.viewportBoundsRange[i] != rhs.viewportBoundsRange[i])
       return false;
   }
-  for(std::size_t i = 0; i < 2; ++i) {
+  for(int i = 0; i < 2; ++i) {
     if(lhs.pointSizeRange[i] != rhs.pointSizeRange[i])
       return false;
   }
-  for(std::size_t i = 0; i < 2; ++i) {
+  for(int i = 0; i < 2; ++i) {
     if(lhs.lineWidthRange[i] != rhs.lineWidthRange[i])
       return false;
   }
@@ -4881,7 +4881,7 @@ bool operator!=(VkDebugMarkerObjectTagInfoEXT const &lhs,
 
 bool operator==(VkDebugMarkerMarkerInfoEXT const &lhs,
                 VkDebugMarkerMarkerInfoEXT const &rhs) noexcept {
-  for(std::size_t i = 0; i < 4; ++i) {
+  for(int i = 0; i < 4; ++i) {
     if(lhs.color[i] != rhs.color[i])
       return false;
   }
@@ -5365,11 +5365,11 @@ bool operator!=(VkConformanceVersion const &lhs,
 
 bool operator==(VkPhysicalDeviceDriverProperties const &lhs,
                 VkPhysicalDeviceDriverProperties const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_DRIVER_NAME_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DRIVER_NAME_SIZE; ++i) {
     if(lhs.driverName[i] != rhs.driverName[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_DRIVER_INFO_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DRIVER_INFO_SIZE; ++i) {
     if(lhs.driverInfo[i] != rhs.driverInfo[i])
       return false;
   }
@@ -5490,15 +5490,15 @@ bool operator!=(VkExternalBufferProperties const &lhs,
 
 bool operator==(VkPhysicalDeviceIDProperties const &lhs,
                 VkPhysicalDeviceIDProperties const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_UUID_SIZE; ++i) {
+  for(int i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.deviceUUID[i] != rhs.deviceUUID[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_UUID_SIZE; ++i) {
+  for(int i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.driverUUID[i] != rhs.driverUUID[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_LUID_SIZE; ++i) {
+  for(int i = 0; i < VK_LUID_SIZE; ++i) {
     if(lhs.deviceLUID[i] != rhs.deviceLUID[i])
       return false;
   }
@@ -5994,7 +5994,7 @@ bool operator!=(VkSwapchainCounterCreateInfoEXT const &lhs,
 
 bool operator==(VkPhysicalDeviceGroupProperties const &lhs,
                 VkPhysicalDeviceGroupProperties const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_DEVICE_GROUP_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DEVICE_GROUP_SIZE; ++i) {
     if(lhs.physicalDevices[i] != rhs.physicalDevices[i])
       return false;
   }
@@ -6126,7 +6126,7 @@ bool operator!=(VkDeviceGroupBindSparseInfo const &lhs,
 
 bool operator==(VkDeviceGroupPresentCapabilitiesKHR const &lhs,
                 VkDeviceGroupPresentCapabilitiesKHR const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_DEVICE_GROUP_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DEVICE_GROUP_SIZE; ++i) {
     if(lhs.presentMask[i] != rhs.presentMask[i])
       return false;
   }
@@ -6990,7 +6990,7 @@ bool operator!=(VkPipelineSampleLocationsStateCreateInfoEXT const &lhs,
 
 bool operator==(VkPhysicalDeviceSampleLocationsPropertiesEXT const &lhs,
                 VkPhysicalDeviceSampleLocationsPropertiesEXT const &rhs) noexcept {
-  for(std::size_t i = 0; i < 2; ++i) {
+  for(int i = 0; i < 2; ++i) {
     if(lhs.sampleLocationCoordinateRange[i] != rhs.sampleLocationCoordinateRange[i])
       return false;
   }
@@ -7325,7 +7325,7 @@ bool operator!=(VkShaderResourceUsageAMD const &lhs,
 
 bool operator==(VkShaderStatisticsInfoAMD const &lhs,
                 VkShaderStatisticsInfoAMD const &rhs) noexcept {
-  for(std::size_t i = 0; i < 3; ++i) {
+  for(int i = 0; i < 3; ++i) {
     if(lhs.computeWorkGroupSize[i] != rhs.computeWorkGroupSize[i])
       return false;
   }
@@ -7383,7 +7383,7 @@ bool operator!=(VkDebugUtilsObjectTagInfoEXT const &lhs,
 
 bool operator==(VkDebugUtilsLabelEXT const &lhs,
                 VkDebugUtilsLabelEXT const &rhs) noexcept {
-  for(std::size_t i = 0; i < 4; ++i) {
+  for(int i = 0; i < 4; ++i) {
     if(lhs.color[i] != rhs.color[i])
       return false;
   }
@@ -8352,11 +8352,11 @@ bool operator!=(VkPhysicalDeviceMeshShaderFeaturesNV const &lhs,
 
 bool operator==(VkPhysicalDeviceMeshShaderPropertiesNV const &lhs,
                 VkPhysicalDeviceMeshShaderPropertiesNV const &rhs) noexcept {
-  for(std::size_t i = 0; i < 3; ++i) {
+  for(int i = 0; i < 3; ++i) {
     if(lhs.maxTaskWorkGroupSize[i] != rhs.maxTaskWorkGroupSize[i])
       return false;
   }
-  for(std::size_t i = 0; i < 3; ++i) {
+  for(int i = 0; i < 3; ++i) {
     if(lhs.maxMeshWorkGroupSize[i] != rhs.maxMeshWorkGroupSize[i])
       return false;
   }
@@ -8889,11 +8889,11 @@ bool operator!=(VkPipelineRasterizationDepthClipStateCreateInfoEXT const &lhs,
 
 bool operator==(VkPhysicalDeviceMemoryBudgetPropertiesEXT const &lhs,
                 VkPhysicalDeviceMemoryBudgetPropertiesEXT const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
+  for(int i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
     if(lhs.heapBudget[i] != rhs.heapBudget[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
+  for(int i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
     if(lhs.heapUsage[i] != rhs.heapUsage[i])
       return false;
   }
@@ -9250,7 +9250,7 @@ bool operator!=(VkPhysicalDevicePerformanceQueryPropertiesKHR const &lhs,
 
 bool operator==(VkPerformanceCounterKHR const &lhs,
                 VkPerformanceCounterKHR const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_UUID_SIZE; ++i) {
+  for(int i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.uuid[i] != rhs.uuid[i])
       return false;
   }
@@ -9267,15 +9267,15 @@ bool operator!=(VkPerformanceCounterKHR const &lhs,
 
 bool operator==(VkPerformanceCounterDescriptionKHR const &lhs,
                 VkPerformanceCounterDescriptionKHR const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.name[i] != rhs.name[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.category[i] != rhs.category[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.description[i] != rhs.description[i])
       return false;
   }
@@ -9568,11 +9568,11 @@ bool operator!=(VkPipelineInfoKHR const &lhs,
 
 bool operator==(VkPipelineExecutablePropertiesKHR const &lhs,
                 VkPipelineExecutablePropertiesKHR const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.name[i] != rhs.name[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.description[i] != rhs.description[i])
       return false;
   }
@@ -9600,11 +9600,11 @@ bool operator!=(VkPipelineExecutableInfoKHR const &lhs,
 
 bool operator==(VkPipelineExecutableInternalRepresentationKHR const &lhs,
                 VkPipelineExecutableInternalRepresentationKHR const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.name[i] != rhs.name[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.description[i] != rhs.description[i])
       return false;
   }
@@ -9790,15 +9790,15 @@ bool operator!=(VkPhysicalDeviceVulkan11Features const &lhs,
 
 bool operator==(VkPhysicalDeviceVulkan11Properties const &lhs,
                 VkPhysicalDeviceVulkan11Properties const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_UUID_SIZE; ++i) {
+  for(int i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.deviceUUID[i] != rhs.deviceUUID[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_UUID_SIZE; ++i) {
+  for(int i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.driverUUID[i] != rhs.driverUUID[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_LUID_SIZE; ++i) {
+  for(int i = 0; i < VK_LUID_SIZE; ++i) {
     if(lhs.deviceLUID[i] != rhs.deviceLUID[i])
       return false;
   }
@@ -9881,11 +9881,11 @@ bool operator!=(VkPhysicalDeviceVulkan12Features const &lhs,
 
 bool operator==(VkPhysicalDeviceVulkan12Properties const &lhs,
                 VkPhysicalDeviceVulkan12Properties const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_DRIVER_NAME_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DRIVER_NAME_SIZE; ++i) {
     if(lhs.driverName[i] != rhs.driverName[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_DRIVER_INFO_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DRIVER_INFO_SIZE; ++i) {
     if(lhs.driverInfo[i] != rhs.driverInfo[i])
       return false;
   }
@@ -9971,19 +9971,19 @@ bool operator!=(VkPhysicalDeviceCoherentMemoryFeaturesAMD const &lhs,
 
 bool operator==(VkPhysicalDeviceToolPropertiesEXT const &lhs,
                 VkPhysicalDeviceToolPropertiesEXT const &rhs) noexcept {
-  for(std::size_t i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
     if(lhs.name[i] != rhs.name[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
     if(lhs.version[i] != rhs.version[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.description[i] != rhs.description[i])
       return false;
   }
-  for(std::size_t i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
+  for(int i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
     if(lhs.layer[i] != rhs.layer[i])
       return false;
   }
@@ -10090,7 +10090,7 @@ bool operator!=(VkAabbPositionsKHR const &lhs,
 #ifdef VK_ENABLE_BETA_EXTENSIONS
 bool operator==(VkTransformMatrixKHR const &lhs,
                 VkTransformMatrixKHR const &rhs) noexcept {
-  for(std::size_t i = 0; i < 3; ++i) {
+  for(int i = 0; i < 3; ++i) {
     if(lhs.matrix[i] != rhs.matrix[i])
       return false;
   }
@@ -10106,19 +10106,19 @@ bool operator!=(VkTransformMatrixKHR const &lhs,
 #ifdef VK_ENABLE_BETA_EXTENSIONS
 bool operator==(VkAccelerationStructureInstanceKHR const &lhs,
                 VkAccelerationStructureInstanceKHR const &rhs) noexcept {
-  for(std::size_t i = 0; i < 2; ++i) {
+  for(int i = 0; i < 2; ++i) {
     if(lhs.instanceCustomIndex[i] != rhs.instanceCustomIndex[i])
       return false;
   }
-  for(std::size_t i = 0; i < 8; ++i) {
+  for(int i = 0; i < 8; ++i) {
     if(lhs.mask[i] != rhs.mask[i])
       return false;
   }
-  for(std::size_t i = 0; i < 2; ++i) {
+  for(int i = 0; i < 2; ++i) {
     if(lhs.instanceShaderBindingTableRecordOffset[i] != rhs.instanceShaderBindingTableRecordOffset[i])
       return false;
   }
-  for(std::size_t i = 0; i < 8; ++i) {
+  for(int i = 0; i < 8; ++i) {
     if(lhs.flags[i] != rhs.flags[i])
       return false;
   }

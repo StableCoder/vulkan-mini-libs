@@ -12,7 +12,7 @@ Header files for C++. Contains the implementation details that allow the use of 
 
 ### Header Usage
 
-To use, include the header where the declarations for the boolean checks are required.
+To use, include the header where the error code is being used.
 
 On *ONE* compilation unit, include the definition of `#define VK_ERROR_CODE_CONFIG_MAIN` so that the definitions are compiled somewhere following the one definition rule.
 
