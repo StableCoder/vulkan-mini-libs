@@ -11,8 +11,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_executable(VkValueSerialization src/value_serialization.cpp)
 target_include_directories(VkValueSerialization PRIVATE external)
 
-#add_executable(VkYamlGenerator src/yaml_generator.cpp)
-#target_include_directories(VkYamlGenerator PRIVATE external)
+# add_executable(VkYamlGenerator src/yaml_generator.cpp)
+# target_include_directories(VkYamlGenerator PRIVATE external)
 
 add_executable(VkEqualityCheck src/equality_check.cpp)
 target_include_directories(VkEqualityCheck PRIVATE external)
