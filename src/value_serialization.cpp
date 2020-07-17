@@ -239,6 +239,14 @@ int main(int argc, char **argv) {
     // Need to be in the 'registry' node
     auto enums = getEnumData(registryNode);
 
+    // Remove the 'VkResult' enum, we're not using it here
+    for (auto it = enums.begin(); it != enums.end(); ++it) {
+        if (it->name == "VkResult") {
+            enums.erase(it);
+            break;
+        }
+    }
+
     // Extensions for type platforms
     auto *extensionsNode = registryNode->first_node("extensions");
     if (extensionsNode == nullptr) {
@@ -304,7 +312,7 @@ struct EnumValueSet {
 )";
 
         for (auto const &it : enums) {
-            if (it.values.empty() || it.name == "VkResult") {
+            if (it.values.empty()) {
                 continue;
             }
 
@@ -341,9 +349,6 @@ struct EnumType {
 )";
         outFile << "\nconstexpr std::array<EnumType, " << enums.size() << "> enumTypes = {{\n";
         for (auto const &it : enums) {
-            if (it.name == "VkResult")
-                continue;
-
             outFile << "  {\"" << it.name << "\", ";
             if (it.values.empty()) {
                 outFile << "nullptr, ";
