@@ -272,7 +272,7 @@ int main(int argc, char **argv) {
 
         // Static assert checking correct/compatible header version
         outFile << "static_assert(VK_HEADER_VERSION == " << vkHeaderVersion
-                << ", \"Wrong VK_HEADER_VERSION!\");\n";
+                << ", \"Incompatible VK_HEADER_VERSION!\");\n";
 
         // Declarations
         outFile << declarationStr;

@@ -35,7 +35,7 @@
 
 #include <vulkan/vulkan.h>
 
-static_assert(VK_HEADER_VERSION == 109, "Wrong VK_HEADER_VERSION!" );
+static_assert(VK_HEADER_VERSION == 109, "Incompatible VK_HEADER_VERSION!" );
 
 bool operator==(VkBaseOutStructure const &lhs,
                 VkBaseOutStructure const &rhs) noexcept;

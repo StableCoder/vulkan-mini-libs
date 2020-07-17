@@ -35,7 +35,7 @@
 
 #include <vulkan/vulkan.h>
 
-static_assert(VK_HEADER_VERSION == 74, "Wrong VK_HEADER_VERSION!" );
+static_assert(VK_HEADER_VERSION == 74, "Incompatible VK_HEADER_VERSION!" );
 
 bool operator==(VkOffset2D const &lhs,
                 VkOffset2D const &rhs) noexcept;

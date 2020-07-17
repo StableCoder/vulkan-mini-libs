@@ -38,7 +38,7 @@
 #include <string>
 #include <string_view>
 
-static_assert(VK_HEADER_VERSION == 115, "Wrong VK_HEADER_VERSION!");
+static_assert(VK_HEADER_VERSION == 115, "Incompatible VK_HEADER_VERSION!");
 
 /**
  * @brief Macro that automatically stringifies the given Vulkan type for serialization
@@ -1331,7 +1331,7 @@ struct EnumType {
     uint32_t count;
 };
 
-constexpr std::array<EnumType, 151> enumTypes = {{
+constexpr std::array<EnumType, 150> enumTypes = {{
   {"VkImageLayout", VkImageLayoutSets, 9},
   {"VkAttachmentLoadOp", VkAttachmentLoadOpSets, 3},
   {"VkAttachmentStoreOp", VkAttachmentStoreOpSets, 2},
