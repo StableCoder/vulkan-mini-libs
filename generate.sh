@@ -46,15 +46,15 @@ fi
 cd Vulkan-Docs
 git fetch -p
 
-# Prepare the top-level headers
-cat ../scripts/equality_check_start.txt >../include/vk_equality_checks.hpp
-cat ../scripts/vulkan_string_parsing_start.txt >../include/vk_value_serialization.hpp
-cat ../scripts/error_code_start.txt >../include/vk_error_code.hpp
-
 # Prepare the 'detail' subfolders
 mkdir -p ../include/detail_value_serialization/
 mkdir -p ../include/detail_equality_checks/
 mkdir -p ../include/detail_error_code/
+
+# Prepare the top-level headers
+cat ../scripts/equality_check_start.txt >../include/vk_equality_checks.hpp
+cat ../scripts/vulkan_string_parsing_start.txt >../include/vk_value_serialization.hpp
+cat ../scripts/error_code_start.txt >../include/vk_error_code.hpp
 
 # Generate the per-version files
 for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$" | sort -t '.' -k3nr); do
