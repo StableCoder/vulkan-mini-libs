@@ -58,13 +58,13 @@ Fedora/Clang:
   image: stabletec/build-foe:fedora-clang
   <<: *platform_unix_template
 
-Debian/GCC:
-  image: stabletec/build-foe:debian-gcc
-  <<: *platform_unix_template
+#Debian/GCC:
+#  image: stabletec/build-foe:debian-gcc
+#  <<: *platform_unix_template
 
-Debian/Clang:
-  image: stabletec/build-foe:debian-clang
-  <<: *platform_unix_template
+#Debian/Clang:
+#  image: stabletec/build-foe:debian-clang
+#  <<: *platform_unix_template
 
 #Ubuntu/GCC:
 #  image: stabletec/build-foe:ubuntu-gcc
