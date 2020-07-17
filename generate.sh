@@ -47,9 +47,12 @@ cd Vulkan-Docs
 git fetch -p
 
 # Prepare the top-level headers
-mkdir -p ../include/vk_mini_libs_detail/
 cat ../scripts/equality_check_start.txt >../include/vk_equality_checks.hpp
 cat ../scripts/vulkan_string_parsing_start.txt >../include/vk_value_serialization.hpp
+
+# Prepare the 'detail' subfolders
+mkdir -p ../include/detail_value_serialization/
+mkdir -p ../include/detail_equality_checks/
 
 # Generate the per-version files
 for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$" | sort -t '.' -k3nr); do
@@ -63,20 +66,20 @@ for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$" | sort -t '.' -k3nr);
     git checkout $TAG
 
     # Generate value serialization
-    ../VkValueSerialization -i xml/vk.xml -d ../include/vk_mini_libs_detail/ -o vk_value_serialization_v$VER.hpp
+    ../VkValueSerialization -i xml/vk.xml -d ../include/detail_value_serialization/ -o vk_value_serialization_v$VER.hpp
 
     cat >>../include/vk_value_serialization.hpp <<EOL
 #if VK_HEADER_VERSION == ${VER}
-    #include "vk_mini_libs_detail/vk_value_serialization_v${VER}.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v${VER}.hpp"
 #endif
 EOL
 
     # Generate equality checks
-    ../VkEqualityCheck -i xml/vk.xml -d ../include/vk_mini_libs_detail/ -o vk_equality_checks_v$VER.hpp
+    ../VkEqualityCheck -i xml/vk.xml -d ../include/detail_equality_checks/ -o vk_equality_checks_v$VER.hpp
 
     cat >>../include/vk_equality_checks.hpp <<EOL
 #if VK_HEADER_VERSION == ${VER}
-    #include "vk_mini_libs_detail/vk_equality_checks_v${VER}.hpp"
+    #include "detail_equality_checks/vk_equality_checks_v${VER}.hpp"
 #endif
 EOL
 

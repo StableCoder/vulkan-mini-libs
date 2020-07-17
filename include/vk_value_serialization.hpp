@@ -37,232 +37,232 @@
 
 // Delegate to header specific to the local Vulkan header version
 #if VK_HEADER_VERSION == 147
-    #include "vk_mini_libs_detail/vk_value_serialization_v147.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v147.hpp"
 #endif
 #if VK_HEADER_VERSION == 146
-    #include "vk_mini_libs_detail/vk_value_serialization_v146.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v146.hpp"
 #endif
 #if VK_HEADER_VERSION == 145
-    #include "vk_mini_libs_detail/vk_value_serialization_v145.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v145.hpp"
 #endif
 #if VK_HEADER_VERSION == 144
-    #include "vk_mini_libs_detail/vk_value_serialization_v144.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v144.hpp"
 #endif
 #if VK_HEADER_VERSION == 143
-    #include "vk_mini_libs_detail/vk_value_serialization_v143.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v143.hpp"
 #endif
 #if VK_HEADER_VERSION == 142
-    #include "vk_mini_libs_detail/vk_value_serialization_v142.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v142.hpp"
 #endif
 #if VK_HEADER_VERSION == 141
-    #include "vk_mini_libs_detail/vk_value_serialization_v141.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v141.hpp"
 #endif
 #if VK_HEADER_VERSION == 140
-    #include "vk_mini_libs_detail/vk_value_serialization_v140.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v140.hpp"
 #endif
 #if VK_HEADER_VERSION == 139
-    #include "vk_mini_libs_detail/vk_value_serialization_v139.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v139.hpp"
 #endif
 #if VK_HEADER_VERSION == 138
-    #include "vk_mini_libs_detail/vk_value_serialization_v138.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v138.hpp"
 #endif
 #if VK_HEADER_VERSION == 137
-    #include "vk_mini_libs_detail/vk_value_serialization_v137.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v137.hpp"
 #endif
 #if VK_HEADER_VERSION == 136
-    #include "vk_mini_libs_detail/vk_value_serialization_v136.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v136.hpp"
 #endif
 #if VK_HEADER_VERSION == 135
-    #include "vk_mini_libs_detail/vk_value_serialization_v135.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v135.hpp"
 #endif
 #if VK_HEADER_VERSION == 134
-    #include "vk_mini_libs_detail/vk_value_serialization_v134.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v134.hpp"
 #endif
 #if VK_HEADER_VERSION == 133
-    #include "vk_mini_libs_detail/vk_value_serialization_v133.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v133.hpp"
 #endif
 #if VK_HEADER_VERSION == 132
-    #include "vk_mini_libs_detail/vk_value_serialization_v132.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v132.hpp"
 #endif
 #if VK_HEADER_VERSION == 131
-    #include "vk_mini_libs_detail/vk_value_serialization_v131.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v131.hpp"
 #endif
 #if VK_HEADER_VERSION == 130
-    #include "vk_mini_libs_detail/vk_value_serialization_v130.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v130.hpp"
 #endif
 #if VK_HEADER_VERSION == 129
-    #include "vk_mini_libs_detail/vk_value_serialization_v129.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v129.hpp"
 #endif
 #if VK_HEADER_VERSION == 128
-    #include "vk_mini_libs_detail/vk_value_serialization_v128.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v128.hpp"
 #endif
 #if VK_HEADER_VERSION == 127
-    #include "vk_mini_libs_detail/vk_value_serialization_v127.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v127.hpp"
 #endif
 #if VK_HEADER_VERSION == 126
-    #include "vk_mini_libs_detail/vk_value_serialization_v126.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v126.hpp"
 #endif
 #if VK_HEADER_VERSION == 125
-    #include "vk_mini_libs_detail/vk_value_serialization_v125.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v125.hpp"
 #endif
 #if VK_HEADER_VERSION == 124
-    #include "vk_mini_libs_detail/vk_value_serialization_v124.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v124.hpp"
 #endif
 #if VK_HEADER_VERSION == 123
-    #include "vk_mini_libs_detail/vk_value_serialization_v123.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v123.hpp"
 #endif
 #if VK_HEADER_VERSION == 122
-    #include "vk_mini_libs_detail/vk_value_serialization_v122.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v122.hpp"
 #endif
 #if VK_HEADER_VERSION == 121
-    #include "vk_mini_libs_detail/vk_value_serialization_v121.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v121.hpp"
 #endif
 #if VK_HEADER_VERSION == 120
-    #include "vk_mini_libs_detail/vk_value_serialization_v120.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v120.hpp"
 #endif
 #if VK_HEADER_VERSION == 119
-    #include "vk_mini_libs_detail/vk_value_serialization_v119.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v119.hpp"
 #endif
 #if VK_HEADER_VERSION == 118
-    #include "vk_mini_libs_detail/vk_value_serialization_v118.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v118.hpp"
 #endif
 #if VK_HEADER_VERSION == 117
-    #include "vk_mini_libs_detail/vk_value_serialization_v117.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v117.hpp"
 #endif
 #if VK_HEADER_VERSION == 116
-    #include "vk_mini_libs_detail/vk_value_serialization_v116.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v116.hpp"
 #endif
 #if VK_HEADER_VERSION == 115
-    #include "vk_mini_libs_detail/vk_value_serialization_v115.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v115.hpp"
 #endif
 #if VK_HEADER_VERSION == 114
-    #include "vk_mini_libs_detail/vk_value_serialization_v114.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v114.hpp"
 #endif
 #if VK_HEADER_VERSION == 113
-    #include "vk_mini_libs_detail/vk_value_serialization_v113.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v113.hpp"
 #endif
 #if VK_HEADER_VERSION == 112
-    #include "vk_mini_libs_detail/vk_value_serialization_v112.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v112.hpp"
 #endif
 #if VK_HEADER_VERSION == 111
-    #include "vk_mini_libs_detail/vk_value_serialization_v111.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v111.hpp"
 #endif
 #if VK_HEADER_VERSION == 110
-    #include "vk_mini_libs_detail/vk_value_serialization_v110.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v110.hpp"
 #endif
 #if VK_HEADER_VERSION == 109
-    #include "vk_mini_libs_detail/vk_value_serialization_v109.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v109.hpp"
 #endif
 #if VK_HEADER_VERSION == 108
-    #include "vk_mini_libs_detail/vk_value_serialization_v108.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v108.hpp"
 #endif
 #if VK_HEADER_VERSION == 107
-    #include "vk_mini_libs_detail/vk_value_serialization_v107.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v107.hpp"
 #endif
 #if VK_HEADER_VERSION == 106
-    #include "vk_mini_libs_detail/vk_value_serialization_v106.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v106.hpp"
 #endif
 #if VK_HEADER_VERSION == 105
-    #include "vk_mini_libs_detail/vk_value_serialization_v105.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v105.hpp"
 #endif
 #if VK_HEADER_VERSION == 104
-    #include "vk_mini_libs_detail/vk_value_serialization_v104.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v104.hpp"
 #endif
 #if VK_HEADER_VERSION == 103
-    #include "vk_mini_libs_detail/vk_value_serialization_v103.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v103.hpp"
 #endif
 #if VK_HEADER_VERSION == 102
-    #include "vk_mini_libs_detail/vk_value_serialization_v102.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v102.hpp"
 #endif
 #if VK_HEADER_VERSION == 101
-    #include "vk_mini_libs_detail/vk_value_serialization_v101.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v101.hpp"
 #endif
 #if VK_HEADER_VERSION == 100
-    #include "vk_mini_libs_detail/vk_value_serialization_v100.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v100.hpp"
 #endif
 #if VK_HEADER_VERSION == 99
-    #include "vk_mini_libs_detail/vk_value_serialization_v99.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v99.hpp"
 #endif
 #if VK_HEADER_VERSION == 98
-    #include "vk_mini_libs_detail/vk_value_serialization_v98.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v98.hpp"
 #endif
 #if VK_HEADER_VERSION == 97
-    #include "vk_mini_libs_detail/vk_value_serialization_v97.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v97.hpp"
 #endif
 #if VK_HEADER_VERSION == 96
-    #include "vk_mini_libs_detail/vk_value_serialization_v96.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v96.hpp"
 #endif
 #if VK_HEADER_VERSION == 95
-    #include "vk_mini_libs_detail/vk_value_serialization_v95.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v95.hpp"
 #endif
 #if VK_HEADER_VERSION == 94
-    #include "vk_mini_libs_detail/vk_value_serialization_v94.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v94.hpp"
 #endif
 #if VK_HEADER_VERSION == 93
-    #include "vk_mini_libs_detail/vk_value_serialization_v93.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v93.hpp"
 #endif
 #if VK_HEADER_VERSION == 92
-    #include "vk_mini_libs_detail/vk_value_serialization_v92.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v92.hpp"
 #endif
 #if VK_HEADER_VERSION == 91
-    #include "vk_mini_libs_detail/vk_value_serialization_v91.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v91.hpp"
 #endif
 #if VK_HEADER_VERSION == 90
-    #include "vk_mini_libs_detail/vk_value_serialization_v90.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v90.hpp"
 #endif
 #if VK_HEADER_VERSION == 89
-    #include "vk_mini_libs_detail/vk_value_serialization_v89.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v89.hpp"
 #endif
 #if VK_HEADER_VERSION == 88
-    #include "vk_mini_libs_detail/vk_value_serialization_v88.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v88.hpp"
 #endif
 #if VK_HEADER_VERSION == 87
-    #include "vk_mini_libs_detail/vk_value_serialization_v87.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v87.hpp"
 #endif
 #if VK_HEADER_VERSION == 86
-    #include "vk_mini_libs_detail/vk_value_serialization_v86.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v86.hpp"
 #endif
 #if VK_HEADER_VERSION == 85
-    #include "vk_mini_libs_detail/vk_value_serialization_v85.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v85.hpp"
 #endif
 #if VK_HEADER_VERSION == 84
-    #include "vk_mini_libs_detail/vk_value_serialization_v84.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v84.hpp"
 #endif
 #if VK_HEADER_VERSION == 83
-    #include "vk_mini_libs_detail/vk_value_serialization_v83.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v83.hpp"
 #endif
 #if VK_HEADER_VERSION == 82
-    #include "vk_mini_libs_detail/vk_value_serialization_v82.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v82.hpp"
 #endif
 #if VK_HEADER_VERSION == 81
-    #include "vk_mini_libs_detail/vk_value_serialization_v81.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v81.hpp"
 #endif
 #if VK_HEADER_VERSION == 80
-    #include "vk_mini_libs_detail/vk_value_serialization_v80.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v80.hpp"
 #endif
 #if VK_HEADER_VERSION == 79
-    #include "vk_mini_libs_detail/vk_value_serialization_v79.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v79.hpp"
 #endif
 #if VK_HEADER_VERSION == 78
-    #include "vk_mini_libs_detail/vk_value_serialization_v78.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v78.hpp"
 #endif
 #if VK_HEADER_VERSION == 77
-    #include "vk_mini_libs_detail/vk_value_serialization_v77.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v77.hpp"
 #endif
 #if VK_HEADER_VERSION == 76
-    #include "vk_mini_libs_detail/vk_value_serialization_v76.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v76.hpp"
 #endif
 #if VK_HEADER_VERSION == 75
-    #include "vk_mini_libs_detail/vk_value_serialization_v75.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v75.hpp"
 #endif
 #if VK_HEADER_VERSION == 74
-    #include "vk_mini_libs_detail/vk_value_serialization_v74.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v74.hpp"
 #endif
 #if VK_HEADER_VERSION == 73
-    #include "vk_mini_libs_detail/vk_value_serialization_v73.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v73.hpp"
 #endif
 #if VK_HEADER_VERSION == 72
-    #include "vk_mini_libs_detail/vk_value_serialization_v72.hpp"
+    #include "detail_value_serialization/vk_value_serialization_v72.hpp"
 #endif
 
 #endif // VK_VALUE_SERIALIZATION_HPP
