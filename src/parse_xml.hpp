@@ -276,8 +276,7 @@ std::vector<EnumData> getEnumData(rapidxml::xml_node<> const *registryNode) {
         auto *nameAttr = enumsNode->first_attribute("name");
         EnumData newEnum;
 
-        if (nameAttr == nullptr || strcmp("API Constants", nameAttr->value()) == 0 ||
-            strcmp("VkResult", nameAttr->value()) == 0)
+        if (nameAttr == nullptr || strcmp("API Constants", nameAttr->value()) == 0)
             continue;
 
         newEnum.name = nameAttr->value();

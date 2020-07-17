@@ -304,7 +304,7 @@ struct EnumValueSet {
 )";
 
         for (auto const &it : enums) {
-            if (it.values.empty()) {
+            if (it.values.empty() || it.name == "VkResult") {
                 continue;
             }
 
@@ -341,6 +341,9 @@ struct EnumType {
 )";
         outFile << "\nconstexpr std::array<EnumType, " << enums.size() << "> enumTypes = {{\n";
         for (auto const &it : enums) {
+            if (it.name == "VkResult")
+                continue;
+
             outFile << "  {\"" << it.name << "\", ";
             if (it.values.empty()) {
                 outFile << "nullptr, ";
