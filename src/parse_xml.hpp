@@ -379,3 +379,49 @@ void getEnumPlatforms(std::vector<EnumData> &enums, rapidxml::xml_node<> *extens
             break;
     }
 }
+
+void getEnumExtensions(std::vector<EnumData> &enums, rapidxml::xml_node<> *extensionsNode) {
+    for (auto *extension = extensionsNode->first_node("extension"); extension != nullptr;
+         extension = extension->next_sibling()) {
+
+        for (auto *requireNode = extension->first_node("require"); requireNode != nullptr;
+             requireNode = requireNode->next_sibling()) {
+
+            for (auto *enumNode = requireNode->first_node("enum"); enumNode != nullptr;
+                 enumNode = enumNode->next_sibling()) {
+                if (enumNode->first_attribute("extends") == nullptr)
+                    continue;
+
+                std::string_view extends = enumNode->first_attribute("extends")->value();
+
+                // Search through enums until we possible find the one we're extending, then add the
+                // value to it
+                for (auto &it : enums) {
+                    if (it.name == extends) {
+                        EnumMember temp;
+                        // Try the alias (vendor tag removed)
+                        if (enumNode->first_attribute("alias") != nullptr) {
+                            temp.name = enumNode->first_attribute("alias")->value();
+                        } else {
+                            temp.name = enumNode->first_attribute("name")->value();
+                        }
+
+                        // Check against duplicates
+                        for (auto &enumIt : it.values) {
+                            if (enumIt.name == temp.name)
+                                goto SKIP_ENUM;
+                        }
+
+                        // Add the mmeber, break out
+                        it.values.push_back(temp);
+                    SKIP_ENUM:
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (extension == extensionsNode->last_node("extension"))
+            break;
+    }
+}

@@ -8,6 +8,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+add_executable(VkErrorCode src/error_code.cpp)
+target_include_directories(VkErrorCode PRIVATE external)
+
 add_executable(VkValueSerialization src/value_serialization.cpp)
 target_include_directories(VkValueSerialization PRIVATE external)
 

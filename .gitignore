@@ -5,4 +5,5 @@ build/
 compile_commands.json
 vk.xml
 VkEqualityCheck
+VkErrorCode
 VkValueSerialization
