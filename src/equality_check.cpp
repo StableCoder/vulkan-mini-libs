@@ -57,7 +57,6 @@ struct Member {
 
 int main(int argc, char **argv) {
     std::string inputFile;
-    std::string whiteListFile;
     std::string outputDir;
     std::string outputFile = "vk_equality_checks.hpp";
 
@@ -68,10 +67,6 @@ int main(int argc, char **argv) {
         } else if (strcmp(argv[i], "-i") == 0 || strcmp(argv[i], "--input") == 0) {
             if (i + 1 <= argc) {
                 inputFile = argv[i + 1];
-            }
-        } else if (strcmp(argv[i], "-w") == 0 || strcmp(argv[i], "--whitelist") == 0) {
-            if (i + 1 <= argc) {
-                whiteListFile = argv[i + 1];
             }
         } else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--dir") == 0) {
             if (i + 1 <= argc) {
