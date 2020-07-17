@@ -125,8 +125,6 @@ std::string VulkanErrCategory::message(int ev) const {
         return "VK_ERROR_INVALID_DEVICE_ADDRESS_EXT";
     case VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT:
         return "VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT";
-    case VK_RESULT_EXT_298_RESERVED_VALUE_0_EXT:
-        return "VK_RESULT_EXT_298_RESERVED_VALUE_0_EXT";
 
     default:
         if (ev > 0)

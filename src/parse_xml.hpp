@@ -345,13 +345,16 @@ std::vector<EnumData> getEnumData(rapidxml::xml_node<> const *registryNode) {
 void getEnumPlatforms(std::vector<EnumData> &enums, rapidxml::xml_node<> *extensionsNode) {
     for (auto *extension = extensionsNode->first_node("extension"); extension != nullptr;
          extension = extension->next_sibling()) {
+        std::string_view supported = extension->first_attribute("supported")->value();
         std::string_view platform;
-
-        // Check for platform=
+        // Check for platform
         auto *platformNode = extension->first_attribute("platform");
         if (platformNode == nullptr)
-            goto END_OF_EXTENSION;
+            goto END_OF_PLATFORM_EXTENSION;
         platform = platformNode->value();
+
+        if (supported == "disabled")
+            goto END_OF_PLATFORM_EXTENSION;
 
         for (auto *require = extension->first_node("require"); require != nullptr;
              require = require->next_sibling()) {
@@ -374,7 +377,7 @@ void getEnumPlatforms(std::vector<EnumData> &enums, rapidxml::xml_node<> *extens
                 break;
         }
 
-    END_OF_EXTENSION:
+    END_OF_PLATFORM_EXTENSION:
         if (extension == extensionsNode->last_node("extension"))
             break;
     }
@@ -383,6 +386,9 @@ void getEnumPlatforms(std::vector<EnumData> &enums, rapidxml::xml_node<> *extens
 void getEnumExtensions(std::vector<EnumData> &enums, rapidxml::xml_node<> *extensionsNode) {
     for (auto *extension = extensionsNode->first_node("extension"); extension != nullptr;
          extension = extension->next_sibling()) {
+        std::string_view supported = extension->first_attribute("supported")->value();
+        if (supported == "disabled")
+            goto END_OF_ENUM_EXTENSION;
 
         for (auto *requireNode = extension->first_node("require"); requireNode != nullptr;
              requireNode = requireNode->next_sibling()) {
@@ -394,8 +400,8 @@ void getEnumExtensions(std::vector<EnumData> &enums, rapidxml::xml_node<> *exten
 
                 std::string_view extends = enumNode->first_attribute("extends")->value();
 
-                // Search through enums until we possible find the one we're extending, then add the
-                // value to it
+                // Search through enums until we possible find the one we're extending, then add
+                // the value to it
                 for (auto &it : enums) {
                     if (it.name == extends) {
                         EnumMember temp;
@@ -421,6 +427,7 @@ void getEnumExtensions(std::vector<EnumData> &enums, rapidxml::xml_node<> *exten
             }
         }
 
+    END_OF_ENUM_EXTENSION:
         if (extension == extensionsNode->last_node("extension"))
             break;
     }
