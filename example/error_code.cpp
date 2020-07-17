@@ -14,16 +14,16 @@
     limitations under the License.
 */
 
-#include <vulkan/vulkan.h>
+#include <cassert>
+#include <iostream>
 
-// The define adds the definitions to this unit to be compiled.
-#define VK_VALUE_SERIALIZATION_CONFIG_MAIN
-#include "vk_value_serialization.hpp"
-
-// The define adds the definitions to this unit to be compiled.
-#define VK_EQUALITY_CHECK_CONFIG_MAIN
-#include "vk_equality_checks.hpp"
-
-// The define adds the definitions to this unit to be compiled.
 #define VK_ERROR_CODE_CONFIG_MAIN
-#include "vk_equality_checks.hpp"
+#include "vk_error_code.hpp"
+
+int main(int argc, char **argv) {
+    std::error_code ec = VK_ERROR_DEVICE_LOST;
+    assert(ec);
+    assert(ec == VK_ERROR_DEVICE_LOST);
+    assert(ec != VK_SUCCESS);
+    std::cout << ec << std::endl;
+}
