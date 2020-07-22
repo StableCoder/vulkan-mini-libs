@@ -58,29 +58,13 @@ Fedora/Clang:
   image: stabletec/build-foe:fedora-clang
   <<: *platform_unix_template
 
-#Debian/GCC:
-#  image: stabletec/build-foe:debian-gcc
-#  <<: *platform_unix_template
+Ubuntu/GCC:
+  image: stabletec/build-foe:ubuntu-gcc
+  <<: *platform_unix_template
 
-#Debian/Clang:
-#  image: stabletec/build-foe:debian-clang
-#  <<: *platform_unix_template
-
-#Ubuntu/GCC:
-#  image: stabletec/build-foe:ubuntu-gcc
-#  <<: *platform_unix_template
-
-#Ubuntu/Clang:
-#  image: stabletec/build-foe:ubuntu-clang
-#  <<: *platform_unix_template
-
-#openSUSE/GCC:
-#  image: stabletec/build-foe:opensuse-gcc
-#  <<: *platform_unix_template
-
-#openSUSE/Clang:
-#  image: stabletec/build-foe:opensuse-clang
-#  <<: *platform_unix_template
+Ubuntu/Clang:
+  image: stabletec/build-foe:ubuntu-clang
+  <<: *platform_unix_template
 
 Windows/MSVC:
   variables:
@@ -92,13 +76,13 @@ Windows/Clang-cl:
     IMAGE: stabletec/build-foe:windows-clang-cl
   <<: *platform_windows_template
 
-macOS/GCC:
+.macOS/GCC:
   variables:
     CC: gcc
     CXX: g++
   <<: *platform_macos_template
 
-macOS/Clang:
+.macOS/Clang:
   variables:
     CC: clang
     CXX: clang++
