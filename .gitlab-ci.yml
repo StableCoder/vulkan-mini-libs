@@ -22,22 +22,15 @@ variables:
 
 .platform_windows_template: &platform_windows_template
   stage: Platform Tests
+  image: stabletec/build-foe:windows
   tags:
     - docker-windows
+    - amd64
   script:
-    - echo 'try {'  | out-file -encoding utf8 build.ps1
-    - echo 'cd ..; mkdir workdir-cpy' | out-file -encoding utf8 -append build.ps1
-    - echo 'Copy-Item C:\workdir\* -Destination C:\workdir-cpy -Recurse' | out-file -encoding utf8 -append build.ps1
-    - echo 'cd workdir-cpy' | out-file -encoding utf8 -append build.ps1
-    - echo 'mkdir build; cd build' | out-file -encoding utf8 -append build.ps1
-    - echo "cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -DBUILD_TESTS=ON" | out-file -encoding utf8 -append build.ps1
-    - echo 'if(-not $?){throw}' | out-file -encoding utf8 -append build.ps1
-    - echo 'ninja' | out-file -encoding utf8 -append build.ps1
-    - echo 'if(-not $?){throw}' | out-file -encoding utf8 -append build.ps1
-    - echo 'ctest' | out-file -encoding utf8 -append build.ps1
-    - echo 'if(-not $?){throw}' | out-file -encoding utf8 -append build.ps1
-    - echo '} catch { exit 1 }' | out-file -encoding utf8 -append build.ps1
-    - docker run --rm -v ${pwd}:C:\workdir $env:IMAGE C:\workdir\build.ps1
+    - mkdir build; cd build
+    - cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -DBUILD_TESTS=ON
+    - ninja
+    - ninja test
 
 .platform_macos_template: &platform_macos_template
   stage: Platform Tests
@@ -80,13 +73,12 @@ Ubuntu/Clang:
   <<: *platform_unix_template
 
 Windows/MSVC:
-  variables:
-    IMAGE: stabletec/build-foe:windows-msvc
   <<: *platform_windows_template
 
 Windows/Clang-cl:
   variables:
-    IMAGE: stabletec/build-foe:windows-clang-cl
+    CC: clang-cl
+    CXX: clang-cl
   <<: *platform_windows_template
 
 macOS/Clang (amd64):
