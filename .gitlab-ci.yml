@@ -43,6 +43,7 @@ variables:
   stage: Platform Tests
   tags:
     - macos
+    - amd64
   dependencies: []
   script:
     - mkdir build && cd build
@@ -76,13 +77,7 @@ Windows/Clang-cl:
     IMAGE: stabletec/build-foe:windows-clang-cl
   <<: *platform_windows_template
 
-.macOS/GCC:
-  variables:
-    CC: gcc
-    CXX: g++
-  <<: *platform_macos_template
-
-.macOS/Clang:
+macOS (amd64):
   variables:
     CC: clang
     CXX: clang++
