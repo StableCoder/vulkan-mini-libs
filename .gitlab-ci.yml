@@ -52,19 +52,31 @@ variables:
     - ctest
 
 Fedora/GCC:
-  image: stabletec/build-foe:fedora-gcc
+  image: stabletec/build-foe:fedora
+  variables:
+    CC: gcc
+    CXX: g++
   <<: *platform_unix_template
 
 Fedora/Clang:
-  image: stabletec/build-foe:fedora-clang
+  image: stabletec/build-foe:fedora
+  variables:
+    CC: clang
+    CXX: clang++
   <<: *platform_unix_template
 
 Ubuntu/GCC:
-  image: stabletec/build-foe:ubuntu-gcc
+  image: stabletec/build-foe:ubuntu
+  variables:
+    CC: gcc
+    CXX: g++
   <<: *platform_unix_template
 
 Ubuntu/Clang:
-  image: stabletec/build-foe:ubuntu-clang
+  image: stabletec/build-foe:ubuntu
+  variables:
+    CC: clang
+    CXX: clang++
   <<: *platform_unix_template
 
 Windows/MSVC:
@@ -77,7 +89,7 @@ Windows/Clang-cl:
     IMAGE: stabletec/build-foe:windows-clang-cl
   <<: *platform_windows_template
 
-macOS (amd64):
+macOS/Clang (amd64):
   variables:
     CC: clang
     CXX: clang++
@@ -86,10 +98,13 @@ macOS (amd64):
 # Analysis
 Code Coverage:
   stage: Analysis
-  image: stabletec/build-foe:fedora-clang
+  image: stabletec/build-foe:fedora
   tags:
     - docker-linux
   dependencies: []
+  variables:
+    CC: clang
+    CXX: clang++
   script:
     - mkdir build && cd build
     - cmake .. -GNinja -DCMAKE_BUILD_TYPE=Release -DCODE_COVERAGE=ON -DBUILD_TESTS=ON
