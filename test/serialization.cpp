@@ -76,11 +76,22 @@ TEST_CASE("Serialize: Bitmask") {
         CHECK(retVal == "BACK");
     }
 
-    SECTION("Failure when given a zero-value") {
-        CHECK_FALSE(vk_serialize("VkShaderModuleCreateFlagBits", 0, &retVal));
-        CHECK(retVal == cDummyStr);
+    SECTION("Successfully returns an empty string when the given type has no actual flags") {
+        CHECK(vk_serialize("VkShaderModuleCreateFlagBits", 0, &retVal));
+        CHECK(retVal == "");
 
-        CHECK_FALSE(vk_serialize("VkShaderModuleCreateFlagBitsVIV", 0, &retVal));
+        CHECK(vk_serialize("VkShaderModuleCreateFlagBitsVIV", 0, &retVal));
+        CHECK(retVal == "");
+    }
+
+    SECTION("Successfully returns an when the bitflag has a zero-value enum") {
+        CHECK(vk_serialize("VkCullModeFlagBits", 0, &retVal));
+        CHECK(retVal == "NONE");
+    }
+
+    SECTION("Fails to serialize when given a zero-value to a type that has enums but NOT a zero "
+            "value") {
+        CHECK_FALSE(vk_serialize("VkShaderStageFlagBits", 0, &retVal));
         CHECK(retVal == cDummyStr);
     }
 
