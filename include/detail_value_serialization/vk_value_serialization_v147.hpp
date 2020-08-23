@@ -1754,17 +1754,21 @@ std::string formatString(std::string str) {
 }
 
 bool serializeBitmask(std::string_view vkType, uint32_t vkValue, std::string *pString) {
-    if(vkValue == 0){
-        // No bitmask value has a serializable value for 0.
-        return false;
-    }
-
     auto [end, start] = getEnumType(vkType);
     --end;
     --start;
 
+    if(start == end) {
+        // If this is a non-existing bitmask, then return an empty string
+        *pString = {};
+        return true;
+    }
+
     std::string retStr;
-    while (start != end && vkValue != 0) {
+    while (start != end) {
+        if(vkValue == 0 && !retStr.empty()) {
+            break;
+        }
         if ((start->value & vkValue) == start->value) {
             // Found a compatible bit mask, add it
             if (!retStr.empty()) {
@@ -1777,7 +1781,7 @@ bool serializeBitmask(std::string_view vkType, uint32_t vkValue, std::string *pS
         --start;
     }
 
-    if (vkValue != 0) {
+    if (vkValue != 0 || retStr.empty()) {
         // Failed to find a valid bitmask for the value
         return false;
     }
