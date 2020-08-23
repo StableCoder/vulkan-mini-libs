@@ -36,6 +36,9 @@
 #include <vulkan/vulkan.h>
 
 // Delegate to header specific to the local Vulkan header version
+#if VK_HEADER_VERSION == 151
+    #include "detail_value_serialization/vk_value_serialization_v151.hpp"
+#endif
 #if VK_HEADER_VERSION == 150
     #include "detail_value_serialization/vk_value_serialization_v150.hpp"
 #endif
