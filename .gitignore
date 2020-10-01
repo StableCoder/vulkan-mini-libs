@@ -2,6 +2,7 @@
 .vscode/
 auto-gen/
 build/
+Vulkan-Docs/
 compile_commands.json
 vk.xml
 VkEqualityCheck
