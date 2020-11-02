@@ -64,6 +64,7 @@ function(prepare_catch)
           git_catch
           PREFIX ${CMAKE_BINARY_DIR}/catch2
           GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+          GIT_TAG v2.x
           GIT_SHALLOW 1
           TIMEOUT 10
           UPDATE_COMMAND ${GIT_EXECUTABLE} pull

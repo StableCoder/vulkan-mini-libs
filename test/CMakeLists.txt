@@ -1,5 +1,5 @@
 include(prepare_catch.cmake)
-include(code_coverage.cmake)
+include(code-coverage.cmake)
 
 prepare_catch(COMPILED_CATCH)
 
