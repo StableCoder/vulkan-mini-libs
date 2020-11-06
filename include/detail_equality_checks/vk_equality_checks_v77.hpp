@@ -117,16 +117,6 @@ bool operator==(VkDeviceQueueCreateInfo const &lhs,
 bool operator!=(VkDeviceQueueCreateInfo const &lhs,
                 VkDeviceQueueCreateInfo const &rhs) noexcept;
 
-bool operator==(VkDeviceCreateInfo const &lhs,
-                VkDeviceCreateInfo const &rhs) noexcept;
-bool operator!=(VkDeviceCreateInfo const &lhs,
-                VkDeviceCreateInfo const &rhs) noexcept;
-
-bool operator==(VkInstanceCreateInfo const &lhs,
-                VkInstanceCreateInfo const &rhs) noexcept;
-bool operator!=(VkInstanceCreateInfo const &lhs,
-                VkInstanceCreateInfo const &rhs) noexcept;
-
 bool operator==(VkQueueFamilyProperties const &lhs,
                 VkQueueFamilyProperties const &rhs) noexcept;
 bool operator!=(VkQueueFamilyProperties const &lhs,
@@ -1863,10 +1853,12 @@ bool operator==(VkPhysicalDeviceProperties const &lhs,
     if(lhs.deviceName[i] != rhs.deviceName[i])
       return false;
   }
+
   for(int i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.pipelineCacheUUID[i] != rhs.pipelineCacheUUID[i])
       return false;
   }
+
   return (lhs.apiVersion == rhs.apiVersion) &&
          (lhs.driverVersion == rhs.driverVersion) &&
          (lhs.vendorID == rhs.vendorID) &&
@@ -1887,6 +1879,7 @@ bool operator==(VkExtensionProperties const &lhs,
     if(lhs.extensionName[i] != rhs.extensionName[i])
       return false;
   }
+
   return (lhs.specVersion == rhs.specVersion);
 }
 
@@ -1901,10 +1894,12 @@ bool operator==(VkLayerProperties const &lhs,
     if(lhs.layerName[i] != rhs.layerName[i])
       return false;
   }
+
   for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.description[i] != rhs.description[i])
       return false;
   }
+
   return (lhs.specVersion == rhs.specVersion) &&
          (lhs.implementationVersion == rhs.implementationVersion);
 }
@@ -1916,10 +1911,14 @@ bool operator!=(VkLayerProperties const &lhs,
 
 bool operator==(VkApplicationInfo const &lhs,
                 VkApplicationInfo const &rhs) noexcept {
+  if(strcmp(lhs.pApplicationName, rhs.pApplicationName) != 0)
+    return false;
+
+  if(strcmp(lhs.pEngineName, rhs.pEngineName) != 0)
+    return false;
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.pApplicationName == rhs.pApplicationName) &&
          (lhs.applicationVersion == rhs.applicationVersion) &&
-         (lhs.pEngineName == rhs.pEngineName) &&
          (lhs.engineVersion == rhs.engineVersion) &&
          (lhs.apiVersion == rhs.apiVersion);
 }
@@ -1946,49 +1945,21 @@ bool operator!=(VkAllocationCallbacks const &lhs,
 
 bool operator==(VkDeviceQueueCreateInfo const &lhs,
                 VkDeviceQueueCreateInfo const &rhs) noexcept {
+  if(lhs.queueCount != rhs.queueCount)
+    return false;
+
+  for(int i = 0; i < lhs.queueCount; ++i) {
+    if(lhs.pQueuePriorities[i] != rhs.pQueuePriorities[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
-         (lhs.queueFamilyIndex == rhs.queueFamilyIndex) &&
-         (lhs.queueCount == rhs.queueCount) &&
-         (lhs.pQueuePriorities == rhs.pQueuePriorities);
+         (lhs.queueFamilyIndex == rhs.queueFamilyIndex);
 }
 
 bool operator!=(VkDeviceQueueCreateInfo const &lhs,
                 VkDeviceQueueCreateInfo const &rhs) noexcept {
-  return !(lhs == rhs);
-}
-
-bool operator==(VkDeviceCreateInfo const &lhs,
-                VkDeviceCreateInfo const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.queueCreateInfoCount == rhs.queueCreateInfoCount) &&
-         (lhs.pQueueCreateInfos == rhs.pQueueCreateInfos) &&
-         (lhs.enabledLayerCount == rhs.enabledLayerCount) &&
-         (lhs.ppEnabledLayerNames == rhs.ppEnabledLayerNames) &&
-         (lhs.enabledExtensionCount == rhs.enabledExtensionCount) &&
-         (lhs.ppEnabledExtensionNames == rhs.ppEnabledExtensionNames) &&
-         (lhs.pEnabledFeatures == rhs.pEnabledFeatures);
-}
-
-bool operator!=(VkDeviceCreateInfo const &lhs,
-                VkDeviceCreateInfo const &rhs) noexcept {
-  return !(lhs == rhs);
-}
-
-bool operator==(VkInstanceCreateInfo const &lhs,
-                VkInstanceCreateInfo const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.pApplicationInfo == rhs.pApplicationInfo) &&
-         (lhs.enabledLayerCount == rhs.enabledLayerCount) &&
-         (lhs.ppEnabledLayerNames == rhs.ppEnabledLayerNames) &&
-         (lhs.enabledExtensionCount == rhs.enabledExtensionCount) &&
-         (lhs.ppEnabledExtensionNames == rhs.ppEnabledExtensionNames);
-}
-
-bool operator!=(VkInstanceCreateInfo const &lhs,
-                VkInstanceCreateInfo const &rhs) noexcept {
   return !(lhs == rhs);
 }
 
@@ -2011,10 +1982,12 @@ bool operator==(VkPhysicalDeviceMemoryProperties const &lhs,
     if(lhs.memoryTypes[i] != rhs.memoryTypes[i])
       return false;
   }
+
   for(int i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
     if(lhs.memoryHeaps[i] != rhs.memoryHeaps[i])
       return false;
   }
+
   return (lhs.memoryTypeCount == rhs.memoryTypeCount) &&
          (lhs.memoryHeapCount == rhs.memoryHeapCount);
 }
@@ -2161,15 +2134,35 @@ bool operator!=(VkDescriptorImageInfo const &lhs,
 
 bool operator==(VkWriteDescriptorSet const &lhs,
                 VkWriteDescriptorSet const &rhs) noexcept {
+  if(lhs.descriptorCount != rhs.descriptorCount)
+    return false;
+
+  if(lhs.descriptorCount != rhs.descriptorCount)
+    return false;
+
+  if(lhs.descriptorCount != rhs.descriptorCount)
+    return false;
+
+  for(int i = 0; i < lhs.descriptorCount; ++i) {
+    if(lhs.pImageInfo[i] != rhs.pImageInfo[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.descriptorCount; ++i) {
+    if(lhs.pBufferInfo[i] != rhs.pBufferInfo[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.descriptorCount; ++i) {
+    if(lhs.pTexelBufferView[i] != rhs.pTexelBufferView[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.dstSet == rhs.dstSet) &&
          (lhs.dstBinding == rhs.dstBinding) &&
          (lhs.dstArrayElement == rhs.dstArrayElement) &&
-         (lhs.descriptorCount == rhs.descriptorCount) &&
-         (lhs.descriptorType == rhs.descriptorType) &&
-         (lhs.pImageInfo == rhs.pImageInfo) &&
-         (lhs.pBufferInfo == rhs.pBufferInfo) &&
-         (lhs.pTexelBufferView == rhs.pTexelBufferView);
+         (lhs.descriptorType == rhs.descriptorType);
 }
 
 bool operator!=(VkWriteDescriptorSet const &lhs,
@@ -2196,13 +2189,19 @@ bool operator!=(VkCopyDescriptorSet const &lhs,
 
 bool operator==(VkBufferCreateInfo const &lhs,
                 VkBufferCreateInfo const &rhs) noexcept {
+  if(lhs.queueFamilyIndexCount != rhs.queueFamilyIndexCount)
+    return false;
+
+  for(int i = 0; i < lhs.queueFamilyIndexCount; ++i) {
+    if(lhs.pQueueFamilyIndices[i] != rhs.pQueueFamilyIndices[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
          (lhs.size == rhs.size) &&
          (lhs.usage == rhs.usage) &&
-         (lhs.sharingMode == rhs.sharingMode) &&
-         (lhs.queueFamilyIndexCount == rhs.queueFamilyIndexCount) &&
-         (lhs.pQueueFamilyIndices == rhs.pQueueFamilyIndices);
+         (lhs.sharingMode == rhs.sharingMode);
 }
 
 bool operator!=(VkBufferCreateInfo const &lhs,
@@ -2313,6 +2312,14 @@ bool operator!=(VkImageMemoryBarrier const &lhs,
 
 bool operator==(VkImageCreateInfo const &lhs,
                 VkImageCreateInfo const &rhs) noexcept {
+  if(lhs.queueFamilyIndexCount != rhs.queueFamilyIndexCount)
+    return false;
+
+  for(int i = 0; i < lhs.queueFamilyIndexCount; ++i) {
+    if(lhs.pQueueFamilyIndices[i] != rhs.pQueueFamilyIndices[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
          (lhs.imageType == rhs.imageType) &&
@@ -2324,8 +2331,6 @@ bool operator==(VkImageCreateInfo const &lhs,
          (lhs.tiling == rhs.tiling) &&
          (lhs.usage == rhs.usage) &&
          (lhs.sharingMode == rhs.sharingMode) &&
-         (lhs.queueFamilyIndexCount == rhs.queueFamilyIndexCount) &&
-         (lhs.pQueueFamilyIndices == rhs.pQueueFamilyIndices) &&
          (lhs.initialLayout == rhs.initialLayout);
 }
 
@@ -2407,9 +2412,15 @@ bool operator!=(VkSparseImageMemoryBind const &lhs,
 
 bool operator==(VkSparseBufferMemoryBindInfo const &lhs,
                 VkSparseBufferMemoryBindInfo const &rhs) noexcept {
-  return (lhs.buffer == rhs.buffer) &&
-         (lhs.bindCount == rhs.bindCount) &&
-         (lhs.pBinds == rhs.pBinds);
+  if(lhs.bindCount != rhs.bindCount)
+    return false;
+
+  for(int i = 0; i < lhs.bindCount; ++i) {
+    if(lhs.pBinds[i] != rhs.pBinds[i])
+      return false;
+  }
+
+  return (lhs.buffer == rhs.buffer);
 }
 
 bool operator!=(VkSparseBufferMemoryBindInfo const &lhs,
@@ -2419,9 +2430,15 @@ bool operator!=(VkSparseBufferMemoryBindInfo const &lhs,
 
 bool operator==(VkSparseImageOpaqueMemoryBindInfo const &lhs,
                 VkSparseImageOpaqueMemoryBindInfo const &rhs) noexcept {
-  return (lhs.image == rhs.image) &&
-         (lhs.bindCount == rhs.bindCount) &&
-         (lhs.pBinds == rhs.pBinds);
+  if(lhs.bindCount != rhs.bindCount)
+    return false;
+
+  for(int i = 0; i < lhs.bindCount; ++i) {
+    if(lhs.pBinds[i] != rhs.pBinds[i])
+      return false;
+  }
+
+  return (lhs.image == rhs.image);
 }
 
 bool operator!=(VkSparseImageOpaqueMemoryBindInfo const &lhs,
@@ -2431,9 +2448,15 @@ bool operator!=(VkSparseImageOpaqueMemoryBindInfo const &lhs,
 
 bool operator==(VkSparseImageMemoryBindInfo const &lhs,
                 VkSparseImageMemoryBindInfo const &rhs) noexcept {
-  return (lhs.image == rhs.image) &&
-         (lhs.bindCount == rhs.bindCount) &&
-         (lhs.pBinds == rhs.pBinds);
+  if(lhs.bindCount != rhs.bindCount)
+    return false;
+
+  for(int i = 0; i < lhs.bindCount; ++i) {
+    if(lhs.pBinds[i] != rhs.pBinds[i])
+      return false;
+  }
+
+  return (lhs.image == rhs.image);
 }
 
 bool operator!=(VkSparseImageMemoryBindInfo const &lhs,
@@ -2443,17 +2466,47 @@ bool operator!=(VkSparseImageMemoryBindInfo const &lhs,
 
 bool operator==(VkBindSparseInfo const &lhs,
                 VkBindSparseInfo const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.waitSemaphoreCount == rhs.waitSemaphoreCount) &&
-         (lhs.pWaitSemaphores == rhs.pWaitSemaphores) &&
-         (lhs.bufferBindCount == rhs.bufferBindCount) &&
-         (lhs.pBufferBinds == rhs.pBufferBinds) &&
-         (lhs.imageOpaqueBindCount == rhs.imageOpaqueBindCount) &&
-         (lhs.pImageOpaqueBinds == rhs.pImageOpaqueBinds) &&
-         (lhs.imageBindCount == rhs.imageBindCount) &&
-         (lhs.pImageBinds == rhs.pImageBinds) &&
-         (lhs.signalSemaphoreCount == rhs.signalSemaphoreCount) &&
-         (lhs.pSignalSemaphores == rhs.pSignalSemaphores);
+  if(lhs.waitSemaphoreCount != rhs.waitSemaphoreCount)
+    return false;
+
+  if(lhs.bufferBindCount != rhs.bufferBindCount)
+    return false;
+
+  if(lhs.imageOpaqueBindCount != rhs.imageOpaqueBindCount)
+    return false;
+
+  if(lhs.imageBindCount != rhs.imageBindCount)
+    return false;
+
+  if(lhs.signalSemaphoreCount != rhs.signalSemaphoreCount)
+    return false;
+
+  for(int i = 0; i < lhs.waitSemaphoreCount; ++i) {
+    if(lhs.pWaitSemaphores[i] != rhs.pWaitSemaphores[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.bufferBindCount; ++i) {
+    if(lhs.pBufferBinds[i] != rhs.pBufferBinds[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.imageOpaqueBindCount; ++i) {
+    if(lhs.pImageOpaqueBinds[i] != rhs.pImageOpaqueBinds[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.imageBindCount; ++i) {
+    if(lhs.pImageBinds[i] != rhs.pImageBinds[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.signalSemaphoreCount; ++i) {
+    if(lhs.pSignalSemaphores[i] != rhs.pSignalSemaphores[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkBindSparseInfo const &lhs,
@@ -2481,10 +2534,12 @@ bool operator==(VkImageBlit const &lhs,
     if(lhs.srcOffsets[i] != rhs.srcOffsets[i])
       return false;
   }
+
   for(int i = 0; i < 2; ++i) {
     if(lhs.dstOffsets[i] != rhs.dstOffsets[i])
       return false;
   }
+
   return (lhs.srcSubresource == rhs.srcSubresource) &&
          (lhs.dstSubresource == rhs.dstSubresource);
 }
@@ -2525,10 +2580,17 @@ bool operator!=(VkImageResolve const &lhs,
 
 bool operator==(VkShaderModuleCreateInfo const &lhs,
                 VkShaderModuleCreateInfo const &rhs) noexcept {
+  if(lhs.latexmath:[codeSize \over 4] != rhs.latexmath:[codeSize \over 4])
+    return false;
+
+  for(int i = 0; i < lhs.latexmath:[codeSize \over 4]; ++i) {
+    if(lhs.pCode[i] != rhs.pCode[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
-         (lhs.codeSize == rhs.codeSize) &&
-         (lhs.pCode == rhs.pCode);
+         (lhs.codeSize == rhs.codeSize);
 }
 
 bool operator!=(VkShaderModuleCreateInfo const &lhs,
@@ -2538,11 +2600,17 @@ bool operator!=(VkShaderModuleCreateInfo const &lhs,
 
 bool operator==(VkDescriptorSetLayoutBinding const &lhs,
                 VkDescriptorSetLayoutBinding const &rhs) noexcept {
+  if(lhs.descriptorCount != rhs.descriptorCount)
+    return false;
+
+  for(int i = 0; i < lhs.descriptorCount; ++i) {
+    if(lhs.pImmutableSamplers[i] != rhs.pImmutableSamplers[i])
+      return false;
+  }
+
   return (lhs.binding == rhs.binding) &&
          (lhs.descriptorType == rhs.descriptorType) &&
-         (lhs.descriptorCount == rhs.descriptorCount) &&
-         (lhs.stageFlags == rhs.stageFlags) &&
-         (lhs.pImmutableSamplers == rhs.pImmutableSamplers);
+         (lhs.stageFlags == rhs.stageFlags);
 }
 
 bool operator!=(VkDescriptorSetLayoutBinding const &lhs,
@@ -2552,10 +2620,16 @@ bool operator!=(VkDescriptorSetLayoutBinding const &lhs,
 
 bool operator==(VkDescriptorSetLayoutCreateInfo const &lhs,
                 VkDescriptorSetLayoutCreateInfo const &rhs) noexcept {
+  if(lhs.bindingCount != rhs.bindingCount)
+    return false;
+
+  for(int i = 0; i < lhs.bindingCount; ++i) {
+    if(lhs.pBindings[i] != rhs.pBindings[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.bindingCount == rhs.bindingCount) &&
-         (lhs.pBindings == rhs.pBindings);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkDescriptorSetLayoutCreateInfo const &lhs,
@@ -2576,11 +2650,17 @@ bool operator!=(VkDescriptorPoolSize const &lhs,
 
 bool operator==(VkDescriptorPoolCreateInfo const &lhs,
                 VkDescriptorPoolCreateInfo const &rhs) noexcept {
+  if(lhs.poolSizeCount != rhs.poolSizeCount)
+    return false;
+
+  for(int i = 0; i < lhs.poolSizeCount; ++i) {
+    if(lhs.pPoolSizes[i] != rhs.pPoolSizes[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
-         (lhs.maxSets == rhs.maxSets) &&
-         (lhs.poolSizeCount == rhs.poolSizeCount) &&
-         (lhs.pPoolSizes == rhs.pPoolSizes);
+         (lhs.maxSets == rhs.maxSets);
 }
 
 bool operator!=(VkDescriptorPoolCreateInfo const &lhs,
@@ -2590,10 +2670,16 @@ bool operator!=(VkDescriptorPoolCreateInfo const &lhs,
 
 bool operator==(VkDescriptorSetAllocateInfo const &lhs,
                 VkDescriptorSetAllocateInfo const &rhs) noexcept {
+  if(lhs.descriptorSetCount != rhs.descriptorSetCount)
+    return false;
+
+  for(int i = 0; i < lhs.descriptorSetCount; ++i) {
+    if(lhs.pSetLayouts[i] != rhs.pSetLayouts[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.descriptorPool == rhs.descriptorPool) &&
-         (lhs.descriptorSetCount == rhs.descriptorSetCount) &&
-         (lhs.pSetLayouts == rhs.pSetLayouts);
+         (lhs.descriptorPool == rhs.descriptorPool);
 }
 
 bool operator!=(VkDescriptorSetAllocateInfo const &lhs,
@@ -2615,10 +2701,23 @@ bool operator!=(VkSpecializationMapEntry const &lhs,
 
 bool operator==(VkSpecializationInfo const &lhs,
                 VkSpecializationInfo const &rhs) noexcept {
-  return (lhs.mapEntryCount == rhs.mapEntryCount) &&
-         (lhs.pMapEntries == rhs.pMapEntries) &&
-         (lhs.dataSize == rhs.dataSize) &&
-         (lhs.pData == rhs.pData);
+  if(lhs.mapEntryCount != rhs.mapEntryCount)
+    return false;
+
+  if(lhs.dataSize != rhs.dataSize)
+    return false;
+
+  for(int i = 0; i < lhs.mapEntryCount; ++i) {
+    if(lhs.pMapEntries[i] != rhs.pMapEntries[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.dataSize; ++i) {
+    if(lhs.pData[i] != rhs.pData[i])
+      return false;
+  }
+
+  return ;
 }
 
 bool operator!=(VkSpecializationInfo const &lhs,
@@ -2628,11 +2727,13 @@ bool operator!=(VkSpecializationInfo const &lhs,
 
 bool operator==(VkPipelineShaderStageCreateInfo const &lhs,
                 VkPipelineShaderStageCreateInfo const &rhs) noexcept {
+  if(strcmp(lhs.pName, rhs.pName) != 0)
+    return false;
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
          (lhs.stage == rhs.stage) &&
          (lhs.module == rhs.module) &&
-         (lhs.pName == rhs.pName) &&
          (lhs.pSpecializationInfo == rhs.pSpecializationInfo);
 }
 
@@ -2683,12 +2784,24 @@ bool operator!=(VkVertexInputAttributeDescription const &lhs,
 
 bool operator==(VkPipelineVertexInputStateCreateInfo const &lhs,
                 VkPipelineVertexInputStateCreateInfo const &rhs) noexcept {
+  if(lhs.vertexBindingDescriptionCount != rhs.vertexBindingDescriptionCount)
+    return false;
+
+  if(lhs.vertexAttributeDescriptionCount != rhs.vertexAttributeDescriptionCount)
+    return false;
+
+  for(int i = 0; i < lhs.vertexBindingDescriptionCount; ++i) {
+    if(lhs.pVertexBindingDescriptions[i] != rhs.pVertexBindingDescriptions[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.vertexAttributeDescriptionCount; ++i) {
+    if(lhs.pVertexAttributeDescriptions[i] != rhs.pVertexAttributeDescriptions[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.vertexBindingDescriptionCount == rhs.vertexBindingDescriptionCount) &&
-         (lhs.pVertexBindingDescriptions == rhs.pVertexBindingDescriptions) &&
-         (lhs.vertexAttributeDescriptionCount == rhs.vertexAttributeDescriptionCount) &&
-         (lhs.pVertexAttributeDescriptions == rhs.pVertexAttributeDescriptions);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkPipelineVertexInputStateCreateInfo const &lhs,
@@ -2723,12 +2836,24 @@ bool operator!=(VkPipelineTessellationStateCreateInfo const &lhs,
 
 bool operator==(VkPipelineViewportStateCreateInfo const &lhs,
                 VkPipelineViewportStateCreateInfo const &rhs) noexcept {
+  if(lhs.viewportCount != rhs.viewportCount)
+    return false;
+
+  if(lhs.scissorCount != rhs.scissorCount)
+    return false;
+
+  for(int i = 0; i < lhs.viewportCount; ++i) {
+    if(lhs.pViewports[i] != rhs.pViewports[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.scissorCount; ++i) {
+    if(lhs.pScissors[i] != rhs.pScissors[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.viewportCount == rhs.viewportCount) &&
-         (lhs.pViewports == rhs.pViewports) &&
-         (lhs.scissorCount == rhs.scissorCount) &&
-         (lhs.pScissors == rhs.pScissors);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkPipelineViewportStateCreateInfo const &lhs,
@@ -2759,12 +2884,19 @@ bool operator!=(VkPipelineRasterizationStateCreateInfo const &lhs,
 
 bool operator==(VkPipelineMultisampleStateCreateInfo const &lhs,
                 VkPipelineMultisampleStateCreateInfo const &rhs) noexcept {
+  if(lhs.latexmath:[\lceil{\mathit{rasterizationSamples} \over 32}\rceil] != rhs.latexmath:[\lceil{\mathit{rasterizationSamples} \over 32}\rceil])
+    return false;
+
+  for(int i = 0; i < lhs.latexmath:[\lceil{\mathit{rasterizationSamples} \over 32}\rceil]; ++i) {
+    if(lhs.pSampleMask[i] != rhs.pSampleMask[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
          (lhs.rasterizationSamples == rhs.rasterizationSamples) &&
          (lhs.sampleShadingEnable == rhs.sampleShadingEnable) &&
          (lhs.minSampleShading == rhs.minSampleShading) &&
-         (lhs.pSampleMask == rhs.pSampleMask) &&
          (lhs.alphaToCoverageEnable == rhs.alphaToCoverageEnable) &&
          (lhs.alphaToOneEnable == rhs.alphaToOneEnable);
 }
@@ -2793,16 +2925,23 @@ bool operator!=(VkPipelineColorBlendAttachmentState const &lhs,
 
 bool operator==(VkPipelineColorBlendStateCreateInfo const &lhs,
                 VkPipelineColorBlendStateCreateInfo const &rhs) noexcept {
+  if(lhs.attachmentCount != rhs.attachmentCount)
+    return false;
+
+  for(int i = 0; i < lhs.attachmentCount; ++i) {
+    if(lhs.pAttachments[i] != rhs.pAttachments[i])
+      return false;
+  }
+
   for(int i = 0; i < 4; ++i) {
     if(lhs.blendConstants[i] != rhs.blendConstants[i])
       return false;
   }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
          (lhs.logicOpEnable == rhs.logicOpEnable) &&
-         (lhs.logicOp == rhs.logicOp) &&
-         (lhs.attachmentCount == rhs.attachmentCount) &&
-         (lhs.pAttachments == rhs.pAttachments);
+         (lhs.logicOp == rhs.logicOp);
 }
 
 bool operator!=(VkPipelineColorBlendStateCreateInfo const &lhs,
@@ -2812,10 +2951,16 @@ bool operator!=(VkPipelineColorBlendStateCreateInfo const &lhs,
 
 bool operator==(VkPipelineDynamicStateCreateInfo const &lhs,
                 VkPipelineDynamicStateCreateInfo const &rhs) noexcept {
+  if(lhs.dynamicStateCount != rhs.dynamicStateCount)
+    return false;
+
+  for(int i = 0; i < lhs.dynamicStateCount; ++i) {
+    if(lhs.pDynamicStates[i] != rhs.pDynamicStates[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.dynamicStateCount == rhs.dynamicStateCount) &&
-         (lhs.pDynamicStates == rhs.pDynamicStates);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkPipelineDynamicStateCreateInfo const &lhs,
@@ -2861,10 +3006,16 @@ bool operator!=(VkPipelineDepthStencilStateCreateInfo const &lhs,
 
 bool operator==(VkGraphicsPipelineCreateInfo const &lhs,
                 VkGraphicsPipelineCreateInfo const &rhs) noexcept {
+  if(lhs.stageCount != rhs.stageCount)
+    return false;
+
+  for(int i = 0; i < lhs.stageCount; ++i) {
+    if(lhs.pStages[i] != rhs.pStages[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
-         (lhs.stageCount == rhs.stageCount) &&
-         (lhs.pStages == rhs.pStages) &&
          (lhs.pVertexInputState == rhs.pVertexInputState) &&
          (lhs.pInputAssemblyState == rhs.pInputAssemblyState) &&
          (lhs.pTessellationState == rhs.pTessellationState) &&
@@ -2888,10 +3039,16 @@ bool operator!=(VkGraphicsPipelineCreateInfo const &lhs,
 
 bool operator==(VkPipelineCacheCreateInfo const &lhs,
                 VkPipelineCacheCreateInfo const &rhs) noexcept {
+  if(lhs.initialDataSize != rhs.initialDataSize)
+    return false;
+
+  for(int i = 0; i < lhs.initialDataSize; ++i) {
+    if(lhs.pInitialData[i] != rhs.pInitialData[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.initialDataSize == rhs.initialDataSize) &&
-         (lhs.pInitialData == rhs.pInitialData);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkPipelineCacheCreateInfo const &lhs,
@@ -2913,12 +3070,24 @@ bool operator!=(VkPushConstantRange const &lhs,
 
 bool operator==(VkPipelineLayoutCreateInfo const &lhs,
                 VkPipelineLayoutCreateInfo const &rhs) noexcept {
+  if(lhs.setLayoutCount != rhs.setLayoutCount)
+    return false;
+
+  if(lhs.pushConstantRangeCount != rhs.pushConstantRangeCount)
+    return false;
+
+  for(int i = 0; i < lhs.setLayoutCount; ++i) {
+    if(lhs.pSetLayouts[i] != rhs.pSetLayouts[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.pushConstantRangeCount; ++i) {
+    if(lhs.pPushConstantRanges[i] != rhs.pPushConstantRanges[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.setLayoutCount == rhs.setLayoutCount) &&
-         (lhs.pSetLayouts == rhs.pSetLayouts) &&
-         (lhs.pushConstantRangeCount == rhs.pushConstantRangeCount) &&
-         (lhs.pPushConstantRanges == rhs.pPushConstantRanges);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkPipelineLayoutCreateInfo const &lhs,
@@ -3047,16 +3216,41 @@ bool operator!=(VkAttachmentReference const &lhs,
 
 bool operator==(VkSubpassDescription const &lhs,
                 VkSubpassDescription const &rhs) noexcept {
+  if(lhs.inputAttachmentCount != rhs.inputAttachmentCount)
+    return false;
+
+  if(lhs.colorAttachmentCount != rhs.colorAttachmentCount)
+    return false;
+
+  if(lhs.colorAttachmentCount != rhs.colorAttachmentCount)
+    return false;
+
+  if(lhs.preserveAttachmentCount != rhs.preserveAttachmentCount)
+    return false;
+
+  for(int i = 0; i < lhs.inputAttachmentCount; ++i) {
+    if(lhs.pInputAttachments[i] != rhs.pInputAttachments[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.colorAttachmentCount; ++i) {
+    if(lhs.pColorAttachments[i] != rhs.pColorAttachments[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.colorAttachmentCount; ++i) {
+    if(lhs.pResolveAttachments[i] != rhs.pResolveAttachments[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.preserveAttachmentCount; ++i) {
+    if(lhs.pPreserveAttachments[i] != rhs.pPreserveAttachments[i])
+      return false;
+  }
+
   return (lhs.flags == rhs.flags) &&
          (lhs.pipelineBindPoint == rhs.pipelineBindPoint) &&
-         (lhs.inputAttachmentCount == rhs.inputAttachmentCount) &&
-         (lhs.pInputAttachments == rhs.pInputAttachments) &&
-         (lhs.colorAttachmentCount == rhs.colorAttachmentCount) &&
-         (lhs.pColorAttachments == rhs.pColorAttachments) &&
-         (lhs.pResolveAttachments == rhs.pResolveAttachments) &&
-         (lhs.pDepthStencilAttachment == rhs.pDepthStencilAttachment) &&
-         (lhs.preserveAttachmentCount == rhs.preserveAttachmentCount) &&
-         (lhs.pPreserveAttachments == rhs.pPreserveAttachments);
+         (lhs.pDepthStencilAttachment == rhs.pDepthStencilAttachment);
 }
 
 bool operator!=(VkSubpassDescription const &lhs,
@@ -3082,14 +3276,32 @@ bool operator!=(VkSubpassDependency const &lhs,
 
 bool operator==(VkRenderPassCreateInfo const &lhs,
                 VkRenderPassCreateInfo const &rhs) noexcept {
+  if(lhs.attachmentCount != rhs.attachmentCount)
+    return false;
+
+  if(lhs.subpassCount != rhs.subpassCount)
+    return false;
+
+  if(lhs.dependencyCount != rhs.dependencyCount)
+    return false;
+
+  for(int i = 0; i < lhs.attachmentCount; ++i) {
+    if(lhs.pAttachments[i] != rhs.pAttachments[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.subpassCount; ++i) {
+    if(lhs.pSubpasses[i] != rhs.pSubpasses[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.dependencyCount; ++i) {
+    if(lhs.pDependencies[i] != rhs.pDependencies[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.attachmentCount == rhs.attachmentCount) &&
-         (lhs.pAttachments == rhs.pAttachments) &&
-         (lhs.subpassCount == rhs.subpassCount) &&
-         (lhs.pSubpasses == rhs.pSubpasses) &&
-         (lhs.dependencyCount == rhs.dependencyCount) &&
-         (lhs.pDependencies == rhs.pDependencies);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkRenderPassCreateInfo const &lhs,
@@ -3203,26 +3415,32 @@ bool operator==(VkPhysicalDeviceLimits const &lhs,
     if(lhs.maxComputeWorkGroupCount[i] != rhs.maxComputeWorkGroupCount[i])
       return false;
   }
+
   for(int i = 0; i < 3; ++i) {
     if(lhs.maxComputeWorkGroupSize[i] != rhs.maxComputeWorkGroupSize[i])
       return false;
   }
+
   for(int i = 0; i < 2; ++i) {
     if(lhs.maxViewportDimensions[i] != rhs.maxViewportDimensions[i])
       return false;
   }
+
   for(int i = 0; i < 2; ++i) {
     if(lhs.viewportBoundsRange[i] != rhs.viewportBoundsRange[i])
       return false;
   }
+
   for(int i = 0; i < 2; ++i) {
     if(lhs.pointSizeRange[i] != rhs.pointSizeRange[i])
       return false;
   }
+
   for(int i = 0; i < 2; ++i) {
     if(lhs.lineWidthRange[i] != rhs.lineWidthRange[i])
       return false;
   }
+
   return (lhs.maxImageDimension1D == rhs.maxImageDimension1D) &&
          (lhs.maxImageDimension2D == rhs.maxImageDimension2D) &&
          (lhs.maxImageDimension3D == rhs.maxImageDimension3D) &&
@@ -3357,11 +3575,17 @@ bool operator!=(VkQueryPoolCreateInfo const &lhs,
 
 bool operator==(VkFramebufferCreateInfo const &lhs,
                 VkFramebufferCreateInfo const &rhs) noexcept {
+  if(lhs.attachmentCount != rhs.attachmentCount)
+    return false;
+
+  for(int i = 0; i < lhs.attachmentCount; ++i) {
+    if(lhs.pAttachments[i] != rhs.pAttachments[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
          (lhs.renderPass == rhs.renderPass) &&
-         (lhs.attachmentCount == rhs.attachmentCount) &&
-         (lhs.pAttachments == rhs.pAttachments) &&
          (lhs.width == rhs.width) &&
          (lhs.height == rhs.height) &&
          (lhs.layers == rhs.layers);
@@ -3413,14 +3637,39 @@ bool operator!=(VkDispatchIndirectCommand const &lhs,
 
 bool operator==(VkSubmitInfo const &lhs,
                 VkSubmitInfo const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.waitSemaphoreCount == rhs.waitSemaphoreCount) &&
-         (lhs.pWaitSemaphores == rhs.pWaitSemaphores) &&
-         (lhs.pWaitDstStageMask == rhs.pWaitDstStageMask) &&
-         (lhs.commandBufferCount == rhs.commandBufferCount) &&
-         (lhs.pCommandBuffers == rhs.pCommandBuffers) &&
-         (lhs.signalSemaphoreCount == rhs.signalSemaphoreCount) &&
-         (lhs.pSignalSemaphores == rhs.pSignalSemaphores);
+  if(lhs.waitSemaphoreCount != rhs.waitSemaphoreCount)
+    return false;
+
+  if(lhs.waitSemaphoreCount != rhs.waitSemaphoreCount)
+    return false;
+
+  if(lhs.commandBufferCount != rhs.commandBufferCount)
+    return false;
+
+  if(lhs.signalSemaphoreCount != rhs.signalSemaphoreCount)
+    return false;
+
+  for(int i = 0; i < lhs.waitSemaphoreCount; ++i) {
+    if(lhs.pWaitSemaphores[i] != rhs.pWaitSemaphores[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.waitSemaphoreCount; ++i) {
+    if(lhs.pWaitDstStageMask[i] != rhs.pWaitDstStageMask[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.commandBufferCount; ++i) {
+    if(lhs.pCommandBuffers[i] != rhs.pCommandBuffers[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.signalSemaphoreCount; ++i) {
+    if(lhs.pSignalSemaphores[i] != rhs.pSignalSemaphores[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkSubmitInfo const &lhs,
@@ -3430,8 +3679,10 @@ bool operator!=(VkSubmitInfo const &lhs,
 
 bool operator==(VkDisplayPropertiesKHR const &lhs,
                 VkDisplayPropertiesKHR const &rhs) noexcept {
+  if(strcmp(lhs.displayName, rhs.displayName) != 0)
+    return false;
+
   return (lhs.display == rhs.display) &&
-         (lhs.displayName == rhs.displayName) &&
          (lhs.physicalDimensions == rhs.physicalDimensions) &&
          (lhs.physicalResolution == rhs.physicalResolution) &&
          (lhs.supportedTransforms == rhs.supportedTransforms) &&
@@ -3673,6 +3924,14 @@ bool operator!=(VkSurfaceFormatKHR const &lhs,
 
 bool operator==(VkSwapchainCreateInfoKHR const &lhs,
                 VkSwapchainCreateInfoKHR const &rhs) noexcept {
+  if(lhs.queueFamilyIndexCount != rhs.queueFamilyIndexCount)
+    return false;
+
+  for(int i = 0; i < lhs.queueFamilyIndexCount; ++i) {
+    if(lhs.pQueueFamilyIndices[i] != rhs.pQueueFamilyIndices[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
          (lhs.surface == rhs.surface) &&
@@ -3683,8 +3942,6 @@ bool operator==(VkSwapchainCreateInfoKHR const &lhs,
          (lhs.imageArrayLayers == rhs.imageArrayLayers) &&
          (lhs.imageUsage == rhs.imageUsage) &&
          (lhs.imageSharingMode == rhs.imageSharingMode) &&
-         (lhs.queueFamilyIndexCount == rhs.queueFamilyIndexCount) &&
-         (lhs.pQueueFamilyIndices == rhs.pQueueFamilyIndices) &&
          (lhs.preTransform == rhs.preTransform) &&
          (lhs.compositeAlpha == rhs.compositeAlpha) &&
          (lhs.presentMode == rhs.presentMode) &&
@@ -3699,13 +3956,39 @@ bool operator!=(VkSwapchainCreateInfoKHR const &lhs,
 
 bool operator==(VkPresentInfoKHR const &lhs,
                 VkPresentInfoKHR const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.waitSemaphoreCount == rhs.waitSemaphoreCount) &&
-         (lhs.pWaitSemaphores == rhs.pWaitSemaphores) &&
-         (lhs.swapchainCount == rhs.swapchainCount) &&
-         (lhs.pSwapchains == rhs.pSwapchains) &&
-         (lhs.pImageIndices == rhs.pImageIndices) &&
-         (lhs.pResults == rhs.pResults);
+  if(lhs.waitSemaphoreCount != rhs.waitSemaphoreCount)
+    return false;
+
+  if(lhs.swapchainCount != rhs.swapchainCount)
+    return false;
+
+  if(lhs.swapchainCount != rhs.swapchainCount)
+    return false;
+
+  if(lhs.swapchainCount != rhs.swapchainCount)
+    return false;
+
+  for(int i = 0; i < lhs.waitSemaphoreCount; ++i) {
+    if(lhs.pWaitSemaphores[i] != rhs.pWaitSemaphores[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.swapchainCount; ++i) {
+    if(lhs.pSwapchains[i] != rhs.pSwapchains[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.swapchainCount; ++i) {
+    if(lhs.pImageIndices[i] != rhs.pImageIndices[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.swapchainCount; ++i) {
+    if(lhs.pResults[i] != rhs.pResults[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkPresentInfoKHR const &lhs,
@@ -3728,9 +4011,15 @@ bool operator!=(VkDebugReportCallbackCreateInfoEXT const &lhs,
 
 bool operator==(VkValidationFlagsEXT const &lhs,
                 VkValidationFlagsEXT const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.disabledValidationCheckCount == rhs.disabledValidationCheckCount) &&
-         (lhs.pDisabledValidationChecks == rhs.pDisabledValidationChecks);
+  if(lhs.disabledValidationCheckCount != rhs.disabledValidationCheckCount)
+    return false;
+
+  for(int i = 0; i < lhs.disabledValidationCheckCount; ++i) {
+    if(lhs.pDisabledValidationChecks[i] != rhs.pDisabledValidationChecks[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkValidationFlagsEXT const &lhs,
@@ -3751,10 +4040,12 @@ bool operator!=(VkPipelineRasterizationStateRasterizationOrderAMD const &lhs,
 
 bool operator==(VkDebugMarkerObjectNameInfoEXT const &lhs,
                 VkDebugMarkerObjectNameInfoEXT const &rhs) noexcept {
+  if(strcmp(lhs.pObjectName, rhs.pObjectName) != 0)
+    return false;
+
   return (lhs.sType == rhs.sType) &&
          (lhs.objectType == rhs.objectType) &&
-         (lhs.object == rhs.object) &&
-         (lhs.pObjectName == rhs.pObjectName);
+         (lhs.object == rhs.object);
 }
 
 bool operator!=(VkDebugMarkerObjectNameInfoEXT const &lhs,
@@ -3764,12 +4055,18 @@ bool operator!=(VkDebugMarkerObjectNameInfoEXT const &lhs,
 
 bool operator==(VkDebugMarkerObjectTagInfoEXT const &lhs,
                 VkDebugMarkerObjectTagInfoEXT const &rhs) noexcept {
+  if(lhs.tagSize != rhs.tagSize)
+    return false;
+
+  for(int i = 0; i < lhs.tagSize; ++i) {
+    if(lhs.pTag[i] != rhs.pTag[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.objectType == rhs.objectType) &&
          (lhs.object == rhs.object) &&
-         (lhs.tagName == rhs.tagName) &&
-         (lhs.tagSize == rhs.tagSize) &&
-         (lhs.pTag == rhs.pTag);
+         (lhs.tagName == rhs.tagName);
 }
 
 bool operator!=(VkDebugMarkerObjectTagInfoEXT const &lhs,
@@ -3779,12 +4076,15 @@ bool operator!=(VkDebugMarkerObjectTagInfoEXT const &lhs,
 
 bool operator==(VkDebugMarkerMarkerInfoEXT const &lhs,
                 VkDebugMarkerMarkerInfoEXT const &rhs) noexcept {
+  if(strcmp(lhs.pMarkerName, rhs.pMarkerName) != 0)
+    return false;
+
   for(int i = 0; i < 4; ++i) {
     if(lhs.color[i] != rhs.color[i])
       return false;
   }
-  return (lhs.sType == rhs.sType) &&
-         (lhs.pMarkerName == rhs.pMarkerName);
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkDebugMarkerMarkerInfoEXT const &lhs,
@@ -3892,14 +4192,47 @@ bool operator!=(VkExportMemoryWin32HandleInfoNV const &lhs,
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 bool operator==(VkWin32KeyedMutexAcquireReleaseInfoNV const &lhs,
                 VkWin32KeyedMutexAcquireReleaseInfoNV const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.acquireCount == rhs.acquireCount) &&
-         (lhs.pAcquireSyncs == rhs.pAcquireSyncs) &&
-         (lhs.pAcquireKeys == rhs.pAcquireKeys) &&
-         (lhs.pAcquireTimeoutMilliseconds == rhs.pAcquireTimeoutMilliseconds) &&
-         (lhs.releaseCount == rhs.releaseCount) &&
-         (lhs.pReleaseSyncs == rhs.pReleaseSyncs) &&
-         (lhs.pReleaseKeys == rhs.pReleaseKeys);
+  if(lhs.acquireCount != rhs.acquireCount)
+    return false;
+
+  if(lhs.acquireCount != rhs.acquireCount)
+    return false;
+
+  if(lhs.acquireCount != rhs.acquireCount)
+    return false;
+
+  if(lhs.releaseCount != rhs.releaseCount)
+    return false;
+
+  if(lhs.releaseCount != rhs.releaseCount)
+    return false;
+
+  for(int i = 0; i < lhs.acquireCount; ++i) {
+    if(lhs.pAcquireSyncs[i] != rhs.pAcquireSyncs[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.acquireCount; ++i) {
+    if(lhs.pAcquireKeys[i] != rhs.pAcquireKeys[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.acquireCount; ++i) {
+    if(lhs.pAcquireTimeoutMilliseconds[i] != rhs.pAcquireTimeoutMilliseconds[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.releaseCount; ++i) {
+    if(lhs.pReleaseSyncs[i] != rhs.pReleaseSyncs[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.releaseCount; ++i) {
+    if(lhs.pReleaseKeys[i] != rhs.pReleaseKeys[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkWin32KeyedMutexAcquireReleaseInfoNV const &lhs,
@@ -3961,11 +4294,17 @@ bool operator!=(VkIndirectCommandsLayoutTokenNVX const &lhs,
 
 bool operator==(VkIndirectCommandsLayoutCreateInfoNVX const &lhs,
                 VkIndirectCommandsLayoutCreateInfoNVX const &rhs) noexcept {
+  if(lhs.tokenCount != rhs.tokenCount)
+    return false;
+
+  for(int i = 0; i < lhs.tokenCount; ++i) {
+    if(lhs.pTokens[i] != rhs.pTokens[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.pipelineBindPoint == rhs.pipelineBindPoint) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.tokenCount == rhs.tokenCount) &&
-         (lhs.pTokens == rhs.pTokens);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkIndirectCommandsLayoutCreateInfoNVX const &lhs,
@@ -3975,11 +4314,17 @@ bool operator!=(VkIndirectCommandsLayoutCreateInfoNVX const &lhs,
 
 bool operator==(VkCmdProcessCommandsInfoNVX const &lhs,
                 VkCmdProcessCommandsInfoNVX const &rhs) noexcept {
+  if(lhs.indirectCommandsTokenCount != rhs.indirectCommandsTokenCount)
+    return false;
+
+  for(int i = 0; i < lhs.indirectCommandsTokenCount; ++i) {
+    if(lhs.pIndirectCommandsTokens[i] != rhs.pIndirectCommandsTokens[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.objectTable == rhs.objectTable) &&
          (lhs.indirectCommandsLayout == rhs.indirectCommandsLayout) &&
-         (lhs.indirectCommandsTokenCount == rhs.indirectCommandsTokenCount) &&
-         (lhs.pIndirectCommandsTokens == rhs.pIndirectCommandsTokens) &&
          (lhs.maxSequencesCount == rhs.maxSequencesCount) &&
          (lhs.targetCommandBuffer == rhs.targetCommandBuffer) &&
          (lhs.sequencesCountBuffer == rhs.sequencesCountBuffer) &&
@@ -4008,11 +4353,31 @@ bool operator!=(VkCmdReserveSpaceForCommandsInfoNVX const &lhs,
 
 bool operator==(VkObjectTableCreateInfoNVX const &lhs,
                 VkObjectTableCreateInfoNVX const &rhs) noexcept {
+  if(lhs.objectCount != rhs.objectCount)
+    return false;
+
+  if(lhs.objectCount != rhs.objectCount)
+    return false;
+
+  if(lhs.objectCount != rhs.objectCount)
+    return false;
+
+  for(int i = 0; i < lhs.objectCount; ++i) {
+    if(lhs.pObjectEntryTypes[i] != rhs.pObjectEntryTypes[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.objectCount; ++i) {
+    if(lhs.pObjectEntryCounts[i] != rhs.pObjectEntryCounts[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.objectCount; ++i) {
+    if(lhs.pObjectEntryUsageFlags[i] != rhs.pObjectEntryUsageFlags[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.objectCount == rhs.objectCount) &&
-         (lhs.pObjectEntryTypes == rhs.pObjectEntryTypes) &&
-         (lhs.pObjectEntryCounts == rhs.pObjectEntryCounts) &&
-         (lhs.pObjectEntryUsageFlags == rhs.pObjectEntryUsageFlags) &&
          (lhs.maxUniformBuffersPerDescriptor == rhs.maxUniformBuffersPerDescriptor) &&
          (lhs.maxStorageBuffersPerDescriptor == rhs.maxStorageBuffersPerDescriptor) &&
          (lhs.maxStorageImagesPerDescriptor == rhs.maxStorageImagesPerDescriptor) &&
@@ -4219,9 +4584,15 @@ bool operator!=(VkPhysicalDevicePushDescriptorPropertiesKHR const &lhs,
 
 bool operator==(VkPresentRegionsKHR const &lhs,
                 VkPresentRegionsKHR const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.swapchainCount == rhs.swapchainCount) &&
-         (lhs.pRegions == rhs.pRegions);
+  if(lhs.swapchainCount != rhs.swapchainCount)
+    return false;
+
+  for(int i = 0; i < lhs.swapchainCount; ++i) {
+    if(lhs.pRegions[i] != rhs.pRegions[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkPresentRegionsKHR const &lhs,
@@ -4231,8 +4602,15 @@ bool operator!=(VkPresentRegionsKHR const &lhs,
 
 bool operator==(VkPresentRegionKHR const &lhs,
                 VkPresentRegionKHR const &rhs) noexcept {
-  return (lhs.rectangleCount == rhs.rectangleCount) &&
-         (lhs.pRectangles == rhs.pRectangles);
+  if(lhs.rectangleCount != rhs.rectangleCount)
+    return false;
+
+  for(int i = 0; i < lhs.rectangleCount; ++i) {
+    if(lhs.pRectangles[i] != rhs.pRectangles[i])
+      return false;
+  }
+
+  return ;
 }
 
 bool operator!=(VkPresentRegionKHR const &lhs,
@@ -4328,14 +4706,17 @@ bool operator==(VkPhysicalDeviceIDProperties const &lhs,
     if(lhs.deviceUUID[i] != rhs.deviceUUID[i])
       return false;
   }
+
   for(int i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.driverUUID[i] != rhs.driverUUID[i])
       return false;
   }
+
   for(int i = 0; i < VK_LUID_SIZE; ++i) {
     if(lhs.deviceLUID[i] != rhs.deviceLUID[i])
       return false;
   }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.deviceNodeMask == rhs.deviceNodeMask) &&
          (lhs.deviceLUIDValid == rhs.deviceLUIDValid);
@@ -4474,14 +4855,47 @@ bool operator!=(VkMemoryGetFdInfoKHR const &lhs,
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 bool operator==(VkWin32KeyedMutexAcquireReleaseInfoKHR const &lhs,
                 VkWin32KeyedMutexAcquireReleaseInfoKHR const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.acquireCount == rhs.acquireCount) &&
-         (lhs.pAcquireSyncs == rhs.pAcquireSyncs) &&
-         (lhs.pAcquireKeys == rhs.pAcquireKeys) &&
-         (lhs.pAcquireTimeouts == rhs.pAcquireTimeouts) &&
-         (lhs.releaseCount == rhs.releaseCount) &&
-         (lhs.pReleaseSyncs == rhs.pReleaseSyncs) &&
-         (lhs.pReleaseKeys == rhs.pReleaseKeys);
+  if(lhs.acquireCount != rhs.acquireCount)
+    return false;
+
+  if(lhs.acquireCount != rhs.acquireCount)
+    return false;
+
+  if(lhs.acquireCount != rhs.acquireCount)
+    return false;
+
+  if(lhs.releaseCount != rhs.releaseCount)
+    return false;
+
+  if(lhs.releaseCount != rhs.releaseCount)
+    return false;
+
+  for(int i = 0; i < lhs.acquireCount; ++i) {
+    if(lhs.pAcquireSyncs[i] != rhs.pAcquireSyncs[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.acquireCount; ++i) {
+    if(lhs.pAcquireKeys[i] != rhs.pAcquireKeys[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.acquireCount; ++i) {
+    if(lhs.pAcquireTimeouts[i] != rhs.pAcquireTimeouts[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.releaseCount; ++i) {
+    if(lhs.pReleaseSyncs[i] != rhs.pReleaseSyncs[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.releaseCount; ++i) {
+    if(lhs.pReleaseKeys[i] != rhs.pReleaseKeys[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkWin32KeyedMutexAcquireReleaseInfoKHR const &lhs,
@@ -4560,11 +4974,23 @@ bool operator!=(VkExportSemaphoreWin32HandleInfoKHR const &lhs,
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 bool operator==(VkD3D12FenceSubmitInfoKHR const &lhs,
                 VkD3D12FenceSubmitInfoKHR const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.waitSemaphoreValuesCount == rhs.waitSemaphoreValuesCount) &&
-         (lhs.pWaitSemaphoreValues == rhs.pWaitSemaphoreValues) &&
-         (lhs.signalSemaphoreValuesCount == rhs.signalSemaphoreValuesCount) &&
-         (lhs.pSignalSemaphoreValues == rhs.pSignalSemaphoreValues);
+  if(lhs.waitSemaphoreValuesCount != rhs.waitSemaphoreValuesCount)
+    return false;
+
+  if(lhs.signalSemaphoreValuesCount != rhs.signalSemaphoreValuesCount)
+    return false;
+
+  for(int i = 0; i < lhs.waitSemaphoreValuesCount; ++i) {
+    if(lhs.pWaitSemaphoreValues[i] != rhs.pWaitSemaphoreValues[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.signalSemaphoreValuesCount; ++i) {
+    if(lhs.pSignalSemaphoreValues[i] != rhs.pSignalSemaphoreValues[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkD3D12FenceSubmitInfoKHR const &lhs,
@@ -4747,13 +5173,31 @@ bool operator!=(VkPhysicalDeviceMultiviewProperties const &lhs,
 
 bool operator==(VkRenderPassMultiviewCreateInfo const &lhs,
                 VkRenderPassMultiviewCreateInfo const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.subpassCount == rhs.subpassCount) &&
-         (lhs.pViewMasks == rhs.pViewMasks) &&
-         (lhs.dependencyCount == rhs.dependencyCount) &&
-         (lhs.pViewOffsets == rhs.pViewOffsets) &&
-         (lhs.correlationMaskCount == rhs.correlationMaskCount) &&
-         (lhs.pCorrelationMasks == rhs.pCorrelationMasks);
+  if(lhs.subpassCount != rhs.subpassCount)
+    return false;
+
+  if(lhs.dependencyCount != rhs.dependencyCount)
+    return false;
+
+  if(lhs.correlationMaskCount != rhs.correlationMaskCount)
+    return false;
+
+  for(int i = 0; i < lhs.subpassCount; ++i) {
+    if(lhs.pViewMasks[i] != rhs.pViewMasks[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.dependencyCount; ++i) {
+    if(lhs.pViewOffsets[i] != rhs.pViewOffsets[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.correlationMaskCount; ++i) {
+    if(lhs.pCorrelationMasks[i] != rhs.pCorrelationMasks[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkRenderPassMultiviewCreateInfo const &lhs,
@@ -4832,6 +5276,7 @@ bool operator==(VkPhysicalDeviceGroupProperties const &lhs,
     if(lhs.physicalDevices[i] != rhs.physicalDevices[i])
       return false;
   }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.physicalDeviceCount == rhs.physicalDeviceCount) &&
          (lhs.subsetAllocation == rhs.subsetAllocation);
@@ -4869,9 +5314,15 @@ bool operator!=(VkBindBufferMemoryInfo const &lhs,
 
 bool operator==(VkBindBufferMemoryDeviceGroupInfo const &lhs,
                 VkBindBufferMemoryDeviceGroupInfo const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.deviceIndexCount == rhs.deviceIndexCount) &&
-         (lhs.pDeviceIndices == rhs.pDeviceIndices);
+  if(lhs.deviceIndexCount != rhs.deviceIndexCount)
+    return false;
+
+  for(int i = 0; i < lhs.deviceIndexCount; ++i) {
+    if(lhs.pDeviceIndices[i] != rhs.pDeviceIndices[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkBindBufferMemoryDeviceGroupInfo const &lhs,
@@ -4894,11 +5345,23 @@ bool operator!=(VkBindImageMemoryInfo const &lhs,
 
 bool operator==(VkBindImageMemoryDeviceGroupInfo const &lhs,
                 VkBindImageMemoryDeviceGroupInfo const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.deviceIndexCount == rhs.deviceIndexCount) &&
-         (lhs.pDeviceIndices == rhs.pDeviceIndices) &&
-         (lhs.splitInstanceBindRegionCount == rhs.splitInstanceBindRegionCount) &&
-         (lhs.pSplitInstanceBindRegions == rhs.pSplitInstanceBindRegions);
+  if(lhs.deviceIndexCount != rhs.deviceIndexCount)
+    return false;
+
+  if(lhs.splitInstanceBindRegionCount != rhs.splitInstanceBindRegionCount)
+    return false;
+
+  for(int i = 0; i < lhs.deviceIndexCount; ++i) {
+    if(lhs.pDeviceIndices[i] != rhs.pDeviceIndices[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.splitInstanceBindRegionCount; ++i) {
+    if(lhs.pSplitInstanceBindRegions[i] != rhs.pSplitInstanceBindRegions[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkBindImageMemoryDeviceGroupInfo const &lhs,
@@ -4908,10 +5371,16 @@ bool operator!=(VkBindImageMemoryDeviceGroupInfo const &lhs,
 
 bool operator==(VkDeviceGroupRenderPassBeginInfo const &lhs,
                 VkDeviceGroupRenderPassBeginInfo const &rhs) noexcept {
+  if(lhs.deviceRenderAreaCount != rhs.deviceRenderAreaCount)
+    return false;
+
+  for(int i = 0; i < lhs.deviceRenderAreaCount; ++i) {
+    if(lhs.pDeviceRenderAreas[i] != rhs.pDeviceRenderAreas[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.deviceMask == rhs.deviceMask) &&
-         (lhs.deviceRenderAreaCount == rhs.deviceRenderAreaCount) &&
-         (lhs.pDeviceRenderAreas == rhs.pDeviceRenderAreas);
+         (lhs.deviceMask == rhs.deviceMask);
 }
 
 bool operator!=(VkDeviceGroupRenderPassBeginInfo const &lhs,
@@ -4932,13 +5401,31 @@ bool operator!=(VkDeviceGroupCommandBufferBeginInfo const &lhs,
 
 bool operator==(VkDeviceGroupSubmitInfo const &lhs,
                 VkDeviceGroupSubmitInfo const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.waitSemaphoreCount == rhs.waitSemaphoreCount) &&
-         (lhs.pWaitSemaphoreDeviceIndices == rhs.pWaitSemaphoreDeviceIndices) &&
-         (lhs.commandBufferCount == rhs.commandBufferCount) &&
-         (lhs.pCommandBufferDeviceMasks == rhs.pCommandBufferDeviceMasks) &&
-         (lhs.signalSemaphoreCount == rhs.signalSemaphoreCount) &&
-         (lhs.pSignalSemaphoreDeviceIndices == rhs.pSignalSemaphoreDeviceIndices);
+  if(lhs.waitSemaphoreCount != rhs.waitSemaphoreCount)
+    return false;
+
+  if(lhs.commandBufferCount != rhs.commandBufferCount)
+    return false;
+
+  if(lhs.signalSemaphoreCount != rhs.signalSemaphoreCount)
+    return false;
+
+  for(int i = 0; i < lhs.waitSemaphoreCount; ++i) {
+    if(lhs.pWaitSemaphoreDeviceIndices[i] != rhs.pWaitSemaphoreDeviceIndices[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.commandBufferCount; ++i) {
+    if(lhs.pCommandBufferDeviceMasks[i] != rhs.pCommandBufferDeviceMasks[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.signalSemaphoreCount; ++i) {
+    if(lhs.pSignalSemaphoreDeviceIndices[i] != rhs.pSignalSemaphoreDeviceIndices[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkDeviceGroupSubmitInfo const &lhs,
@@ -4964,6 +5451,7 @@ bool operator==(VkDeviceGroupPresentCapabilitiesKHR const &lhs,
     if(lhs.presentMask[i] != rhs.presentMask[i])
       return false;
   }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.modes == rhs.modes);
 }
@@ -5013,9 +5501,15 @@ bool operator!=(VkAcquireNextImageInfoKHR const &lhs,
 
 bool operator==(VkDeviceGroupPresentInfoKHR const &lhs,
                 VkDeviceGroupPresentInfoKHR const &rhs) noexcept {
+  if(lhs.swapchainCount != rhs.swapchainCount)
+    return false;
+
+  for(int i = 0; i < lhs.swapchainCount; ++i) {
+    if(lhs.pDeviceMasks[i] != rhs.pDeviceMasks[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.swapchainCount == rhs.swapchainCount) &&
-         (lhs.pDeviceMasks == rhs.pDeviceMasks) &&
          (lhs.mode == rhs.mode);
 }
 
@@ -5026,9 +5520,15 @@ bool operator!=(VkDeviceGroupPresentInfoKHR const &lhs,
 
 bool operator==(VkDeviceGroupDeviceCreateInfo const &lhs,
                 VkDeviceGroupDeviceCreateInfo const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.physicalDeviceCount == rhs.physicalDeviceCount) &&
-         (lhs.pPhysicalDevices == rhs.pPhysicalDevices);
+  if(lhs.physicalDeviceCount != rhs.physicalDeviceCount)
+    return false;
+
+  for(int i = 0; i < lhs.physicalDeviceCount; ++i) {
+    if(lhs.pPhysicalDevices[i] != rhs.pPhysicalDevices[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkDeviceGroupDeviceCreateInfo const &lhs,
@@ -5064,10 +5564,16 @@ bool operator!=(VkDescriptorUpdateTemplateEntry const &lhs,
 
 bool operator==(VkDescriptorUpdateTemplateCreateInfo const &lhs,
                 VkDescriptorUpdateTemplateCreateInfo const &rhs) noexcept {
+  if(lhs.descriptorUpdateEntryCount != rhs.descriptorUpdateEntryCount)
+    return false;
+
+  for(int i = 0; i < lhs.descriptorUpdateEntryCount; ++i) {
+    if(lhs.pDescriptorUpdateEntries[i] != rhs.pDescriptorUpdateEntries[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
-         (lhs.descriptorUpdateEntryCount == rhs.descriptorUpdateEntryCount) &&
-         (lhs.pDescriptorUpdateEntries == rhs.pDescriptorUpdateEntries) &&
          (lhs.templateType == rhs.templateType) &&
          (lhs.descriptorSetLayout == rhs.descriptorSetLayout) &&
          (lhs.pipelineBindPoint == rhs.pipelineBindPoint) &&
@@ -5135,9 +5641,15 @@ bool operator!=(VkPastPresentationTimingGOOGLE const &lhs,
 
 bool operator==(VkPresentTimesInfoGOOGLE const &lhs,
                 VkPresentTimesInfoGOOGLE const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.swapchainCount == rhs.swapchainCount) &&
-         (lhs.pTimes == rhs.pTimes);
+  if(lhs.swapchainCount != rhs.swapchainCount)
+    return false;
+
+  for(int i = 0; i < lhs.swapchainCount; ++i) {
+    if(lhs.pTimes[i] != rhs.pTimes[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkPresentTimesInfoGOOGLE const &lhs,
@@ -5197,10 +5709,16 @@ bool operator!=(VkViewportWScalingNV const &lhs,
 
 bool operator==(VkPipelineViewportWScalingStateCreateInfoNV const &lhs,
                 VkPipelineViewportWScalingStateCreateInfoNV const &rhs) noexcept {
+  if(lhs.viewportCount != rhs.viewportCount)
+    return false;
+
+  for(int i = 0; i < lhs.viewportCount; ++i) {
+    if(lhs.pViewportWScalings[i] != rhs.pViewportWScalings[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.viewportWScalingEnable == rhs.viewportWScalingEnable) &&
-         (lhs.viewportCount == rhs.viewportCount) &&
-         (lhs.pViewportWScalings == rhs.pViewportWScalings);
+         (lhs.viewportWScalingEnable == rhs.viewportWScalingEnable);
 }
 
 bool operator!=(VkPipelineViewportWScalingStateCreateInfoNV const &lhs,
@@ -5223,10 +5741,16 @@ bool operator!=(VkViewportSwizzleNV const &lhs,
 
 bool operator==(VkPipelineViewportSwizzleStateCreateInfoNV const &lhs,
                 VkPipelineViewportSwizzleStateCreateInfoNV const &rhs) noexcept {
+  if(lhs.viewportCount != rhs.viewportCount)
+    return false;
+
+  for(int i = 0; i < lhs.viewportCount; ++i) {
+    if(lhs.pViewportSwizzles[i] != rhs.pViewportSwizzles[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.viewportCount == rhs.viewportCount) &&
-         (lhs.pViewportSwizzles == rhs.pViewportSwizzles);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkPipelineViewportSwizzleStateCreateInfoNV const &lhs,
@@ -5247,11 +5771,17 @@ bool operator!=(VkPhysicalDeviceDiscardRectanglePropertiesEXT const &lhs,
 
 bool operator==(VkPipelineDiscardRectangleStateCreateInfoEXT const &lhs,
                 VkPipelineDiscardRectangleStateCreateInfoEXT const &rhs) noexcept {
+  if(lhs.discardRectangleCount != rhs.discardRectangleCount)
+    return false;
+
+  for(int i = 0; i < lhs.discardRectangleCount; ++i) {
+    if(lhs.pDiscardRectangles[i] != rhs.pDiscardRectangles[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
-         (lhs.discardRectangleMode == rhs.discardRectangleMode) &&
-         (lhs.discardRectangleCount == rhs.discardRectangleCount) &&
-         (lhs.pDiscardRectangles == rhs.pDiscardRectangles);
+         (lhs.discardRectangleMode == rhs.discardRectangleMode);
 }
 
 bool operator!=(VkPipelineDiscardRectangleStateCreateInfoEXT const &lhs,
@@ -5284,9 +5814,15 @@ bool operator!=(VkInputAttachmentAspectReference const &lhs,
 
 bool operator==(VkRenderPassInputAttachmentAspectCreateInfo const &lhs,
                 VkRenderPassInputAttachmentAspectCreateInfo const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.aspectReferenceCount == rhs.aspectReferenceCount) &&
-         (lhs.pAspectReferences == rhs.pAspectReferences);
+  if(lhs.aspectReferenceCount != rhs.aspectReferenceCount)
+    return false;
+
+  for(int i = 0; i < lhs.aspectReferenceCount; ++i) {
+    if(lhs.pAspectReferences[i] != rhs.pAspectReferences[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkRenderPassInputAttachmentAspectCreateInfo const &lhs,
@@ -5702,11 +6238,17 @@ bool operator!=(VkSampleLocationEXT const &lhs,
 
 bool operator==(VkSampleLocationsInfoEXT const &lhs,
                 VkSampleLocationsInfoEXT const &rhs) noexcept {
+  if(lhs.sampleLocationsCount != rhs.sampleLocationsCount)
+    return false;
+
+  for(int i = 0; i < lhs.sampleLocationsCount; ++i) {
+    if(lhs.pSampleLocations[i] != rhs.pSampleLocations[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.sampleLocationsPerPixel == rhs.sampleLocationsPerPixel) &&
-         (lhs.sampleLocationGridSize == rhs.sampleLocationGridSize) &&
-         (lhs.sampleLocationsCount == rhs.sampleLocationsCount) &&
-         (lhs.pSampleLocations == rhs.pSampleLocations);
+         (lhs.sampleLocationGridSize == rhs.sampleLocationGridSize);
 }
 
 bool operator!=(VkSampleLocationsInfoEXT const &lhs,
@@ -5738,11 +6280,23 @@ bool operator!=(VkSubpassSampleLocationsEXT const &lhs,
 
 bool operator==(VkRenderPassSampleLocationsBeginInfoEXT const &lhs,
                 VkRenderPassSampleLocationsBeginInfoEXT const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.attachmentInitialSampleLocationsCount == rhs.attachmentInitialSampleLocationsCount) &&
-         (lhs.pAttachmentInitialSampleLocations == rhs.pAttachmentInitialSampleLocations) &&
-         (lhs.postSubpassSampleLocationsCount == rhs.postSubpassSampleLocationsCount) &&
-         (lhs.pPostSubpassSampleLocations == rhs.pPostSubpassSampleLocations);
+  if(lhs.attachmentInitialSampleLocationsCount != rhs.attachmentInitialSampleLocationsCount)
+    return false;
+
+  if(lhs.postSubpassSampleLocationsCount != rhs.postSubpassSampleLocationsCount)
+    return false;
+
+  for(int i = 0; i < lhs.attachmentInitialSampleLocationsCount; ++i) {
+    if(lhs.pAttachmentInitialSampleLocations[i] != rhs.pAttachmentInitialSampleLocations[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.postSubpassSampleLocationsCount; ++i) {
+    if(lhs.pPostSubpassSampleLocations[i] != rhs.pPostSubpassSampleLocations[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkRenderPassSampleLocationsBeginInfoEXT const &lhs,
@@ -5768,6 +6322,7 @@ bool operator==(VkPhysicalDeviceSampleLocationsPropertiesEXT const &lhs,
     if(lhs.sampleLocationCoordinateRange[i] != rhs.sampleLocationCoordinateRange[i])
       return false;
   }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.sampleLocationSampleCounts == rhs.sampleLocationSampleCounts) &&
          (lhs.maxSampleLocationGridSize == rhs.maxSampleLocationGridSize) &&
@@ -5844,12 +6399,18 @@ bool operator!=(VkPipelineColorBlendAdvancedStateCreateInfoEXT const &lhs,
 
 bool operator==(VkPipelineCoverageModulationStateCreateInfoNV const &lhs,
                 VkPipelineCoverageModulationStateCreateInfoNV const &rhs) noexcept {
+  if(lhs.coverageModulationTableCount != rhs.coverageModulationTableCount)
+    return false;
+
+  for(int i = 0; i < lhs.coverageModulationTableCount; ++i) {
+    if(lhs.pCoverageModulationTable[i] != rhs.pCoverageModulationTable[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
          (lhs.coverageModulationMode == rhs.coverageModulationMode) &&
-         (lhs.coverageModulationTableEnable == rhs.coverageModulationTableEnable) &&
-         (lhs.coverageModulationTableCount == rhs.coverageModulationTableCount) &&
-         (lhs.pCoverageModulationTable == rhs.pCoverageModulationTable);
+         (lhs.coverageModulationTableEnable == rhs.coverageModulationTableEnable);
 }
 
 bool operator!=(VkPipelineCoverageModulationStateCreateInfoNV const &lhs,
@@ -5859,9 +6420,15 @@ bool operator!=(VkPipelineCoverageModulationStateCreateInfoNV const &lhs,
 
 bool operator==(VkImageFormatListCreateInfoKHR const &lhs,
                 VkImageFormatListCreateInfoKHR const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.viewFormatCount == rhs.viewFormatCount) &&
-         (lhs.pViewFormats == rhs.pViewFormats);
+  if(lhs.viewFormatCount != rhs.viewFormatCount)
+    return false;
+
+  for(int i = 0; i < lhs.viewFormatCount; ++i) {
+    if(lhs.pViewFormats[i] != rhs.pViewFormats[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkImageFormatListCreateInfoKHR const &lhs,
@@ -5871,10 +6438,16 @@ bool operator!=(VkImageFormatListCreateInfoKHR const &lhs,
 
 bool operator==(VkValidationCacheCreateInfoEXT const &lhs,
                 VkValidationCacheCreateInfoEXT const &rhs) noexcept {
+  if(lhs.initialDataSize != rhs.initialDataSize)
+    return false;
+
+  for(int i = 0; i < lhs.initialDataSize; ++i) {
+    if(lhs.pInitialData[i] != rhs.pInitialData[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.initialDataSize == rhs.initialDataSize) &&
-         (lhs.pInitialData == rhs.pInitialData);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkValidationCacheCreateInfoEXT const &lhs,
@@ -5963,6 +6536,7 @@ bool operator==(VkShaderStatisticsInfoAMD const &lhs,
     if(lhs.computeWorkGroupSize[i] != rhs.computeWorkGroupSize[i])
       return false;
   }
+
   return (lhs.shaderStageMask == rhs.shaderStageMask) &&
          (lhs.resourceUsage == rhs.resourceUsage) &&
          (lhs.numPhysicalVgprs == rhs.numPhysicalVgprs) &&
@@ -5989,10 +6563,12 @@ bool operator!=(VkDeviceQueueGlobalPriorityCreateInfoEXT const &lhs,
 
 bool operator==(VkDebugUtilsObjectNameInfoEXT const &lhs,
                 VkDebugUtilsObjectNameInfoEXT const &rhs) noexcept {
+  if(strcmp(lhs.pObjectName, rhs.pObjectName) != 0)
+    return false;
+
   return (lhs.sType == rhs.sType) &&
          (lhs.objectType == rhs.objectType) &&
-         (lhs.objectHandle == rhs.objectHandle) &&
-         (lhs.pObjectName == rhs.pObjectName);
+         (lhs.objectHandle == rhs.objectHandle);
 }
 
 bool operator!=(VkDebugUtilsObjectNameInfoEXT const &lhs,
@@ -6002,12 +6578,18 @@ bool operator!=(VkDebugUtilsObjectNameInfoEXT const &lhs,
 
 bool operator==(VkDebugUtilsObjectTagInfoEXT const &lhs,
                 VkDebugUtilsObjectTagInfoEXT const &rhs) noexcept {
+  if(lhs.tagSize != rhs.tagSize)
+    return false;
+
+  for(int i = 0; i < lhs.tagSize; ++i) {
+    if(lhs.pTag[i] != rhs.pTag[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.objectType == rhs.objectType) &&
          (lhs.objectHandle == rhs.objectHandle) &&
-         (lhs.tagName == rhs.tagName) &&
-         (lhs.tagSize == rhs.tagSize) &&
-         (lhs.pTag == rhs.pTag);
+         (lhs.tagName == rhs.tagName);
 }
 
 bool operator!=(VkDebugUtilsObjectTagInfoEXT const &lhs,
@@ -6017,12 +6599,15 @@ bool operator!=(VkDebugUtilsObjectTagInfoEXT const &lhs,
 
 bool operator==(VkDebugUtilsLabelEXT const &lhs,
                 VkDebugUtilsLabelEXT const &rhs) noexcept {
+  if(strcmp(lhs.pLabelName, rhs.pLabelName) != 0)
+    return false;
+
   for(int i = 0; i < 4; ++i) {
     if(lhs.color[i] != rhs.color[i])
       return false;
   }
-  return (lhs.sType == rhs.sType) &&
-         (lhs.pLabelName == rhs.pLabelName);
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkDebugUtilsLabelEXT const &lhs,
@@ -6047,17 +6632,39 @@ bool operator!=(VkDebugUtilsMessengerCreateInfoEXT const &lhs,
 
 bool operator==(VkDebugUtilsMessengerCallbackDataEXT const &lhs,
                 VkDebugUtilsMessengerCallbackDataEXT const &rhs) noexcept {
+  if(lhs.queueLabelCount != rhs.queueLabelCount)
+    return false;
+
+  if(lhs.cmdBufLabelCount != rhs.cmdBufLabelCount)
+    return false;
+
+  if(lhs.objectCount != rhs.objectCount)
+    return false;
+
+  if(strcmp(lhs.pMessageIdName, rhs.pMessageIdName) != 0)
+    return false;
+
+  if(strcmp(lhs.pMessage, rhs.pMessage) != 0)
+    return false;
+
+  for(int i = 0; i < lhs.queueLabelCount; ++i) {
+    if(lhs.pQueueLabels[i] != rhs.pQueueLabels[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.cmdBufLabelCount; ++i) {
+    if(lhs.pCmdBufLabels[i] != rhs.pCmdBufLabels[i])
+      return false;
+  }
+
+  for(int i = 0; i < lhs.objectCount; ++i) {
+    if(lhs.pObjects[i] != rhs.pObjects[i])
+      return false;
+  }
+
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
-         (lhs.pMessageIdName == rhs.pMessageIdName) &&
-         (lhs.messageIdNumber == rhs.messageIdNumber) &&
-         (lhs.pMessage == rhs.pMessage) &&
-         (lhs.queueLabelCount == rhs.queueLabelCount) &&
-         (lhs.pQueueLabels == rhs.pQueueLabels) &&
-         (lhs.cmdBufLabelCount == rhs.cmdBufLabelCount) &&
-         (lhs.pCmdBufLabels == rhs.pCmdBufLabels) &&
-         (lhs.objectCount == rhs.objectCount) &&
-         (lhs.pObjects == rhs.pObjects);
+         (lhs.messageIdNumber == rhs.messageIdNumber);
 }
 
 bool operator!=(VkDebugUtilsMessengerCallbackDataEXT const &lhs,
@@ -6220,9 +6827,15 @@ bool operator!=(VkPhysicalDeviceDescriptorIndexingPropertiesEXT const &lhs,
 
 bool operator==(VkDescriptorSetLayoutBindingFlagsCreateInfoEXT const &lhs,
                 VkDescriptorSetLayoutBindingFlagsCreateInfoEXT const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.bindingCount == rhs.bindingCount) &&
-         (lhs.pBindingFlags == rhs.pBindingFlags);
+  if(lhs.bindingCount != rhs.bindingCount)
+    return false;
+
+  for(int i = 0; i < lhs.bindingCount; ++i) {
+    if(lhs.pBindingFlags[i] != rhs.pBindingFlags[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkDescriptorSetLayoutBindingFlagsCreateInfoEXT const &lhs,
@@ -6232,9 +6845,15 @@ bool operator!=(VkDescriptorSetLayoutBindingFlagsCreateInfoEXT const &lhs,
 
 bool operator==(VkDescriptorSetVariableDescriptorCountAllocateInfoEXT const &lhs,
                 VkDescriptorSetVariableDescriptorCountAllocateInfoEXT const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.descriptorSetCount == rhs.descriptorSetCount) &&
-         (lhs.pDescriptorCounts == rhs.pDescriptorCounts);
+  if(lhs.descriptorSetCount != rhs.descriptorSetCount)
+    return false;
+
+  for(int i = 0; i < lhs.descriptorSetCount; ++i) {
+    if(lhs.pDescriptorCounts[i] != rhs.pDescriptorCounts[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkDescriptorSetVariableDescriptorCountAllocateInfoEXT const &lhs,
@@ -6266,9 +6885,15 @@ bool operator!=(VkVertexInputBindingDivisorDescriptionEXT const &lhs,
 
 bool operator==(VkPipelineVertexInputDivisorStateCreateInfoEXT const &lhs,
                 VkPipelineVertexInputDivisorStateCreateInfoEXT const &rhs) noexcept {
-  return (lhs.sType == rhs.sType) &&
-         (lhs.vertexBindingDivisorCount == rhs.vertexBindingDivisorCount) &&
-         (lhs.pVertexBindingDivisors == rhs.pVertexBindingDivisors);
+  if(lhs.vertexBindingDivisorCount != rhs.vertexBindingDivisorCount)
+    return false;
+
+  for(int i = 0; i < lhs.vertexBindingDivisorCount; ++i) {
+    if(lhs.pVertexBindingDivisors[i] != rhs.pVertexBindingDivisors[i])
+      return false;
+  }
+
+  return (lhs.sType == rhs.sType);
 }
 
 bool operator!=(VkPipelineVertexInputDivisorStateCreateInfoEXT const &lhs,
