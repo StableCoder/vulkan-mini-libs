@@ -190,6 +190,9 @@ int main(int argc, char **argv) {
         if (it.members.empty())
             continue;
 
+        if (it.name == "VkDeviceCreateInfo" || it.name == "VkInstanceCreateInfo")
+            continue;
+
         if (structHasUnion(it, unions))
             continue;
 
@@ -222,6 +225,9 @@ int main(int argc, char **argv) {
     for (auto &it : structs) {
         // If no members to compare, then no point
         if (it.members.empty())
+            continue;
+
+        if (it.name == "VkDeviceCreateInfo" || it.name == "VkInstanceCreateInfo")
             continue;
 
         if (structHasUnion(it, unions))
