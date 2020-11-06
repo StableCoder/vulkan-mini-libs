@@ -26,4 +26,4 @@
 
 // The define adds the definitions to this unit to be compiled.
 #define VK_ERROR_CODE_CONFIG_MAIN
-#include "vk_equality_checks.hpp"
+#include "vk_error_code.hpp"
