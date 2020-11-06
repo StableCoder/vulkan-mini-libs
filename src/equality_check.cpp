@@ -249,23 +249,48 @@ int main(int argc, char **argv) {
         // == definition
         outFile << "\nbool operator==(" << it.name << " const &lhs,\n";
         outFile << "                " << it.name << " const &rhs) noexcept {\n";
-        // Array members
+        // Len members
         for (auto const &member : it.members) {
-            if (member.sizeEnum.empty())
+            if (member.len.empty() || member.len == "null-terminated")
                 continue;
 
-            outFile << "  for(int i = 0; i < " << member.sizeEnum << "; ++i) {\n";
-            outFile << "    if(lhs." << member.name << "[i] != rhs." << member.name << "[i])\n";
-            outFile << "      return false;\n";
-            outFile << "  }\n";
+            outFile << "  if(lhs." << member.len << " != rhs." << member.len << ")\n";
+            outFile << "    return false;\n\n";
+        }
+        // Array members
+        for (auto const &member : it.members) {
+            if (!member.sizeEnum.empty()) {
+                outFile << "  for(int i = 0; i < " << member.sizeEnum << "; ++i) {\n";
+                outFile << "    if(lhs." << member.name << "[i] != rhs." << member.name << "[i])\n";
+                outFile << "      return false;\n";
+                outFile << "  }\n\n";
+            } else if (!member.len.empty()) {
+                if (member.len == "null-terminated") {
+                    outFile << "  if(strcmp(lhs." << member.name << ", rhs." << member.name
+                            << ") != 0)\n";
+                    outFile << "    return false;\n\n";
+                } else {
+                    outFile << "  for(int i = 0; i < lhs." << member.len << "; ++i) {\n";
+                    outFile << "    if(lhs." << member.name << "[i] != rhs." << member.name
+                            << "[i])\n";
+                    outFile << "      return false;\n";
+                    outFile << "  }\n\n";
+                }
+            }
         }
         // Regular members
         outFile << "  return ";
         bool isFirst = true;
         for (auto const &member : it.members) {
             // Don't do array members here
-            if (!member.sizeEnum.empty())
+            if (!member.sizeEnum.empty() || !member.len.empty())
                 continue;
+
+            // Don't do one if it's a member length count
+            for (auto const &inMem : it.members) {
+                if (member.name == inMem.len)
+                    goto MEMBER_END;
+            }
 
             // Don't do 'void' pointer types
             if (member.name == "pNext" && member.type == "void" && member.typeSuffix == "*")
@@ -278,6 +303,7 @@ int main(int argc, char **argv) {
                 outFile << " &&\n         ";
             }
             outFile << "(lhs." << member.name << " == rhs." << member.name << ")";
+        MEMBER_END:;
         }
         outFile << ";\n";
         outFile << "}\n";

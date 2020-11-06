@@ -51,6 +51,7 @@ struct MemberData {
     std::string_view typeSuffix;
     std::string_view name;
     std::string sizeEnum;
+    std::string_view len;
     bool optional;
 };
 
@@ -112,6 +113,10 @@ std::vector<StructData> getStructData(rapidxml::xml_node<> *typesNode) {
                     if (std::string_view{nextNode->value()}.find('*') != std::string::npos) {
                         temp.typeSuffix = "*";
                     }
+                }
+
+                if (auto lenAttr = memberNode->first_attribute("len"); lenAttr != nullptr) {
+                    temp.len = lenAttr->value();
                 }
 
                 if (auto optAttr = memberNode->first_attribute("optional"); optAttr != nullptr) {
