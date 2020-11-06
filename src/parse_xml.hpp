@@ -51,7 +51,8 @@ struct MemberData {
     std::string_view typeSuffix;
     std::string_view name;
     std::string sizeEnum;
-    std::string_view len;
+    std::string len;
+    std::string altlen;
     bool optional;
 };
 
@@ -117,6 +118,17 @@ std::vector<StructData> getStructData(rapidxml::xml_node<> *typesNode) {
 
                 if (auto lenAttr = memberNode->first_attribute("len"); lenAttr != nullptr) {
                     temp.len = lenAttr->value();
+                }
+                if (auto lenAttr = memberNode->first_attribute("altlen"); lenAttr != nullptr) {
+                    temp.altlen = lenAttr->value();
+
+                    auto startIt = temp.len.find_last_of('{');
+                    auto endIt = temp.len.find_first_of('}');
+                    if (startIt != std::string::npos) {
+                        temp.len = temp.len.substr(startIt + 1, endIt - startIt - 1);
+                    }
+                } else {
+                    temp.altlen = temp.len;
                 }
 
                 if (auto optAttr = memberNode->first_attribute("optional"); optAttr != nullptr) {

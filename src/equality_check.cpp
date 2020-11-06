@@ -269,8 +269,15 @@ int main(int argc, char **argv) {
                     outFile << "  if(strcmp(lhs." << member.name << ", rhs." << member.name
                             << ") != 0)\n";
                     outFile << "    return false;\n\n";
+                } else if (member.type == "void" && member.typeSuffix == "*") {
+                    outFile << "  if(memcmp(lhs." << member.name << ", rhs." << member.name
+                            << ", lhs." << member.altlen << ") != 0)\n";
+                    outFile << "    return false;\n\n";
                 } else {
-                    outFile << "  for(int i = 0; i < lhs." << member.len << "; ++i) {\n";
+                    auto searchIt = member.altlen.find(member.len);
+                    std::string tempLen = member.altlen;
+                    tempLen.insert(searchIt, std::string{"lhs."});
+                    outFile << "  for(int i = 0; i < " << tempLen << "; ++i) {\n";
                     outFile << "    if(lhs." << member.name << "[i] != rhs." << member.name
                             << "[i])\n";
                     outFile << "      return false;\n";
@@ -279,7 +286,6 @@ int main(int argc, char **argv) {
             }
         }
         // Regular members
-        outFile << "  return ";
         bool isFirst = true;
         for (auto const &member : it.members) {
             // Don't do array members here
@@ -299,12 +305,16 @@ int main(int argc, char **argv) {
             // If it's the first, then we don't prefix with '&&'
             if (isFirst) {
                 isFirst = false;
+                outFile << "  return ";
             } else {
                 outFile << " &&\n         ";
             }
             outFile << "(lhs." << member.name << " == rhs." << member.name << ")";
         MEMBER_END:;
         }
+        if (isFirst)
+            outFile << "  return true";
+
         outFile << ";\n";
         outFile << "}\n";
 
