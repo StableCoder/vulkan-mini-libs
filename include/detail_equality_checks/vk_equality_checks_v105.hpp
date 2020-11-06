@@ -3112,17 +3112,16 @@ bool operator!=(VkImageResolve const &lhs,
 
 bool operator==(VkShaderModuleCreateInfo const &lhs,
                 VkShaderModuleCreateInfo const &rhs) noexcept {
-  if(lhs.latexmath:[\textrm{codeSize} \over 4] != rhs.latexmath:[\textrm{codeSize} \over 4])
+  if(lhs.codeSize != rhs.codeSize)
     return false;
 
-  for(int i = 0; i < lhs.latexmath:[\textrm{codeSize} \over 4]; ++i) {
+  for(int i = 0; i < lhs.codeSize / 4; ++i) {
     if(lhs.pCode[i] != rhs.pCode[i])
       return false;
   }
 
   return (lhs.sType == rhs.sType) &&
-         (lhs.flags == rhs.flags) &&
-         (lhs.codeSize == rhs.codeSize);
+         (lhs.flags == rhs.flags);
 }
 
 bool operator!=(VkShaderModuleCreateInfo const &lhs,
@@ -3244,12 +3243,10 @@ bool operator==(VkSpecializationInfo const &lhs,
       return false;
   }
 
-  for(int i = 0; i < lhs.dataSize; ++i) {
-    if(lhs.pData[i] != rhs.pData[i])
-      return false;
-  }
+  if(memcmp(lhs.pData, rhs.pData, lhs.dataSize) != 0)
+    return false;
 
-  return ;
+  return true;
 }
 
 bool operator!=(VkSpecializationInfo const &lhs,
@@ -3416,17 +3413,16 @@ bool operator!=(VkPipelineRasterizationStateCreateInfo const &lhs,
 
 bool operator==(VkPipelineMultisampleStateCreateInfo const &lhs,
                 VkPipelineMultisampleStateCreateInfo const &rhs) noexcept {
-  if(lhs.latexmath:[\lceil{\mathit{rasterizationSamples} \over 32}\rceil] != rhs.latexmath:[\lceil{\mathit{rasterizationSamples} \over 32}\rceil])
+  if(lhs.rasterizationSamples != rhs.rasterizationSamples)
     return false;
 
-  for(int i = 0; i < lhs.latexmath:[\lceil{\mathit{rasterizationSamples} \over 32}\rceil]; ++i) {
+  for(int i = 0; i < (lhs.rasterizationSamples + 31) / 32; ++i) {
     if(lhs.pSampleMask[i] != rhs.pSampleMask[i])
       return false;
   }
 
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
-         (lhs.rasterizationSamples == rhs.rasterizationSamples) &&
          (lhs.sampleShadingEnable == rhs.sampleShadingEnable) &&
          (lhs.minSampleShading == rhs.minSampleShading) &&
          (lhs.alphaToCoverageEnable == rhs.alphaToCoverageEnable) &&
@@ -3574,10 +3570,8 @@ bool operator==(VkPipelineCacheCreateInfo const &lhs,
   if(lhs.initialDataSize != rhs.initialDataSize)
     return false;
 
-  for(int i = 0; i < lhs.initialDataSize; ++i) {
-    if(lhs.pInitialData[i] != rhs.pInitialData[i])
-      return false;
-  }
+  if(memcmp(lhs.pInitialData, rhs.pInitialData, lhs.initialDataSize) != 0)
+    return false;
 
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags);
@@ -4629,10 +4623,8 @@ bool operator==(VkDebugMarkerObjectTagInfoEXT const &lhs,
   if(lhs.tagSize != rhs.tagSize)
     return false;
 
-  for(int i = 0; i < lhs.tagSize; ++i) {
-    if(lhs.pTag[i] != rhs.pTag[i])
-      return false;
-  }
+  if(memcmp(lhs.pTag, rhs.pTag, lhs.tagSize) != 0)
+    return false;
 
   return (lhs.sType == rhs.sType) &&
          (lhs.objectType == rhs.objectType) &&
@@ -5216,7 +5208,7 @@ bool operator==(VkPresentRegionKHR const &lhs,
       return false;
   }
 
-  return ;
+  return true;
 }
 
 bool operator!=(VkPresentRegionKHR const &lhs,
@@ -7084,10 +7076,8 @@ bool operator==(VkWriteDescriptorSetInlineUniformBlockEXT const &lhs,
   if(lhs.dataSize != rhs.dataSize)
     return false;
 
-  for(int i = 0; i < lhs.dataSize; ++i) {
-    if(lhs.pData[i] != rhs.pData[i])
-      return false;
-  }
+  if(memcmp(lhs.pData, rhs.pData, lhs.dataSize) != 0)
+    return false;
 
   return (lhs.sType == rhs.sType);
 }
@@ -7152,10 +7142,8 @@ bool operator==(VkValidationCacheCreateInfoEXT const &lhs,
   if(lhs.initialDataSize != rhs.initialDataSize)
     return false;
 
-  for(int i = 0; i < lhs.initialDataSize; ++i) {
-    if(lhs.pInitialData[i] != rhs.pInitialData[i])
-      return false;
-  }
+  if(memcmp(lhs.pInitialData, rhs.pInitialData, lhs.initialDataSize) != 0)
+    return false;
 
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags);
@@ -7342,10 +7330,8 @@ bool operator==(VkDebugUtilsObjectTagInfoEXT const &lhs,
   if(lhs.tagSize != rhs.tagSize)
     return false;
 
-  for(int i = 0; i < lhs.tagSize; ++i) {
-    if(lhs.pTag[i] != rhs.pTag[i])
-      return false;
-  }
+  if(memcmp(lhs.pTag, rhs.pTag, lhs.tagSize) != 0)
+    return false;
 
   return (lhs.sType == rhs.sType) &&
          (lhs.objectType == rhs.objectType) &&
@@ -8250,7 +8236,7 @@ bool operator==(VkShadingRatePaletteNV const &lhs,
       return false;
   }
 
-  return ;
+  return true;
 }
 
 bool operator!=(VkShadingRatePaletteNV const &lhs,

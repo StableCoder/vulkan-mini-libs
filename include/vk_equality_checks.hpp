@@ -246,59 +246,5 @@
 #if VK_HEADER_VERSION == 90
     #include "detail_equality_checks/vk_equality_checks_v90.hpp"
 #endif
-#if VK_HEADER_VERSION == 89
-    #include "detail_equality_checks/vk_equality_checks_v89.hpp"
-#endif
-#if VK_HEADER_VERSION == 88
-    #include "detail_equality_checks/vk_equality_checks_v88.hpp"
-#endif
-#if VK_HEADER_VERSION == 87
-    #include "detail_equality_checks/vk_equality_checks_v87.hpp"
-#endif
-#if VK_HEADER_VERSION == 86
-    #include "detail_equality_checks/vk_equality_checks_v86.hpp"
-#endif
-#if VK_HEADER_VERSION == 85
-    #include "detail_equality_checks/vk_equality_checks_v85.hpp"
-#endif
-#if VK_HEADER_VERSION == 84
-    #include "detail_equality_checks/vk_equality_checks_v84.hpp"
-#endif
-#if VK_HEADER_VERSION == 83
-    #include "detail_equality_checks/vk_equality_checks_v83.hpp"
-#endif
-#if VK_HEADER_VERSION == 82
-    #include "detail_equality_checks/vk_equality_checks_v82.hpp"
-#endif
-#if VK_HEADER_VERSION == 81
-    #include "detail_equality_checks/vk_equality_checks_v81.hpp"
-#endif
-#if VK_HEADER_VERSION == 80
-    #include "detail_equality_checks/vk_equality_checks_v80.hpp"
-#endif
-#if VK_HEADER_VERSION == 79
-    #include "detail_equality_checks/vk_equality_checks_v79.hpp"
-#endif
-#if VK_HEADER_VERSION == 78
-    #include "detail_equality_checks/vk_equality_checks_v78.hpp"
-#endif
-#if VK_HEADER_VERSION == 77
-    #include "detail_equality_checks/vk_equality_checks_v77.hpp"
-#endif
-#if VK_HEADER_VERSION == 76
-    #include "detail_equality_checks/vk_equality_checks_v76.hpp"
-#endif
-#if VK_HEADER_VERSION == 75
-    #include "detail_equality_checks/vk_equality_checks_v75.hpp"
-#endif
-#if VK_HEADER_VERSION == 74
-    #include "detail_equality_checks/vk_equality_checks_v74.hpp"
-#endif
-#if VK_HEADER_VERSION == 73
-    #include "detail_equality_checks/vk_equality_checks_v73.hpp"
-#endif
-#if VK_HEADER_VERSION == 72
-    #include "detail_equality_checks/vk_equality_checks_v72.hpp"
-#endif
 
 #endif // VK_EQUALITY_CHECKS_HPP
