@@ -267,9 +267,14 @@ int main(int argc, char **argv) {
                 outFile << "  }\n\n";
             } else if (!member.len.empty()) {
                 if (member.len == "null-terminated") {
-                    outFile << "  if(strcmp(lhs." << member.name << ", rhs." << member.name
+                    outFile << "  if (lhs." << member.name << " != rhs." << member.name << ") {\n";
+                    outFile << "    if(lhs." << member.name << " == nullptr || rhs." << member.name
+                            << " == nullptr)\n";
+                    outFile << "      return false;\n";
+                    outFile << "    if(strcmp(lhs." << member.name << ", rhs." << member.name
                             << ") != 0)\n";
-                    outFile << "    return false;\n\n";
+                    outFile << "      return false;\n";
+                    outFile << "  }\n\n";
                 } else if (member.type == "void" && member.typeSuffix == "*") {
                     outFile << "  if(memcmp(lhs." << member.name << ", rhs." << member.name
                             << ", lhs." << member.altlen << ") != 0)\n";
