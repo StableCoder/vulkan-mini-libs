@@ -261,7 +261,7 @@ int main(int argc, char **argv) {
         // Array members
         for (auto const &member : it.members) {
             if (!member.sizeEnum.empty()) {
-                outFile << "  for(int i = 0; i < " << member.sizeEnum << "; ++i) {\n";
+                outFile << "  for(uint32_t i = 0; i < " << member.sizeEnum << "; ++i) {\n";
                 outFile << "    if(lhs." << member.name << "[i] != rhs." << member.name << "[i])\n";
                 outFile << "      return false;\n";
                 outFile << "  }\n\n";
@@ -283,7 +283,7 @@ int main(int argc, char **argv) {
                     auto searchIt = member.altlen.find(member.len);
                     std::string tempLen = member.altlen;
                     tempLen.insert(searchIt, std::string{"lhs."});
-                    outFile << "  for(int i = 0; i < " << tempLen << "; ++i) {\n";
+                    outFile << "  for(uint32_t i = 0; i < " << tempLen << "; ++i) {\n";
                     outFile << "    if(lhs." << member.name << "[i] != rhs." << member.name
                             << "[i])\n";
                     outFile << "      return false;\n";
