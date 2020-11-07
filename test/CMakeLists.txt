@@ -8,6 +8,11 @@ find_package(Vulkan REQUIRED)
 include_directories(../include)
 link_libraries(catch Vulkan::Vulkan)
 
+# Equality Checks
+add_executable(VkEqualityCheckTests equality_checks.cpp)
+
+add_test(NAME VkEqualityCheckTests-Tests COMMAND VkEqualityCheckTests)
+
 # Error Code
 add_executable(VkErrorCodeTests error_code.cpp)
 target_code_coverage(VkErrorCodeTests EXCLUDE ".*/test/.*")
