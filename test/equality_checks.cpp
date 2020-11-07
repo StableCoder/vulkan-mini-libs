@@ -20,6 +20,8 @@
 #define VK_EQUALITY_CHECK_CONFIG_MAIN
 #include "vk_equality_checks.hpp"
 
+#include <array>
+
 TEST_CASE("VkApplicationInfo - strcmp for null-terminated data") {
     SECTION("Empty nullptr data") {
         VkApplicationInfo test1{};
