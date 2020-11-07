@@ -2152,6 +2152,7 @@ bool operator!=(VkFilterCubicImageViewImageFormatPropertiesEXT const &lhs,
 #ifdef VK_EQUALITY_CHECK_CONFIG_MAIN
 
 #include <cstdint>
+#include <cstring>
 
 bool operator==(VkBaseOutStructure const &lhs,
                 VkBaseOutStructure const &rhs) noexcept {
@@ -2274,12 +2275,12 @@ bool operator!=(VkComponentMapping const &lhs,
 
 bool operator==(VkPhysicalDeviceProperties const &lhs,
                 VkPhysicalDeviceProperties const &rhs) noexcept {
-  for(int i = 0; i < VK_MAX_PHYSICAL_DEVICE_NAME_SIZE; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_PHYSICAL_DEVICE_NAME_SIZE; ++i) {
     if(lhs.deviceName[i] != rhs.deviceName[i])
       return false;
   }
 
-  for(int i = 0; i < VK_UUID_SIZE; ++i) {
+  for(uint32_t i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.pipelineCacheUUID[i] != rhs.pipelineCacheUUID[i])
       return false;
   }
@@ -2300,7 +2301,7 @@ bool operator!=(VkPhysicalDeviceProperties const &lhs,
 
 bool operator==(VkExtensionProperties const &lhs,
                 VkExtensionProperties const &rhs) noexcept {
-  for(int i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
     if(lhs.extensionName[i] != rhs.extensionName[i])
       return false;
   }
@@ -2315,12 +2316,12 @@ bool operator!=(VkExtensionProperties const &lhs,
 
 bool operator==(VkLayerProperties const &lhs,
                 VkLayerProperties const &rhs) noexcept {
-  for(int i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_EXTENSION_NAME_SIZE; ++i) {
     if(lhs.layerName[i] != rhs.layerName[i])
       return false;
   }
 
-  for(int i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_DESCRIPTION_SIZE; ++i) {
     if(lhs.description[i] != rhs.description[i])
       return false;
   }
@@ -2336,11 +2337,19 @@ bool operator!=(VkLayerProperties const &lhs,
 
 bool operator==(VkApplicationInfo const &lhs,
                 VkApplicationInfo const &rhs) noexcept {
-  if(strcmp(lhs.pApplicationName, rhs.pApplicationName) != 0)
-    return false;
+  if (lhs.pApplicationName != rhs.pApplicationName) {
+    if(lhs.pApplicationName == nullptr || rhs.pApplicationName == nullptr)
+      return false;
+    if(strcmp(lhs.pApplicationName, rhs.pApplicationName) != 0)
+      return false;
+  }
 
-  if(strcmp(lhs.pEngineName, rhs.pEngineName) != 0)
-    return false;
+  if (lhs.pEngineName != rhs.pEngineName) {
+    if(lhs.pEngineName == nullptr || rhs.pEngineName == nullptr)
+      return false;
+    if(strcmp(lhs.pEngineName, rhs.pEngineName) != 0)
+      return false;
+  }
 
   return (lhs.sType == rhs.sType) &&
          (lhs.applicationVersion == rhs.applicationVersion) &&
@@ -2373,7 +2382,7 @@ bool operator==(VkDeviceQueueCreateInfo const &lhs,
   if(lhs.queueCount != rhs.queueCount)
     return false;
 
-  for(int i = 0; i < lhs.queueCount; ++i) {
+  for(uint32_t i = 0; i < lhs.queueCount; ++i) {
     if(lhs.pQueuePriorities[i] != rhs.pQueuePriorities[i])
       return false;
   }
@@ -2403,12 +2412,12 @@ bool operator!=(VkQueueFamilyProperties const &lhs,
 
 bool operator==(VkPhysicalDeviceMemoryProperties const &lhs,
                 VkPhysicalDeviceMemoryProperties const &rhs) noexcept {
-  for(int i = 0; i < VK_MAX_MEMORY_TYPES; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_MEMORY_TYPES; ++i) {
     if(lhs.memoryTypes[i] != rhs.memoryTypes[i])
       return false;
   }
 
-  for(int i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
     if(lhs.memoryHeaps[i] != rhs.memoryHeaps[i])
       return false;
   }
@@ -2568,17 +2577,17 @@ bool operator==(VkWriteDescriptorSet const &lhs,
   if(lhs.descriptorCount != rhs.descriptorCount)
     return false;
 
-  for(int i = 0; i < lhs.descriptorCount; ++i) {
+  for(uint32_t i = 0; i < lhs.descriptorCount; ++i) {
     if(lhs.pImageInfo[i] != rhs.pImageInfo[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.descriptorCount; ++i) {
+  for(uint32_t i = 0; i < lhs.descriptorCount; ++i) {
     if(lhs.pBufferInfo[i] != rhs.pBufferInfo[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.descriptorCount; ++i) {
+  for(uint32_t i = 0; i < lhs.descriptorCount; ++i) {
     if(lhs.pTexelBufferView[i] != rhs.pTexelBufferView[i])
       return false;
   }
@@ -2617,7 +2626,7 @@ bool operator==(VkBufferCreateInfo const &lhs,
   if(lhs.queueFamilyIndexCount != rhs.queueFamilyIndexCount)
     return false;
 
-  for(int i = 0; i < lhs.queueFamilyIndexCount; ++i) {
+  for(uint32_t i = 0; i < lhs.queueFamilyIndexCount; ++i) {
     if(lhs.pQueueFamilyIndices[i] != rhs.pQueueFamilyIndices[i])
       return false;
   }
@@ -2740,7 +2749,7 @@ bool operator==(VkImageCreateInfo const &lhs,
   if(lhs.queueFamilyIndexCount != rhs.queueFamilyIndexCount)
     return false;
 
-  for(int i = 0; i < lhs.queueFamilyIndexCount; ++i) {
+  for(uint32_t i = 0; i < lhs.queueFamilyIndexCount; ++i) {
     if(lhs.pQueueFamilyIndices[i] != rhs.pQueueFamilyIndices[i])
       return false;
   }
@@ -2840,7 +2849,7 @@ bool operator==(VkSparseBufferMemoryBindInfo const &lhs,
   if(lhs.bindCount != rhs.bindCount)
     return false;
 
-  for(int i = 0; i < lhs.bindCount; ++i) {
+  for(uint32_t i = 0; i < lhs.bindCount; ++i) {
     if(lhs.pBinds[i] != rhs.pBinds[i])
       return false;
   }
@@ -2858,7 +2867,7 @@ bool operator==(VkSparseImageOpaqueMemoryBindInfo const &lhs,
   if(lhs.bindCount != rhs.bindCount)
     return false;
 
-  for(int i = 0; i < lhs.bindCount; ++i) {
+  for(uint32_t i = 0; i < lhs.bindCount; ++i) {
     if(lhs.pBinds[i] != rhs.pBinds[i])
       return false;
   }
@@ -2876,7 +2885,7 @@ bool operator==(VkSparseImageMemoryBindInfo const &lhs,
   if(lhs.bindCount != rhs.bindCount)
     return false;
 
-  for(int i = 0; i < lhs.bindCount; ++i) {
+  for(uint32_t i = 0; i < lhs.bindCount; ++i) {
     if(lhs.pBinds[i] != rhs.pBinds[i])
       return false;
   }
@@ -2906,27 +2915,27 @@ bool operator==(VkBindSparseInfo const &lhs,
   if(lhs.signalSemaphoreCount != rhs.signalSemaphoreCount)
     return false;
 
-  for(int i = 0; i < lhs.waitSemaphoreCount; ++i) {
+  for(uint32_t i = 0; i < lhs.waitSemaphoreCount; ++i) {
     if(lhs.pWaitSemaphores[i] != rhs.pWaitSemaphores[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.bufferBindCount; ++i) {
+  for(uint32_t i = 0; i < lhs.bufferBindCount; ++i) {
     if(lhs.pBufferBinds[i] != rhs.pBufferBinds[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.imageOpaqueBindCount; ++i) {
+  for(uint32_t i = 0; i < lhs.imageOpaqueBindCount; ++i) {
     if(lhs.pImageOpaqueBinds[i] != rhs.pImageOpaqueBinds[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.imageBindCount; ++i) {
+  for(uint32_t i = 0; i < lhs.imageBindCount; ++i) {
     if(lhs.pImageBinds[i] != rhs.pImageBinds[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.signalSemaphoreCount; ++i) {
+  for(uint32_t i = 0; i < lhs.signalSemaphoreCount; ++i) {
     if(lhs.pSignalSemaphores[i] != rhs.pSignalSemaphores[i])
       return false;
   }
@@ -2955,12 +2964,12 @@ bool operator!=(VkImageCopy const &lhs,
 
 bool operator==(VkImageBlit const &lhs,
                 VkImageBlit const &rhs) noexcept {
-  for(int i = 0; i < 2; ++i) {
+  for(uint32_t i = 0; i < 2; ++i) {
     if(lhs.srcOffsets[i] != rhs.srcOffsets[i])
       return false;
   }
 
-  for(int i = 0; i < 2; ++i) {
+  for(uint32_t i = 0; i < 2; ++i) {
     if(lhs.dstOffsets[i] != rhs.dstOffsets[i])
       return false;
   }
@@ -3008,7 +3017,7 @@ bool operator==(VkShaderModuleCreateInfo const &lhs,
   if(lhs.codeSize != rhs.codeSize)
     return false;
 
-  for(int i = 0; i < lhs.codeSize / 4; ++i) {
+  for(uint32_t i = 0; i < lhs.codeSize / 4; ++i) {
     if(lhs.pCode[i] != rhs.pCode[i])
       return false;
   }
@@ -3027,7 +3036,7 @@ bool operator==(VkDescriptorSetLayoutBinding const &lhs,
   if(lhs.descriptorCount != rhs.descriptorCount)
     return false;
 
-  for(int i = 0; i < lhs.descriptorCount; ++i) {
+  for(uint32_t i = 0; i < lhs.descriptorCount; ++i) {
     if(lhs.pImmutableSamplers[i] != rhs.pImmutableSamplers[i])
       return false;
   }
@@ -3047,7 +3056,7 @@ bool operator==(VkDescriptorSetLayoutCreateInfo const &lhs,
   if(lhs.bindingCount != rhs.bindingCount)
     return false;
 
-  for(int i = 0; i < lhs.bindingCount; ++i) {
+  for(uint32_t i = 0; i < lhs.bindingCount; ++i) {
     if(lhs.pBindings[i] != rhs.pBindings[i])
       return false;
   }
@@ -3077,7 +3086,7 @@ bool operator==(VkDescriptorPoolCreateInfo const &lhs,
   if(lhs.poolSizeCount != rhs.poolSizeCount)
     return false;
 
-  for(int i = 0; i < lhs.poolSizeCount; ++i) {
+  for(uint32_t i = 0; i < lhs.poolSizeCount; ++i) {
     if(lhs.pPoolSizes[i] != rhs.pPoolSizes[i])
       return false;
   }
@@ -3097,7 +3106,7 @@ bool operator==(VkDescriptorSetAllocateInfo const &lhs,
   if(lhs.descriptorSetCount != rhs.descriptorSetCount)
     return false;
 
-  for(int i = 0; i < lhs.descriptorSetCount; ++i) {
+  for(uint32_t i = 0; i < lhs.descriptorSetCount; ++i) {
     if(lhs.pSetLayouts[i] != rhs.pSetLayouts[i])
       return false;
   }
@@ -3131,7 +3140,7 @@ bool operator==(VkSpecializationInfo const &lhs,
   if(lhs.dataSize != rhs.dataSize)
     return false;
 
-  for(int i = 0; i < lhs.mapEntryCount; ++i) {
+  for(uint32_t i = 0; i < lhs.mapEntryCount; ++i) {
     if(lhs.pMapEntries[i] != rhs.pMapEntries[i])
       return false;
   }
@@ -3149,8 +3158,12 @@ bool operator!=(VkSpecializationInfo const &lhs,
 
 bool operator==(VkPipelineShaderStageCreateInfo const &lhs,
                 VkPipelineShaderStageCreateInfo const &rhs) noexcept {
-  if(strcmp(lhs.pName, rhs.pName) != 0)
-    return false;
+  if (lhs.pName != rhs.pName) {
+    if(lhs.pName == nullptr || rhs.pName == nullptr)
+      return false;
+    if(strcmp(lhs.pName, rhs.pName) != 0)
+      return false;
+  }
 
   return (lhs.sType == rhs.sType) &&
          (lhs.flags == rhs.flags) &&
@@ -3212,12 +3225,12 @@ bool operator==(VkPipelineVertexInputStateCreateInfo const &lhs,
   if(lhs.vertexAttributeDescriptionCount != rhs.vertexAttributeDescriptionCount)
     return false;
 
-  for(int i = 0; i < lhs.vertexBindingDescriptionCount; ++i) {
+  for(uint32_t i = 0; i < lhs.vertexBindingDescriptionCount; ++i) {
     if(lhs.pVertexBindingDescriptions[i] != rhs.pVertexBindingDescriptions[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.vertexAttributeDescriptionCount; ++i) {
+  for(uint32_t i = 0; i < lhs.vertexAttributeDescriptionCount; ++i) {
     if(lhs.pVertexAttributeDescriptions[i] != rhs.pVertexAttributeDescriptions[i])
       return false;
   }
@@ -3264,12 +3277,12 @@ bool operator==(VkPipelineViewportStateCreateInfo const &lhs,
   if(lhs.scissorCount != rhs.scissorCount)
     return false;
 
-  for(int i = 0; i < lhs.viewportCount; ++i) {
+  for(uint32_t i = 0; i < lhs.viewportCount; ++i) {
     if(lhs.pViewports[i] != rhs.pViewports[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.scissorCount; ++i) {
+  for(uint32_t i = 0; i < lhs.scissorCount; ++i) {
     if(lhs.pScissors[i] != rhs.pScissors[i])
       return false;
   }
@@ -3309,7 +3322,7 @@ bool operator==(VkPipelineMultisampleStateCreateInfo const &lhs,
   if(lhs.rasterizationSamples != rhs.rasterizationSamples)
     return false;
 
-  for(int i = 0; i < (lhs.rasterizationSamples + 31) / 32; ++i) {
+  for(uint32_t i = 0; i < (lhs.rasterizationSamples + 31) / 32; ++i) {
     if(lhs.pSampleMask[i] != rhs.pSampleMask[i])
       return false;
   }
@@ -3349,12 +3362,12 @@ bool operator==(VkPipelineColorBlendStateCreateInfo const &lhs,
   if(lhs.attachmentCount != rhs.attachmentCount)
     return false;
 
-  for(int i = 0; i < lhs.attachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.attachmentCount; ++i) {
     if(lhs.pAttachments[i] != rhs.pAttachments[i])
       return false;
   }
 
-  for(int i = 0; i < 4; ++i) {
+  for(uint32_t i = 0; i < 4; ++i) {
     if(lhs.blendConstants[i] != rhs.blendConstants[i])
       return false;
   }
@@ -3375,7 +3388,7 @@ bool operator==(VkPipelineDynamicStateCreateInfo const &lhs,
   if(lhs.dynamicStateCount != rhs.dynamicStateCount)
     return false;
 
-  for(int i = 0; i < lhs.dynamicStateCount; ++i) {
+  for(uint32_t i = 0; i < lhs.dynamicStateCount; ++i) {
     if(lhs.pDynamicStates[i] != rhs.pDynamicStates[i])
       return false;
   }
@@ -3430,7 +3443,7 @@ bool operator==(VkGraphicsPipelineCreateInfo const &lhs,
   if(lhs.stageCount != rhs.stageCount)
     return false;
 
-  for(int i = 0; i < lhs.stageCount; ++i) {
+  for(uint32_t i = 0; i < lhs.stageCount; ++i) {
     if(lhs.pStages[i] != rhs.pStages[i])
       return false;
   }
@@ -3495,12 +3508,12 @@ bool operator==(VkPipelineLayoutCreateInfo const &lhs,
   if(lhs.pushConstantRangeCount != rhs.pushConstantRangeCount)
     return false;
 
-  for(int i = 0; i < lhs.setLayoutCount; ++i) {
+  for(uint32_t i = 0; i < lhs.setLayoutCount; ++i) {
     if(lhs.pSetLayouts[i] != rhs.pSetLayouts[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.pushConstantRangeCount; ++i) {
+  for(uint32_t i = 0; i < lhs.pushConstantRangeCount; ++i) {
     if(lhs.pPushConstantRanges[i] != rhs.pPushConstantRanges[i])
       return false;
   }
@@ -3647,22 +3660,22 @@ bool operator==(VkSubpassDescription const &lhs,
   if(lhs.preserveAttachmentCount != rhs.preserveAttachmentCount)
     return false;
 
-  for(int i = 0; i < lhs.inputAttachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.inputAttachmentCount; ++i) {
     if(lhs.pInputAttachments[i] != rhs.pInputAttachments[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.colorAttachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.colorAttachmentCount; ++i) {
     if(lhs.pColorAttachments[i] != rhs.pColorAttachments[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.colorAttachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.colorAttachmentCount; ++i) {
     if(lhs.pResolveAttachments[i] != rhs.pResolveAttachments[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.preserveAttachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.preserveAttachmentCount; ++i) {
     if(lhs.pPreserveAttachments[i] != rhs.pPreserveAttachments[i])
       return false;
   }
@@ -3704,17 +3717,17 @@ bool operator==(VkRenderPassCreateInfo const &lhs,
   if(lhs.dependencyCount != rhs.dependencyCount)
     return false;
 
-  for(int i = 0; i < lhs.attachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.attachmentCount; ++i) {
     if(lhs.pAttachments[i] != rhs.pAttachments[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.subpassCount; ++i) {
+  for(uint32_t i = 0; i < lhs.subpassCount; ++i) {
     if(lhs.pSubpasses[i] != rhs.pSubpasses[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.dependencyCount; ++i) {
+  for(uint32_t i = 0; i < lhs.dependencyCount; ++i) {
     if(lhs.pDependencies[i] != rhs.pDependencies[i])
       return false;
   }
@@ -3830,32 +3843,32 @@ bool operator!=(VkPhysicalDeviceSparseProperties const &lhs,
 
 bool operator==(VkPhysicalDeviceLimits const &lhs,
                 VkPhysicalDeviceLimits const &rhs) noexcept {
-  for(int i = 0; i < 3; ++i) {
+  for(uint32_t i = 0; i < 3; ++i) {
     if(lhs.maxComputeWorkGroupCount[i] != rhs.maxComputeWorkGroupCount[i])
       return false;
   }
 
-  for(int i = 0; i < 3; ++i) {
+  for(uint32_t i = 0; i < 3; ++i) {
     if(lhs.maxComputeWorkGroupSize[i] != rhs.maxComputeWorkGroupSize[i])
       return false;
   }
 
-  for(int i = 0; i < 2; ++i) {
+  for(uint32_t i = 0; i < 2; ++i) {
     if(lhs.maxViewportDimensions[i] != rhs.maxViewportDimensions[i])
       return false;
   }
 
-  for(int i = 0; i < 2; ++i) {
+  for(uint32_t i = 0; i < 2; ++i) {
     if(lhs.viewportBoundsRange[i] != rhs.viewportBoundsRange[i])
       return false;
   }
 
-  for(int i = 0; i < 2; ++i) {
+  for(uint32_t i = 0; i < 2; ++i) {
     if(lhs.pointSizeRange[i] != rhs.pointSizeRange[i])
       return false;
   }
 
-  for(int i = 0; i < 2; ++i) {
+  for(uint32_t i = 0; i < 2; ++i) {
     if(lhs.lineWidthRange[i] != rhs.lineWidthRange[i])
       return false;
   }
@@ -3997,7 +4010,7 @@ bool operator==(VkFramebufferCreateInfo const &lhs,
   if(lhs.attachmentCount != rhs.attachmentCount)
     return false;
 
-  for(int i = 0; i < lhs.attachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.attachmentCount; ++i) {
     if(lhs.pAttachments[i] != rhs.pAttachments[i])
       return false;
   }
@@ -4068,22 +4081,22 @@ bool operator==(VkSubmitInfo const &lhs,
   if(lhs.signalSemaphoreCount != rhs.signalSemaphoreCount)
     return false;
 
-  for(int i = 0; i < lhs.waitSemaphoreCount; ++i) {
+  for(uint32_t i = 0; i < lhs.waitSemaphoreCount; ++i) {
     if(lhs.pWaitSemaphores[i] != rhs.pWaitSemaphores[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.waitSemaphoreCount; ++i) {
+  for(uint32_t i = 0; i < lhs.waitSemaphoreCount; ++i) {
     if(lhs.pWaitDstStageMask[i] != rhs.pWaitDstStageMask[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.commandBufferCount; ++i) {
+  for(uint32_t i = 0; i < lhs.commandBufferCount; ++i) {
     if(lhs.pCommandBuffers[i] != rhs.pCommandBuffers[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.signalSemaphoreCount; ++i) {
+  for(uint32_t i = 0; i < lhs.signalSemaphoreCount; ++i) {
     if(lhs.pSignalSemaphores[i] != rhs.pSignalSemaphores[i])
       return false;
   }
@@ -4098,8 +4111,12 @@ bool operator!=(VkSubmitInfo const &lhs,
 
 bool operator==(VkDisplayPropertiesKHR const &lhs,
                 VkDisplayPropertiesKHR const &rhs) noexcept {
-  if(strcmp(lhs.displayName, rhs.displayName) != 0)
-    return false;
+  if (lhs.displayName != rhs.displayName) {
+    if(lhs.displayName == nullptr || rhs.displayName == nullptr)
+      return false;
+    if(strcmp(lhs.displayName, rhs.displayName) != 0)
+      return false;
+  }
 
   return (lhs.display == rhs.display) &&
          (lhs.physicalDimensions == rhs.physicalDimensions) &&
@@ -4345,7 +4362,7 @@ bool operator==(VkSwapchainCreateInfoKHR const &lhs,
   if(lhs.queueFamilyIndexCount != rhs.queueFamilyIndexCount)
     return false;
 
-  for(int i = 0; i < lhs.queueFamilyIndexCount; ++i) {
+  for(uint32_t i = 0; i < lhs.queueFamilyIndexCount; ++i) {
     if(lhs.pQueueFamilyIndices[i] != rhs.pQueueFamilyIndices[i])
       return false;
   }
@@ -4386,22 +4403,22 @@ bool operator==(VkPresentInfoKHR const &lhs,
   if(lhs.swapchainCount != rhs.swapchainCount)
     return false;
 
-  for(int i = 0; i < lhs.waitSemaphoreCount; ++i) {
+  for(uint32_t i = 0; i < lhs.waitSemaphoreCount; ++i) {
     if(lhs.pWaitSemaphores[i] != rhs.pWaitSemaphores[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.swapchainCount; ++i) {
+  for(uint32_t i = 0; i < lhs.swapchainCount; ++i) {
     if(lhs.pSwapchains[i] != rhs.pSwapchains[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.swapchainCount; ++i) {
+  for(uint32_t i = 0; i < lhs.swapchainCount; ++i) {
     if(lhs.pImageIndices[i] != rhs.pImageIndices[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.swapchainCount; ++i) {
+  for(uint32_t i = 0; i < lhs.swapchainCount; ++i) {
     if(lhs.pResults[i] != rhs.pResults[i])
       return false;
   }
@@ -4432,7 +4449,7 @@ bool operator==(VkValidationFlagsEXT const &lhs,
   if(lhs.disabledValidationCheckCount != rhs.disabledValidationCheckCount)
     return false;
 
-  for(int i = 0; i < lhs.disabledValidationCheckCount; ++i) {
+  for(uint32_t i = 0; i < lhs.disabledValidationCheckCount; ++i) {
     if(lhs.pDisabledValidationChecks[i] != rhs.pDisabledValidationChecks[i])
       return false;
   }
@@ -4453,12 +4470,12 @@ bool operator==(VkValidationFeaturesEXT const &lhs,
   if(lhs.disabledValidationFeatureCount != rhs.disabledValidationFeatureCount)
     return false;
 
-  for(int i = 0; i < lhs.enabledValidationFeatureCount; ++i) {
+  for(uint32_t i = 0; i < lhs.enabledValidationFeatureCount; ++i) {
     if(lhs.pEnabledValidationFeatures[i] != rhs.pEnabledValidationFeatures[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.disabledValidationFeatureCount; ++i) {
+  for(uint32_t i = 0; i < lhs.disabledValidationFeatureCount; ++i) {
     if(lhs.pDisabledValidationFeatures[i] != rhs.pDisabledValidationFeatures[i])
       return false;
   }
@@ -4484,8 +4501,12 @@ bool operator!=(VkPipelineRasterizationStateRasterizationOrderAMD const &lhs,
 
 bool operator==(VkDebugMarkerObjectNameInfoEXT const &lhs,
                 VkDebugMarkerObjectNameInfoEXT const &rhs) noexcept {
-  if(strcmp(lhs.pObjectName, rhs.pObjectName) != 0)
-    return false;
+  if (lhs.pObjectName != rhs.pObjectName) {
+    if(lhs.pObjectName == nullptr || rhs.pObjectName == nullptr)
+      return false;
+    if(strcmp(lhs.pObjectName, rhs.pObjectName) != 0)
+      return false;
+  }
 
   return (lhs.sType == rhs.sType) &&
          (lhs.objectType == rhs.objectType) &&
@@ -4518,10 +4539,14 @@ bool operator!=(VkDebugMarkerObjectTagInfoEXT const &lhs,
 
 bool operator==(VkDebugMarkerMarkerInfoEXT const &lhs,
                 VkDebugMarkerMarkerInfoEXT const &rhs) noexcept {
-  if(strcmp(lhs.pMarkerName, rhs.pMarkerName) != 0)
-    return false;
+  if (lhs.pMarkerName != rhs.pMarkerName) {
+    if(lhs.pMarkerName == nullptr || rhs.pMarkerName == nullptr)
+      return false;
+    if(strcmp(lhs.pMarkerName, rhs.pMarkerName) != 0)
+      return false;
+  }
 
-  for(int i = 0; i < 4; ++i) {
+  for(uint32_t i = 0; i < 4; ++i) {
     if(lhs.color[i] != rhs.color[i])
       return false;
   }
@@ -4649,27 +4674,27 @@ bool operator==(VkWin32KeyedMutexAcquireReleaseInfoNV const &lhs,
   if(lhs.releaseCount != rhs.releaseCount)
     return false;
 
-  for(int i = 0; i < lhs.acquireCount; ++i) {
+  for(uint32_t i = 0; i < lhs.acquireCount; ++i) {
     if(lhs.pAcquireSyncs[i] != rhs.pAcquireSyncs[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.acquireCount; ++i) {
+  for(uint32_t i = 0; i < lhs.acquireCount; ++i) {
     if(lhs.pAcquireKeys[i] != rhs.pAcquireKeys[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.acquireCount; ++i) {
+  for(uint32_t i = 0; i < lhs.acquireCount; ++i) {
     if(lhs.pAcquireTimeoutMilliseconds[i] != rhs.pAcquireTimeoutMilliseconds[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.releaseCount; ++i) {
+  for(uint32_t i = 0; i < lhs.releaseCount; ++i) {
     if(lhs.pReleaseSyncs[i] != rhs.pReleaseSyncs[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.releaseCount; ++i) {
+  for(uint32_t i = 0; i < lhs.releaseCount; ++i) {
     if(lhs.pReleaseKeys[i] != rhs.pReleaseKeys[i])
       return false;
   }
@@ -4739,7 +4764,7 @@ bool operator==(VkIndirectCommandsLayoutCreateInfoNVX const &lhs,
   if(lhs.tokenCount != rhs.tokenCount)
     return false;
 
-  for(int i = 0; i < lhs.tokenCount; ++i) {
+  for(uint32_t i = 0; i < lhs.tokenCount; ++i) {
     if(lhs.pTokens[i] != rhs.pTokens[i])
       return false;
   }
@@ -4759,7 +4784,7 @@ bool operator==(VkCmdProcessCommandsInfoNVX const &lhs,
   if(lhs.indirectCommandsTokenCount != rhs.indirectCommandsTokenCount)
     return false;
 
-  for(int i = 0; i < lhs.indirectCommandsTokenCount; ++i) {
+  for(uint32_t i = 0; i < lhs.indirectCommandsTokenCount; ++i) {
     if(lhs.pIndirectCommandsTokens[i] != rhs.pIndirectCommandsTokens[i])
       return false;
   }
@@ -4804,17 +4829,17 @@ bool operator==(VkObjectTableCreateInfoNVX const &lhs,
   if(lhs.objectCount != rhs.objectCount)
     return false;
 
-  for(int i = 0; i < lhs.objectCount; ++i) {
+  for(uint32_t i = 0; i < lhs.objectCount; ++i) {
     if(lhs.pObjectEntryTypes[i] != rhs.pObjectEntryTypes[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.objectCount; ++i) {
+  for(uint32_t i = 0; i < lhs.objectCount; ++i) {
     if(lhs.pObjectEntryCounts[i] != rhs.pObjectEntryCounts[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.objectCount; ++i) {
+  for(uint32_t i = 0; i < lhs.objectCount; ++i) {
     if(lhs.pObjectEntryUsageFlags[i] != rhs.pObjectEntryUsageFlags[i])
       return false;
   }
@@ -5039,12 +5064,12 @@ bool operator!=(VkConformanceVersionKHR const &lhs,
 
 bool operator==(VkPhysicalDeviceDriverPropertiesKHR const &lhs,
                 VkPhysicalDeviceDriverPropertiesKHR const &rhs) noexcept {
-  for(int i = 0; i < VK_MAX_DRIVER_NAME_SIZE_KHR; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_DRIVER_NAME_SIZE_KHR; ++i) {
     if(lhs.driverName[i] != rhs.driverName[i])
       return false;
   }
 
-  for(int i = 0; i < VK_MAX_DRIVER_INFO_SIZE_KHR; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_DRIVER_INFO_SIZE_KHR; ++i) {
     if(lhs.driverInfo[i] != rhs.driverInfo[i])
       return false;
   }
@@ -5064,7 +5089,7 @@ bool operator==(VkPresentRegionsKHR const &lhs,
   if(lhs.swapchainCount != rhs.swapchainCount)
     return false;
 
-  for(int i = 0; i < lhs.swapchainCount; ++i) {
+  for(uint32_t i = 0; i < lhs.swapchainCount; ++i) {
     if(lhs.pRegions[i] != rhs.pRegions[i])
       return false;
   }
@@ -5082,7 +5107,7 @@ bool operator==(VkPresentRegionKHR const &lhs,
   if(lhs.rectangleCount != rhs.rectangleCount)
     return false;
 
-  for(int i = 0; i < lhs.rectangleCount; ++i) {
+  for(uint32_t i = 0; i < lhs.rectangleCount; ++i) {
     if(lhs.pRectangles[i] != rhs.pRectangles[i])
       return false;
   }
@@ -5179,17 +5204,17 @@ bool operator!=(VkExternalBufferProperties const &lhs,
 
 bool operator==(VkPhysicalDeviceIDProperties const &lhs,
                 VkPhysicalDeviceIDProperties const &rhs) noexcept {
-  for(int i = 0; i < VK_UUID_SIZE; ++i) {
+  for(uint32_t i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.deviceUUID[i] != rhs.deviceUUID[i])
       return false;
   }
 
-  for(int i = 0; i < VK_UUID_SIZE; ++i) {
+  for(uint32_t i = 0; i < VK_UUID_SIZE; ++i) {
     if(lhs.driverUUID[i] != rhs.driverUUID[i])
       return false;
   }
 
-  for(int i = 0; i < VK_LUID_SIZE; ++i) {
+  for(uint32_t i = 0; i < VK_LUID_SIZE; ++i) {
     if(lhs.deviceLUID[i] != rhs.deviceLUID[i])
       return false;
   }
@@ -5347,27 +5372,27 @@ bool operator==(VkWin32KeyedMutexAcquireReleaseInfoKHR const &lhs,
   if(lhs.releaseCount != rhs.releaseCount)
     return false;
 
-  for(int i = 0; i < lhs.acquireCount; ++i) {
+  for(uint32_t i = 0; i < lhs.acquireCount; ++i) {
     if(lhs.pAcquireSyncs[i] != rhs.pAcquireSyncs[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.acquireCount; ++i) {
+  for(uint32_t i = 0; i < lhs.acquireCount; ++i) {
     if(lhs.pAcquireKeys[i] != rhs.pAcquireKeys[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.acquireCount; ++i) {
+  for(uint32_t i = 0; i < lhs.acquireCount; ++i) {
     if(lhs.pAcquireTimeouts[i] != rhs.pAcquireTimeouts[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.releaseCount; ++i) {
+  for(uint32_t i = 0; i < lhs.releaseCount; ++i) {
     if(lhs.pReleaseSyncs[i] != rhs.pReleaseSyncs[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.releaseCount; ++i) {
+  for(uint32_t i = 0; i < lhs.releaseCount; ++i) {
     if(lhs.pReleaseKeys[i] != rhs.pReleaseKeys[i])
       return false;
   }
@@ -5457,12 +5482,12 @@ bool operator==(VkD3D12FenceSubmitInfoKHR const &lhs,
   if(lhs.signalSemaphoreValuesCount != rhs.signalSemaphoreValuesCount)
     return false;
 
-  for(int i = 0; i < lhs.waitSemaphoreValuesCount; ++i) {
+  for(uint32_t i = 0; i < lhs.waitSemaphoreValuesCount; ++i) {
     if(lhs.pWaitSemaphoreValues[i] != rhs.pWaitSemaphoreValues[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.signalSemaphoreValuesCount; ++i) {
+  for(uint32_t i = 0; i < lhs.signalSemaphoreValuesCount; ++i) {
     if(lhs.pSignalSemaphoreValues[i] != rhs.pSignalSemaphoreValues[i])
       return false;
   }
@@ -5659,17 +5684,17 @@ bool operator==(VkRenderPassMultiviewCreateInfo const &lhs,
   if(lhs.correlationMaskCount != rhs.correlationMaskCount)
     return false;
 
-  for(int i = 0; i < lhs.subpassCount; ++i) {
+  for(uint32_t i = 0; i < lhs.subpassCount; ++i) {
     if(lhs.pViewMasks[i] != rhs.pViewMasks[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.dependencyCount; ++i) {
+  for(uint32_t i = 0; i < lhs.dependencyCount; ++i) {
     if(lhs.pViewOffsets[i] != rhs.pViewOffsets[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.correlationMaskCount; ++i) {
+  for(uint32_t i = 0; i < lhs.correlationMaskCount; ++i) {
     if(lhs.pCorrelationMasks[i] != rhs.pCorrelationMasks[i])
       return false;
   }
@@ -5749,7 +5774,7 @@ bool operator!=(VkSwapchainCounterCreateInfoEXT const &lhs,
 
 bool operator==(VkPhysicalDeviceGroupProperties const &lhs,
                 VkPhysicalDeviceGroupProperties const &rhs) noexcept {
-  for(int i = 0; i < VK_MAX_DEVICE_GROUP_SIZE; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_DEVICE_GROUP_SIZE; ++i) {
     if(lhs.physicalDevices[i] != rhs.physicalDevices[i])
       return false;
   }
@@ -5794,7 +5819,7 @@ bool operator==(VkBindBufferMemoryDeviceGroupInfo const &lhs,
   if(lhs.deviceIndexCount != rhs.deviceIndexCount)
     return false;
 
-  for(int i = 0; i < lhs.deviceIndexCount; ++i) {
+  for(uint32_t i = 0; i < lhs.deviceIndexCount; ++i) {
     if(lhs.pDeviceIndices[i] != rhs.pDeviceIndices[i])
       return false;
   }
@@ -5828,12 +5853,12 @@ bool operator==(VkBindImageMemoryDeviceGroupInfo const &lhs,
   if(lhs.splitInstanceBindRegionCount != rhs.splitInstanceBindRegionCount)
     return false;
 
-  for(int i = 0; i < lhs.deviceIndexCount; ++i) {
+  for(uint32_t i = 0; i < lhs.deviceIndexCount; ++i) {
     if(lhs.pDeviceIndices[i] != rhs.pDeviceIndices[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.splitInstanceBindRegionCount; ++i) {
+  for(uint32_t i = 0; i < lhs.splitInstanceBindRegionCount; ++i) {
     if(lhs.pSplitInstanceBindRegions[i] != rhs.pSplitInstanceBindRegions[i])
       return false;
   }
@@ -5851,7 +5876,7 @@ bool operator==(VkDeviceGroupRenderPassBeginInfo const &lhs,
   if(lhs.deviceRenderAreaCount != rhs.deviceRenderAreaCount)
     return false;
 
-  for(int i = 0; i < lhs.deviceRenderAreaCount; ++i) {
+  for(uint32_t i = 0; i < lhs.deviceRenderAreaCount; ++i) {
     if(lhs.pDeviceRenderAreas[i] != rhs.pDeviceRenderAreas[i])
       return false;
   }
@@ -5887,17 +5912,17 @@ bool operator==(VkDeviceGroupSubmitInfo const &lhs,
   if(lhs.signalSemaphoreCount != rhs.signalSemaphoreCount)
     return false;
 
-  for(int i = 0; i < lhs.waitSemaphoreCount; ++i) {
+  for(uint32_t i = 0; i < lhs.waitSemaphoreCount; ++i) {
     if(lhs.pWaitSemaphoreDeviceIndices[i] != rhs.pWaitSemaphoreDeviceIndices[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.commandBufferCount; ++i) {
+  for(uint32_t i = 0; i < lhs.commandBufferCount; ++i) {
     if(lhs.pCommandBufferDeviceMasks[i] != rhs.pCommandBufferDeviceMasks[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.signalSemaphoreCount; ++i) {
+  for(uint32_t i = 0; i < lhs.signalSemaphoreCount; ++i) {
     if(lhs.pSignalSemaphoreDeviceIndices[i] != rhs.pSignalSemaphoreDeviceIndices[i])
       return false;
   }
@@ -5924,7 +5949,7 @@ bool operator!=(VkDeviceGroupBindSparseInfo const &lhs,
 
 bool operator==(VkDeviceGroupPresentCapabilitiesKHR const &lhs,
                 VkDeviceGroupPresentCapabilitiesKHR const &rhs) noexcept {
-  for(int i = 0; i < VK_MAX_DEVICE_GROUP_SIZE; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_DEVICE_GROUP_SIZE; ++i) {
     if(lhs.presentMask[i] != rhs.presentMask[i])
       return false;
   }
@@ -5981,7 +6006,7 @@ bool operator==(VkDeviceGroupPresentInfoKHR const &lhs,
   if(lhs.swapchainCount != rhs.swapchainCount)
     return false;
 
-  for(int i = 0; i < lhs.swapchainCount; ++i) {
+  for(uint32_t i = 0; i < lhs.swapchainCount; ++i) {
     if(lhs.pDeviceMasks[i] != rhs.pDeviceMasks[i])
       return false;
   }
@@ -6000,7 +6025,7 @@ bool operator==(VkDeviceGroupDeviceCreateInfo const &lhs,
   if(lhs.physicalDeviceCount != rhs.physicalDeviceCount)
     return false;
 
-  for(int i = 0; i < lhs.physicalDeviceCount; ++i) {
+  for(uint32_t i = 0; i < lhs.physicalDeviceCount; ++i) {
     if(lhs.pPhysicalDevices[i] != rhs.pPhysicalDevices[i])
       return false;
   }
@@ -6044,7 +6069,7 @@ bool operator==(VkDescriptorUpdateTemplateCreateInfo const &lhs,
   if(lhs.descriptorUpdateEntryCount != rhs.descriptorUpdateEntryCount)
     return false;
 
-  for(int i = 0; i < lhs.descriptorUpdateEntryCount; ++i) {
+  for(uint32_t i = 0; i < lhs.descriptorUpdateEntryCount; ++i) {
     if(lhs.pDescriptorUpdateEntries[i] != rhs.pDescriptorUpdateEntries[i])
       return false;
   }
@@ -6121,7 +6146,7 @@ bool operator==(VkPresentTimesInfoGOOGLE const &lhs,
   if(lhs.swapchainCount != rhs.swapchainCount)
     return false;
 
-  for(int i = 0; i < lhs.swapchainCount; ++i) {
+  for(uint32_t i = 0; i < lhs.swapchainCount; ++i) {
     if(lhs.pTimes[i] != rhs.pTimes[i])
       return false;
   }
@@ -6189,7 +6214,7 @@ bool operator==(VkPipelineViewportWScalingStateCreateInfoNV const &lhs,
   if(lhs.viewportCount != rhs.viewportCount)
     return false;
 
-  for(int i = 0; i < lhs.viewportCount; ++i) {
+  for(uint32_t i = 0; i < lhs.viewportCount; ++i) {
     if(lhs.pViewportWScalings[i] != rhs.pViewportWScalings[i])
       return false;
   }
@@ -6221,7 +6246,7 @@ bool operator==(VkPipelineViewportSwizzleStateCreateInfoNV const &lhs,
   if(lhs.viewportCount != rhs.viewportCount)
     return false;
 
-  for(int i = 0; i < lhs.viewportCount; ++i) {
+  for(uint32_t i = 0; i < lhs.viewportCount; ++i) {
     if(lhs.pViewportSwizzles[i] != rhs.pViewportSwizzles[i])
       return false;
   }
@@ -6251,7 +6276,7 @@ bool operator==(VkPipelineDiscardRectangleStateCreateInfoEXT const &lhs,
   if(lhs.discardRectangleCount != rhs.discardRectangleCount)
     return false;
 
-  for(int i = 0; i < lhs.discardRectangleCount; ++i) {
+  for(uint32_t i = 0; i < lhs.discardRectangleCount; ++i) {
     if(lhs.pDiscardRectangles[i] != rhs.pDiscardRectangles[i])
       return false;
   }
@@ -6294,7 +6319,7 @@ bool operator==(VkRenderPassInputAttachmentAspectCreateInfo const &lhs,
   if(lhs.aspectReferenceCount != rhs.aspectReferenceCount)
     return false;
 
-  for(int i = 0; i < lhs.aspectReferenceCount; ++i) {
+  for(uint32_t i = 0; i < lhs.aspectReferenceCount; ++i) {
     if(lhs.pAspectReferences[i] != rhs.pAspectReferences[i])
       return false;
   }
@@ -6731,7 +6756,7 @@ bool operator==(VkSampleLocationsInfoEXT const &lhs,
   if(lhs.sampleLocationsCount != rhs.sampleLocationsCount)
     return false;
 
-  for(int i = 0; i < lhs.sampleLocationsCount; ++i) {
+  for(uint32_t i = 0; i < lhs.sampleLocationsCount; ++i) {
     if(lhs.pSampleLocations[i] != rhs.pSampleLocations[i])
       return false;
   }
@@ -6776,12 +6801,12 @@ bool operator==(VkRenderPassSampleLocationsBeginInfoEXT const &lhs,
   if(lhs.postSubpassSampleLocationsCount != rhs.postSubpassSampleLocationsCount)
     return false;
 
-  for(int i = 0; i < lhs.attachmentInitialSampleLocationsCount; ++i) {
+  for(uint32_t i = 0; i < lhs.attachmentInitialSampleLocationsCount; ++i) {
     if(lhs.pAttachmentInitialSampleLocations[i] != rhs.pAttachmentInitialSampleLocations[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.postSubpassSampleLocationsCount; ++i) {
+  for(uint32_t i = 0; i < lhs.postSubpassSampleLocationsCount; ++i) {
     if(lhs.pPostSubpassSampleLocations[i] != rhs.pPostSubpassSampleLocations[i])
       return false;
   }
@@ -6808,7 +6833,7 @@ bool operator!=(VkPipelineSampleLocationsStateCreateInfoEXT const &lhs,
 
 bool operator==(VkPhysicalDeviceSampleLocationsPropertiesEXT const &lhs,
                 VkPhysicalDeviceSampleLocationsPropertiesEXT const &rhs) noexcept {
-  for(int i = 0; i < 2; ++i) {
+  for(uint32_t i = 0; i < 2; ++i) {
     if(lhs.sampleLocationCoordinateRange[i] != rhs.sampleLocationCoordinateRange[i])
       return false;
   }
@@ -6946,7 +6971,7 @@ bool operator==(VkPipelineCoverageModulationStateCreateInfoNV const &lhs,
   if(lhs.coverageModulationTableCount != rhs.coverageModulationTableCount)
     return false;
 
-  for(int i = 0; i < lhs.coverageModulationTableCount; ++i) {
+  for(uint32_t i = 0; i < lhs.coverageModulationTableCount; ++i) {
     if(lhs.pCoverageModulationTable[i] != rhs.pCoverageModulationTable[i])
       return false;
   }
@@ -6967,7 +6992,7 @@ bool operator==(VkImageFormatListCreateInfoKHR const &lhs,
   if(lhs.viewFormatCount != rhs.viewFormatCount)
     return false;
 
-  for(int i = 0; i < lhs.viewFormatCount; ++i) {
+  for(uint32_t i = 0; i < lhs.viewFormatCount; ++i) {
     if(lhs.pViewFormats[i] != rhs.pViewFormats[i])
       return false;
   }
@@ -7113,7 +7138,7 @@ bool operator!=(VkShaderResourceUsageAMD const &lhs,
 
 bool operator==(VkShaderStatisticsInfoAMD const &lhs,
                 VkShaderStatisticsInfoAMD const &rhs) noexcept {
-  for(int i = 0; i < 3; ++i) {
+  for(uint32_t i = 0; i < 3; ++i) {
     if(lhs.computeWorkGroupSize[i] != rhs.computeWorkGroupSize[i])
       return false;
   }
@@ -7144,8 +7169,12 @@ bool operator!=(VkDeviceQueueGlobalPriorityCreateInfoEXT const &lhs,
 
 bool operator==(VkDebugUtilsObjectNameInfoEXT const &lhs,
                 VkDebugUtilsObjectNameInfoEXT const &rhs) noexcept {
-  if(strcmp(lhs.pObjectName, rhs.pObjectName) != 0)
-    return false;
+  if (lhs.pObjectName != rhs.pObjectName) {
+    if(lhs.pObjectName == nullptr || rhs.pObjectName == nullptr)
+      return false;
+    if(strcmp(lhs.pObjectName, rhs.pObjectName) != 0)
+      return false;
+  }
 
   return (lhs.sType == rhs.sType) &&
          (lhs.objectType == rhs.objectType) &&
@@ -7178,10 +7207,14 @@ bool operator!=(VkDebugUtilsObjectTagInfoEXT const &lhs,
 
 bool operator==(VkDebugUtilsLabelEXT const &lhs,
                 VkDebugUtilsLabelEXT const &rhs) noexcept {
-  if(strcmp(lhs.pLabelName, rhs.pLabelName) != 0)
-    return false;
+  if (lhs.pLabelName != rhs.pLabelName) {
+    if(lhs.pLabelName == nullptr || rhs.pLabelName == nullptr)
+      return false;
+    if(strcmp(lhs.pLabelName, rhs.pLabelName) != 0)
+      return false;
+  }
 
-  for(int i = 0; i < 4; ++i) {
+  for(uint32_t i = 0; i < 4; ++i) {
     if(lhs.color[i] != rhs.color[i])
       return false;
   }
@@ -7220,23 +7253,31 @@ bool operator==(VkDebugUtilsMessengerCallbackDataEXT const &lhs,
   if(lhs.objectCount != rhs.objectCount)
     return false;
 
-  if(strcmp(lhs.pMessageIdName, rhs.pMessageIdName) != 0)
-    return false;
+  if (lhs.pMessageIdName != rhs.pMessageIdName) {
+    if(lhs.pMessageIdName == nullptr || rhs.pMessageIdName == nullptr)
+      return false;
+    if(strcmp(lhs.pMessageIdName, rhs.pMessageIdName) != 0)
+      return false;
+  }
 
-  if(strcmp(lhs.pMessage, rhs.pMessage) != 0)
-    return false;
+  if (lhs.pMessage != rhs.pMessage) {
+    if(lhs.pMessage == nullptr || rhs.pMessage == nullptr)
+      return false;
+    if(strcmp(lhs.pMessage, rhs.pMessage) != 0)
+      return false;
+  }
 
-  for(int i = 0; i < lhs.queueLabelCount; ++i) {
+  for(uint32_t i = 0; i < lhs.queueLabelCount; ++i) {
     if(lhs.pQueueLabels[i] != rhs.pQueueLabels[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.cmdBufLabelCount; ++i) {
+  for(uint32_t i = 0; i < lhs.cmdBufLabelCount; ++i) {
     if(lhs.pCmdBufLabels[i] != rhs.pCmdBufLabels[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.objectCount; ++i) {
+  for(uint32_t i = 0; i < lhs.objectCount; ++i) {
     if(lhs.pObjects[i] != rhs.pObjects[i])
       return false;
   }
@@ -7420,7 +7461,7 @@ bool operator==(VkDescriptorSetLayoutBindingFlagsCreateInfoEXT const &lhs,
   if(lhs.bindingCount != rhs.bindingCount)
     return false;
 
-  for(int i = 0; i < lhs.bindingCount; ++i) {
+  for(uint32_t i = 0; i < lhs.bindingCount; ++i) {
     if(lhs.pBindingFlags[i] != rhs.pBindingFlags[i])
       return false;
   }
@@ -7438,7 +7479,7 @@ bool operator==(VkDescriptorSetVariableDescriptorCountAllocateInfoEXT const &lhs
   if(lhs.descriptorSetCount != rhs.descriptorSetCount)
     return false;
 
-  for(int i = 0; i < lhs.descriptorSetCount; ++i) {
+  for(uint32_t i = 0; i < lhs.descriptorSetCount; ++i) {
     if(lhs.pDescriptorCounts[i] != rhs.pDescriptorCounts[i])
       return false;
   }
@@ -7508,22 +7549,22 @@ bool operator==(VkSubpassDescription2KHR const &lhs,
   if(lhs.preserveAttachmentCount != rhs.preserveAttachmentCount)
     return false;
 
-  for(int i = 0; i < lhs.inputAttachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.inputAttachmentCount; ++i) {
     if(lhs.pInputAttachments[i] != rhs.pInputAttachments[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.colorAttachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.colorAttachmentCount; ++i) {
     if(lhs.pColorAttachments[i] != rhs.pColorAttachments[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.colorAttachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.colorAttachmentCount; ++i) {
     if(lhs.pResolveAttachments[i] != rhs.pResolveAttachments[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.preserveAttachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.preserveAttachmentCount; ++i) {
     if(lhs.pPreserveAttachments[i] != rhs.pPreserveAttachments[i])
       return false;
   }
@@ -7572,22 +7613,22 @@ bool operator==(VkRenderPassCreateInfo2KHR const &lhs,
   if(lhs.correlatedViewMaskCount != rhs.correlatedViewMaskCount)
     return false;
 
-  for(int i = 0; i < lhs.attachmentCount; ++i) {
+  for(uint32_t i = 0; i < lhs.attachmentCount; ++i) {
     if(lhs.pAttachments[i] != rhs.pAttachments[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.subpassCount; ++i) {
+  for(uint32_t i = 0; i < lhs.subpassCount; ++i) {
     if(lhs.pSubpasses[i] != rhs.pSubpasses[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.dependencyCount; ++i) {
+  for(uint32_t i = 0; i < lhs.dependencyCount; ++i) {
     if(lhs.pDependencies[i] != rhs.pDependencies[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.correlatedViewMaskCount; ++i) {
+  for(uint32_t i = 0; i < lhs.correlatedViewMaskCount; ++i) {
     if(lhs.pCorrelatedViewMasks[i] != rhs.pCorrelatedViewMasks[i])
       return false;
   }
@@ -7638,7 +7679,7 @@ bool operator==(VkPipelineVertexInputDivisorStateCreateInfoEXT const &lhs,
   if(lhs.vertexBindingDivisorCount != rhs.vertexBindingDivisorCount)
     return false;
 
-  for(int i = 0; i < lhs.vertexBindingDivisorCount; ++i) {
+  for(uint32_t i = 0; i < lhs.vertexBindingDivisorCount; ++i) {
     if(lhs.pVertexBindingDivisors[i] != rhs.pVertexBindingDivisors[i])
       return false;
   }
@@ -7989,7 +8030,7 @@ bool operator==(VkPipelineViewportExclusiveScissorStateCreateInfoNV const &lhs,
   if(lhs.exclusiveScissorCount != rhs.exclusiveScissorCount)
     return false;
 
-  for(int i = 0; i < lhs.exclusiveScissorCount; ++i) {
+  for(uint32_t i = 0; i < lhs.exclusiveScissorCount; ++i) {
     if(lhs.pExclusiveScissors[i] != rhs.pExclusiveScissors[i])
       return false;
   }
@@ -8063,7 +8104,7 @@ bool operator==(VkShadingRatePaletteNV const &lhs,
   if(lhs.shadingRatePaletteEntryCount != rhs.shadingRatePaletteEntryCount)
     return false;
 
-  for(int i = 0; i < lhs.shadingRatePaletteEntryCount; ++i) {
+  for(uint32_t i = 0; i < lhs.shadingRatePaletteEntryCount; ++i) {
     if(lhs.pShadingRatePaletteEntries[i] != rhs.pShadingRatePaletteEntries[i])
       return false;
   }
@@ -8081,7 +8122,7 @@ bool operator==(VkPipelineViewportShadingRateImageStateCreateInfoNV const &lhs,
   if(lhs.viewportCount != rhs.viewportCount)
     return false;
 
-  for(int i = 0; i < lhs.viewportCount; ++i) {
+  for(uint32_t i = 0; i < lhs.viewportCount; ++i) {
     if(lhs.pShadingRatePalettes[i] != rhs.pShadingRatePalettes[i])
       return false;
   }
@@ -8137,7 +8178,7 @@ bool operator==(VkCoarseSampleOrderCustomNV const &lhs,
   if(lhs.sampleLocationCount != rhs.sampleLocationCount)
     return false;
 
-  for(int i = 0; i < lhs.sampleLocationCount; ++i) {
+  for(uint32_t i = 0; i < lhs.sampleLocationCount; ++i) {
     if(lhs.pSampleLocations[i] != rhs.pSampleLocations[i])
       return false;
   }
@@ -8156,7 +8197,7 @@ bool operator==(VkPipelineViewportCoarseSampleOrderStateCreateInfoNV const &lhs,
   if(lhs.customSampleOrderCount != rhs.customSampleOrderCount)
     return false;
 
-  for(int i = 0; i < lhs.customSampleOrderCount; ++i) {
+  for(uint32_t i = 0; i < lhs.customSampleOrderCount; ++i) {
     if(lhs.pCustomSampleOrders[i] != rhs.pCustomSampleOrders[i])
       return false;
   }
@@ -8184,12 +8225,12 @@ bool operator!=(VkPhysicalDeviceMeshShaderFeaturesNV const &lhs,
 
 bool operator==(VkPhysicalDeviceMeshShaderPropertiesNV const &lhs,
                 VkPhysicalDeviceMeshShaderPropertiesNV const &rhs) noexcept {
-  for(int i = 0; i < 3; ++i) {
+  for(uint32_t i = 0; i < 3; ++i) {
     if(lhs.maxTaskWorkGroupSize[i] != rhs.maxTaskWorkGroupSize[i])
       return false;
   }
 
-  for(int i = 0; i < 3; ++i) {
+  for(uint32_t i = 0; i < 3; ++i) {
     if(lhs.maxMeshWorkGroupSize[i] != rhs.maxMeshWorkGroupSize[i])
       return false;
   }
@@ -8247,12 +8288,12 @@ bool operator==(VkRayTracingPipelineCreateInfoNV const &lhs,
   if(lhs.groupCount != rhs.groupCount)
     return false;
 
-  for(int i = 0; i < lhs.stageCount; ++i) {
+  for(uint32_t i = 0; i < lhs.stageCount; ++i) {
     if(lhs.pStages[i] != rhs.pStages[i])
       return false;
   }
 
-  for(int i = 0; i < lhs.groupCount; ++i) {
+  for(uint32_t i = 0; i < lhs.groupCount; ++i) {
     if(lhs.pGroups[i] != rhs.pGroups[i])
       return false;
   }
@@ -8334,7 +8375,7 @@ bool operator==(VkAccelerationStructureInfoNV const &lhs,
   if(lhs.geometryCount != rhs.geometryCount)
     return false;
 
-  for(int i = 0; i < lhs.geometryCount; ++i) {
+  for(uint32_t i = 0; i < lhs.geometryCount; ++i) {
     if(lhs.pGeometries[i] != rhs.pGeometries[i])
       return false;
   }
@@ -8367,7 +8408,7 @@ bool operator==(VkBindAccelerationStructureMemoryInfoNV const &lhs,
   if(lhs.deviceIndexCount != rhs.deviceIndexCount)
     return false;
 
-  for(int i = 0; i < lhs.deviceIndexCount; ++i) {
+  for(uint32_t i = 0; i < lhs.deviceIndexCount; ++i) {
     if(lhs.pDeviceIndices[i] != rhs.pDeviceIndices[i])
       return false;
   }
@@ -8388,7 +8429,7 @@ bool operator==(VkWriteDescriptorSetAccelerationStructureNV const &lhs,
   if(lhs.accelerationStructureCount != rhs.accelerationStructureCount)
     return false;
 
-  for(int i = 0; i < lhs.accelerationStructureCount; ++i) {
+  for(uint32_t i = 0; i < lhs.accelerationStructureCount; ++i) {
     if(lhs.pAccelerationStructures[i] != rhs.pAccelerationStructures[i])
       return false;
   }
@@ -8436,7 +8477,7 @@ bool operator==(VkDrmFormatModifierPropertiesListEXT const &lhs,
   if(lhs.drmFormatModifierCount != rhs.drmFormatModifierCount)
     return false;
 
-  for(int i = 0; i < lhs.drmFormatModifierCount; ++i) {
+  for(uint32_t i = 0; i < lhs.drmFormatModifierCount; ++i) {
     if(lhs.pDrmFormatModifierProperties[i] != rhs.pDrmFormatModifierProperties[i])
       return false;
   }
@@ -8466,7 +8507,7 @@ bool operator==(VkPhysicalDeviceImageDrmFormatModifierInfoEXT const &lhs,
   if(lhs.queueFamilyIndexCount != rhs.queueFamilyIndexCount)
     return false;
 
-  for(int i = 0; i < lhs.queueFamilyIndexCount; ++i) {
+  for(uint32_t i = 0; i < lhs.queueFamilyIndexCount; ++i) {
     if(lhs.pQueueFamilyIndices[i] != rhs.pQueueFamilyIndices[i])
       return false;
   }
@@ -8486,7 +8527,7 @@ bool operator==(VkImageDrmFormatModifierListCreateInfoEXT const &lhs,
   if(lhs.drmFormatModifierCount != rhs.drmFormatModifierCount)
     return false;
 
-  for(int i = 0; i < lhs.drmFormatModifierCount; ++i) {
+  for(uint32_t i = 0; i < lhs.drmFormatModifierCount; ++i) {
     if(lhs.pDrmFormatModifiers[i] != rhs.pDrmFormatModifiers[i])
       return false;
   }
@@ -8504,7 +8545,7 @@ bool operator==(VkImageDrmFormatModifierExplicitCreateInfoEXT const &lhs,
   if(lhs.drmFormatModifierPlaneCount != rhs.drmFormatModifierPlaneCount)
     return false;
 
-  for(int i = 0; i < lhs.drmFormatModifierPlaneCount; ++i) {
+  for(uint32_t i = 0; i < lhs.drmFormatModifierPlaneCount; ++i) {
     if(lhs.pPlaneLayouts[i] != rhs.pPlaneLayouts[i])
       return false;
   }
@@ -8601,12 +8642,12 @@ bool operator!=(VkPhysicalDeviceScalarBlockLayoutFeaturesEXT const &lhs,
 
 bool operator==(VkPhysicalDeviceMemoryBudgetPropertiesEXT const &lhs,
                 VkPhysicalDeviceMemoryBudgetPropertiesEXT const &rhs) noexcept {
-  for(int i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
     if(lhs.heapBudget[i] != rhs.heapBudget[i])
       return false;
   }
 
-  for(int i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
+  for(uint32_t i = 0; i < VK_MAX_MEMORY_HEAPS; ++i) {
     if(lhs.heapUsage[i] != rhs.heapUsage[i])
       return false;
   }
