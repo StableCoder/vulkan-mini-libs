@@ -18,7 +18,7 @@
 #include <vulkan/vulkan.h>
 
 #define VK_ERROR_CODE_CONFIG_MAIN
-#include "../include/vk_error_code.hpp"
+#include "vk_error_code.hpp"
 
 TEST_CASE("Success Case") {
     std::error_code test = VK_SUCCESS;

@@ -17,7 +17,7 @@
 #include <catch.hpp>
 #include <vulkan/vulkan.h>
 
-#include "../include/vk_value_serialization.hpp"
+#include "vk_value_serialization.hpp"
 
 std::string cDummyStr = "AAABBBCCC";
 
