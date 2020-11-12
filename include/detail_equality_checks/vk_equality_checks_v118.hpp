@@ -3324,9 +3324,13 @@ bool operator==(VkDescriptorSetLayoutBinding const &lhs,
   if(lhs.descriptorCount != rhs.descriptorCount)
     return false;
 
-  for(uint32_t i = 0; i < lhs.descriptorCount; ++i) {
-    if(lhs.pImmutableSamplers[i] != rhs.pImmutableSamplers[i])
+  if (lhs.pImmutableSamplers != rhs.pImmutableSamplers) {
+    if(lhs.pImmutableSamplers == nullptr || rhs.pImmutableSamplers == nullptr)
       return false;
+    for(uint32_t i = 0; i < lhs.descriptorCount; ++i) {
+        if(lhs.pImmutableSamplers[i] != rhs.pImmutableSamplers[i])
+        return false;
+    }
   }
 
   return (lhs.binding == rhs.binding) &&
