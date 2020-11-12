@@ -266,7 +266,18 @@ int main(int argc, char **argv) {
                 outFile << "      return false;\n";
                 outFile << "  }\n\n";
             } else if (!member.len.empty()) {
-                if (member.len == "null-terminated") {
+                if (member.name == "pImmutableSamplers") {
+                    outFile << "  if (lhs.pImmutableSamplers != rhs.pImmutableSamplers) {\n";
+                    outFile << "    if(lhs.pImmutableSamplers == nullptr || rhs.pImmutableSamplers == "
+                               "nullptr)\n";
+                    outFile << "      return false;\n";
+                    outFile << "    for(uint32_t i = 0; i < lhs.descriptorCount; ++i) {\n";
+                    outFile
+                        << "        if(lhs.pImmutableSamplers[i] != rhs.pImmutableSamplers[i])\n";
+                    outFile << "        return false;\n";
+                    outFile << "    }\n";
+                    outFile << "  }\n\n";
+                } else if (member.len == "null-terminated") {
                     outFile << "  if (lhs." << member.name << " != rhs." << member.name << ") {\n";
                     outFile << "    if(lhs." << member.name << " == nullptr || rhs." << member.name
                             << " == nullptr)\n";
