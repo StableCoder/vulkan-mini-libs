@@ -10970,10 +10970,7 @@ bool operator!=(VkAccelerationStructureDeviceAddressInfoKHR const &lhs,
 #ifdef VK_ENABLE_BETA_EXTENSIONS
 bool operator==(VkAccelerationStructureVersionKHR const &lhs,
                 VkAccelerationStructureVersionKHR const &rhs) noexcept {
-  if(lhs.2*VK_UUID_SIZE != rhs.2*VK_UUID_SIZE)
-    return false;
-
-  for(uint32_t i = 0; i < lhs.2*VK_UUID_SIZE; ++i) {
+  for(uint32_t i = 0; i < 2*VK_UUID_SIZE; ++i) {
     if(lhs.versionData[i] != rhs.versionData[i])
       return false;
   }
