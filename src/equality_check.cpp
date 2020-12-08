@@ -252,7 +252,8 @@ int main(int argc, char **argv) {
         outFile << "                " << it.name << " const &rhs) noexcept {\n";
         // Len members
         for (auto const &member : it.members) {
-            if (member.len.empty() || member.len == "null-terminated")
+            if (member.len.empty() || member.len == "null-terminated" ||
+                member.len.find("VK_UUID_SIZE") != std::string::npos)
                 continue;
 
             outFile << "  if(lhs." << member.len << " != rhs." << member.len << ")\n";
@@ -268,8 +269,9 @@ int main(int argc, char **argv) {
             } else if (!member.len.empty()) {
                 if (member.name == "pImmutableSamplers") {
                     outFile << "  if (lhs.pImmutableSamplers != rhs.pImmutableSamplers) {\n";
-                    outFile << "    if(lhs.pImmutableSamplers == nullptr || rhs.pImmutableSamplers == "
-                               "nullptr)\n";
+                    outFile
+                        << "    if(lhs.pImmutableSamplers == nullptr || rhs.pImmutableSamplers == "
+                           "nullptr)\n";
                     outFile << "      return false;\n";
                     outFile << "    for(uint32_t i = 0; i < lhs.descriptorCount; ++i) {\n";
                     outFile
@@ -293,7 +295,9 @@ int main(int argc, char **argv) {
                 } else {
                     auto searchIt = member.altlen.find(member.len);
                     std::string tempLen = member.altlen;
-                    tempLen.insert(searchIt, std::string{"lhs."});
+                    if (member.altlen != "2*VK_UUID_SIZE") {
+                        tempLen.insert(searchIt, std::string{"lhs."});
+                    }
                     outFile << "  for(uint32_t i = 0; i < " << tempLen << "; ++i) {\n";
                     outFile << "    if(lhs." << member.name << "[i] != rhs." << member.name
                             << "[i])\n";
