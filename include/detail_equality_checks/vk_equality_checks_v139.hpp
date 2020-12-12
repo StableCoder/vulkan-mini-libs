@@ -10935,8 +10935,10 @@ bool operator!=(VkAabbPositionsKHR const &lhs,
 bool operator==(VkTransformMatrixKHR const &lhs,
                 VkTransformMatrixKHR const &rhs) noexcept {
   for(uint32_t i = 0; i < 3; ++i) {
-    if(lhs.matrix[i] != rhs.matrix[i])
+  for(uint32_t j = 0; j < 4; ++j) {
+    if(lhs.matrix[i][j] != rhs.matrix[i][j])
       return false;
+  }
   }
 
   return true;
@@ -10951,27 +10953,11 @@ bool operator!=(VkTransformMatrixKHR const &lhs,
 #ifdef VK_ENABLE_BETA_EXTENSIONS
 bool operator==(VkAccelerationStructureInstanceKHR const &lhs,
                 VkAccelerationStructureInstanceKHR const &rhs) noexcept {
-  for(uint32_t i = 0; i < 2; ++i) {
-    if(lhs.instanceCustomIndex[i] != rhs.instanceCustomIndex[i])
-      return false;
-  }
-
-  for(uint32_t i = 0; i < 8; ++i) {
-    if(lhs.mask[i] != rhs.mask[i])
-      return false;
-  }
-
-  for(uint32_t i = 0; i < 2; ++i) {
-    if(lhs.instanceShaderBindingTableRecordOffset[i] != rhs.instanceShaderBindingTableRecordOffset[i])
-      return false;
-  }
-
-  for(uint32_t i = 0; i < 8; ++i) {
-    if(lhs.flags[i] != rhs.flags[i])
-      return false;
-  }
-
   return (lhs.transform == rhs.transform) &&
+         (lhs.instanceCustomIndex == rhs.instanceCustomIndex) &&
+         (lhs.mask == rhs.mask) &&
+         (lhs.instanceShaderBindingTableRecordOffset == rhs.instanceShaderBindingTableRecordOffset) &&
+         (lhs.flags == rhs.flags) &&
          (lhs.accelerationStructureReference == rhs.accelerationStructureReference);
 }
 
