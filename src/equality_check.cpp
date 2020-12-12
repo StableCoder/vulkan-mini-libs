@@ -262,10 +262,29 @@ int main(int argc, char **argv) {
         // Array members
         for (auto const &member : it.members) {
             if (!member.sizeEnum.empty()) {
-                outFile << "  for(uint32_t i = 0; i < " << member.sizeEnum << "; ++i) {\n";
-                outFile << "    if(lhs." << member.name << "[i] != rhs." << member.name << "[i])\n";
+                std::vector<char> const itName = {'i', 'j', 'k'};
+
+                for (int i = 0; i < member.sizeEnum.size(); ++i) {
+                    outFile << "  for(uint32_t " << itName[i] << " = 0; " << itName[i] << " < "
+                            << member.sizeEnum[i] << "; ++" << itName[i] << ") {\n";
+                }
+
+                outFile << "    if(lhs." << member.name;
+                for (int i = 0; i < member.sizeEnum.size(); ++i) {
+                    outFile << "[" << itName[i] << "]";
+                }
+
+                outFile << " != rhs." << member.name;
+                for (int i = 0; i < member.sizeEnum.size(); ++i) {
+                    outFile << "[" << itName[i] << "]";
+                }
+                outFile << ")\n";
                 outFile << "      return false;\n";
-                outFile << "  }\n\n";
+
+                for (int i = 0; i < member.sizeEnum.size(); ++i) {
+                    outFile << "  }\n";
+                }
+                outFile << "\n";
             } else if (!member.len.empty()) {
                 if (member.name == "pImmutableSamplers") {
                     outFile << "  if (lhs.pImmutableSamplers != rhs.pImmutableSamplers) {\n";

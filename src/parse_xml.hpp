@@ -50,7 +50,7 @@ struct MemberData {
     std::string_view typePrefix;
     std::string_view typeSuffix;
     std::string_view name;
-    std::string sizeEnum;
+    std::vector<std::string> sizeEnum;
     std::string len;
     std::string altlen;
     bool optional;
@@ -82,28 +82,32 @@ std::vector<StructData> getStructData(rapidxml::xml_node<> *typesNode) {
              memberNode = memberNode->next_sibling()) {
 
             if (std::string_view{memberNode->name()} == "member") {
+                MemberData temp;
+                temp.type = memberNode->first_node("type")->value();
+                temp.name = memberNode->first_node("name")->value();
+                temp.optional = false;
+
+                if (std::string_view{memberNode->first_node("name")->value()} == "matrix")
+                    int red = 5;
                 std::string sizeEnum = memberNode->value();
 
-                std::regex searchRegex("[(0-9)+]");
+                if (sizeEnum.starts_with(':'))
+                    sizeEnum = "";
+
+                std::regex searchRegex("[(0-9)]+");
                 auto words_begin =
                     std::sregex_iterator(sizeEnum.begin(), sizeEnum.end(), searchRegex);
                 auto words_end = std::sregex_iterator();
 
                 if (words_begin != std::sregex_iterator()) {
-                    sizeEnum = words_begin->str();
-                } else {
-                    sizeEnum = "";
+                    for (std::sregex_iterator it = words_begin; it != words_end; ++it) {
+                        temp.sizeEnum.emplace_back(it->str());
+                    }
                 }
 
                 auto *enumNode = memberNode->first_node("enum");
                 if (enumNode != nullptr)
-                    sizeEnum = enumNode->value();
-
-                MemberData temp;
-                temp.type = memberNode->first_node("type")->value();
-                temp.name = memberNode->first_node("name")->value();
-                temp.sizeEnum = sizeEnum;
-                temp.optional = false;
+                    temp.sizeEnum.emplace_back(enumNode->value());
 
                 if (std::string_view{memberNode->value()}.find("const ") != std::string::npos) {
                     temp.typePrefix = memberNode->value();
@@ -188,7 +192,7 @@ std::vector<UnionData> getUnionData(rapidxml::xml_node<> *typesNode) {
                 MemberData temp;
                 temp.type = memberNode->first_node("type")->value();
                 temp.name = memberNode->first_node("name")->value();
-                temp.sizeEnum = sizeEnum;
+                temp.sizeEnum.emplace_back(sizeEnum);
 
                 newStruct.members.emplace_back(temp);
             }
