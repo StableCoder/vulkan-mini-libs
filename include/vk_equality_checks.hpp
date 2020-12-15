@@ -36,6 +36,9 @@
 #include <vulkan/vulkan.h>
 
 // Delegate to header specific to the local Vulkan header version
+#if VK_HEADER_VERSION == 165
+    #include "detail_equality_checks/vk_equality_checks_v165.hpp"
+#endif
 #if VK_HEADER_VERSION == 164
     #include "detail_equality_checks/vk_equality_checks_v164.hpp"
 #endif
