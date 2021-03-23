@@ -36,6 +36,9 @@
 #include <vulkan/vulkan.h>
 
 // Delegate to header specific to the local Vulkan header version
+#if VK_HEADER_VERSION == 173
+    #include "detail_error_code/vk_error_code_v173.hpp"
+#endif
 #if VK_HEADER_VERSION == 172
     #include "detail_error_code/vk_error_code_v172.hpp"
 #endif
