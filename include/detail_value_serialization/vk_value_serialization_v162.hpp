@@ -158,7 +158,7 @@ constexpr std::array<std::string_view, 31> vendors = {{
 
 struct EnumValueSet {
     std::string_view name;
-    uint32_t value;
+    int32_t value;
 };
 constexpr EnumValueSet VkImageLayoutSets[] = {
     {"UNDEFINED", 0},

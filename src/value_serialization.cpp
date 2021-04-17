@@ -307,7 +307,7 @@ int main(int argc, char **argv) {
         outFile << R"(
 struct EnumValueSet {
     std::string_view name;
-    uint32_t value;
+    int32_t value;
 };
 )";
 
