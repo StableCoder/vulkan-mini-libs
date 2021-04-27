@@ -53,6 +53,7 @@ struct MemberData {
     std::vector<std::string> sizeEnum;
     std::string len;
     std::string altlen;
+    std::string values;
     bool optional;
 };
 
@@ -87,10 +88,7 @@ std::vector<StructData> getStructData(rapidxml::xml_node<> *typesNode) {
                 temp.name = memberNode->first_node("name")->value();
                 temp.optional = false;
 
-                if (std::string_view{memberNode->first_node("name")->value()} == "matrix")
-                    int red = 5;
                 std::string sizeEnum = memberNode->value();
-
                 if (sizeEnum.starts_with(':'))
                     sizeEnum = "";
 
@@ -139,6 +137,11 @@ std::vector<StructData> getStructData(rapidxml::xml_node<> *typesNode) {
                     if (std::string_view{optAttr->value()} == "true") {
                         temp.optional = true;
                     }
+                }
+
+                if (auto valuesAttr = memberNode->first_attribute("values");
+                    valuesAttr != nullptr) {
+                    temp.values = valuesAttr->value();
                 }
 
                 newStruct.members.emplace_back(temp);

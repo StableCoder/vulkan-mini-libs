@@ -37,6 +37,10 @@ if [ ! -x VkValueSerialization ]; then
     printf " >> Error: Could not find 'VkValueSerialization' executable\n"
 elif [ ! -x VkEqualityCheck ]; then
     printf " >> Error: Could not find 'VkEqualityCheck' executable\n"
+elif [ ! -x VkErrorCode ]; then
+    printf " >> Error: Could not find 'VkErrorCode' executable\n"
+elif [ ! -x VkStructCleanup ]; then
+    printf " >> Error: Could not find 'VkStructCleanup' executable\n"
 fi
 
 # Clone/update the Vulkan-Docs repository
@@ -50,11 +54,13 @@ git fetch -p
 mkdir -p ../include/detail_value_serialization/
 mkdir -p ../include/detail_equality_checks/
 mkdir -p ../include/detail_error_code/
+mkdir -p ../include/detail_struct_cleanup/
 
 # Prepare the top-level headers
 cat ../scripts/equality_check_start.txt >../include/vk_equality_checks.hpp
 cat ../scripts/vulkan_string_parsing_start.txt >../include/vk_value_serialization.hpp
 cat ../scripts/error_code_start.txt >../include/vk_error_code.hpp
+cat ../scripts/struct_cleanup_start.txt >../include/vk_struct_cleanup.hpp
 
 # Generate the per-version files
 for TAG in $(git tag | grep -e "^v[0-9]*\.[0-9]*\.[0-9]*$" | sort -t '.' -k3nr); do
@@ -94,9 +100,19 @@ EOL
 #endif
 EOL
 
+    # Generate error code
+    ../VkStructCleanup -i xml/vk.xml -d ../include/detail_struct_cleanup/ -o vk_struct_cleanup_v$VER.hpp
+
+    cat >>../include/vk_struct_cleanup.hpp <<EOL
+#if VK_HEADER_VERSION == ${VER}
+    #include "detail_struct_cleanup/vk_struct_cleanup_v${VER}.hpp"
+#endif
+EOL
+
 done
 
 # Complete the top-level headers
 cat ../scripts/equality_check_end.txt >>../include/vk_equality_checks.hpp
 cat ../scripts/vulkan_string_parsing_end.txt >>../include/vk_value_serialization.hpp
 cat ../scripts/error_code_end.txt >>../include/vk_error_code.hpp
+cat ../scripts/error_code_end.txt >>../include/vk_struct_cleanup.hpp

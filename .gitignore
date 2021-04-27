@@ -8,4 +8,5 @@ compile_commands.json
 vk.xml
 VkEqualityCheck
 VkErrorCode
+VkStructCleanup
 VkValueSerialization

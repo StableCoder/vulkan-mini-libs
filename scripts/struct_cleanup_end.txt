@@ -1,0 +1,2 @@
+
+#endif // VK_STRUCT_CLEANUP_HPP
