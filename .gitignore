@@ -6,7 +6,12 @@ build/
 Vulkan-Docs/
 compile_commands.json
 vk.xml
+
+vk_equality_checks.hpp
 VkEqualityCheck
+vk_error_code.hpp
 VkErrorCode
+vk_struct_cleanup.hpp
 VkStructCleanup
+vk_value_serialization.hpp
 VkValueSerialization

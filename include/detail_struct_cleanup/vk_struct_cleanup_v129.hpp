@@ -51,6 +51,8 @@ void vk_struct_cleanup(void const* pData);
 
 #ifdef VK_STRUCT_CLEANUP_CONFIG_MAIN
 
+#include <cstdlib>
+
 void vk_struct_cleanup(void const *pData) {
     if (pData == nullptr)
         return;
