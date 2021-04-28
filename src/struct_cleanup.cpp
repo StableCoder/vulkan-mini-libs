@@ -219,6 +219,7 @@ int main(int argc, char **argv) {
 
     // Definitions
     outFile << "\n#ifdef VK_STRUCT_CLEANUP_CONFIG_MAIN\n";
+    outFile << "\n#include <cstdlib>\n";
     outFile << "\nvoid vk_struct_cleanup(void const *pData) {\n";
     outFile << "    if (pData == nullptr)\n";
     outFile << "        return;\n";
