@@ -231,11 +231,9 @@ int main(int argc, char **argv) {
     outFile << "\n    switch (pTemp->sType) {\n";
 
     for (auto const &it : structs) {
-        if (it.name == "VkBaseOutStructure" || it.name == "VkBaseInStructure")
+        if (it.name == "VkBaseOutStructure" || it.name == "VkBaseInStructure" ||
+            it.name == "VkCuLaunchInfoNVX")
             continue;
-
-        if (it.name == "VkXcbSurfaceCreateInfoKHR")
-            int red = 5;
 
         bool hasType{false};
         bool hasPointerData{false};

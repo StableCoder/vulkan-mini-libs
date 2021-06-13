@@ -7098,23 +7098,6 @@ void vk_struct_cleanup(void const *pData) {
 
         break;
 
-    case VK_STRUCTURE_TYPE_CU_LAUNCH_INFO_NVX:
-        {   // VkCuLaunchInfoNVX
-            VkCuLaunchInfoNVX const *pStruct = static_cast<VkCuLaunchInfoNVX const *>(pData);
-
-            // void - pNext
-            vk_struct_cleanup(pStruct->pNext);
-            free(const_cast<void *>(pStruct->pNext));
-
-            // void - pParams
-            free(const_cast<void *>(pStruct->pParams));
-
-            // void - pExtras
-            free(const_cast<void *>(pStruct->pExtras));
-        }
-
-        break;
-
 
     default:
         break;
