@@ -36,6 +36,9 @@
 #include <vulkan/vulkan.h>
 
 // Delegate to header specific to the local Vulkan header version
+#if VK_HEADER_VERSION == 181
+    #include "detail_struct_cleanup/vk_struct_cleanup_v181.hpp"
+#endif
 #if VK_HEADER_VERSION == 180
     #include "detail_struct_cleanup/vk_struct_cleanup_v180.hpp"
 #endif
