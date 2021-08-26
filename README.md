@@ -1,3 +1,7 @@
+## WARNING!
+
+This repository has been superseeded by Vulkan-Mini-Libs-2, which compacts all Vulkan versions into single header files instead of the large multitude here! It can be found on GitHub @ https://github.com/StableCoder/vulkan-mini-libs-2
+
 # Vulkan Mini Libs
 [![pipeline status](https://git.stabletec.com/utilities/vulkan-mini-libs/badges/main/pipeline.svg)](https://git.stabletec.com/utilities/vulkan-mini-libs/commits/main)
 [![coverage report](https://git.stabletec.com/utilities/vulkan-mini-libs/badges/main/coverage.svg)](https://git.stabletec.com/utilities/vulkan-mini-libs/commits/main)
