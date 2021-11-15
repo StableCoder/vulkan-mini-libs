@@ -253,7 +253,8 @@ int main(int argc, char **argv) {
         // Len members
         for (auto const &member : it.members) {
             if (member.len.empty() || member.len == "null-terminated" ||
-                member.len.find("VK_UUID_SIZE") != std::string::npos)
+                member.len.find("VK_UUID_SIZE") != std::string::npos ||
+                member.len.find("VK\\_UUID\\_SIZE") != std::string::npos)
                 continue;
 
             outFile << "  if(lhs." << member.len << " != rhs." << member.len << ")\n";

@@ -12390,9 +12390,6 @@ bool operator!=(VkAccelerationStructureDeviceAddressInfoKHR const &lhs,
 
 bool operator==(VkAccelerationStructureVersionInfoKHR const &lhs,
                 VkAccelerationStructureVersionInfoKHR const &rhs) noexcept {
-  if(lhs.VK\_UUID\_SIZE != rhs.VK\_UUID\_SIZE)
-    return false;
-
   for(uint32_t i = 0; i < 2*VK_UUID_SIZE; ++i) {
     if(lhs.pVersionData[i] != rhs.pVersionData[i])
       return false;
